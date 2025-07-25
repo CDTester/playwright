@@ -1,0 +1,79 @@
+expect()
+.not() expects opposite to be true
+.soft() does not terminate tetst but marks it as failed.
+
+The following assertions will retry until the assertion passes, or the assertion timeout is reached. 
+Note that retrying assertions are async, so you must await them.
+Auto-Retry: {
+  locator:
+    .toBeAttached()	Element is attached
+    .toBeChecked()	Checkbox is checked
+    .toBeDisabled()	Element is disabled
+    .toBeEditable()	Element is editable
+    .toBeEmpty()	Container is empty
+    .toBeEnabled()	Element is enabled
+    .toBeFocused()	Element is focused
+    .toBeHidden()	Element is not visible
+    .toBeInViewport()	Element intersects viewport
+    .toBeVisible()	Element is visible
+    .toContainText()	Element contains text
+    .toContainClass()	Element has specified CSS classes
+    .toHaveAccessibleDescription()	Element has a matching accessible description
+    .toHaveAccessibleName()	Element has a matching accessible name
+    .toHaveAttribute()	Element has a DOM attribute
+    .toHaveClass()	Element has specified CSS class property
+    .toHaveCount()	List has exact number of children
+    .toHaveCSS()	Element has CSS property
+    .toHaveId()	Element has an ID
+    .toHaveJSProperty()	Element has a JavaScript property
+    .toHaveRole()	Element has a specific ARIA role
+    .toHaveScreenshot()	Element has a screenshot
+    .toHaveText()	Element matches text
+    .toHaveValue()	Input has a value
+    .toHaveValues()	Select has options selected
+    .toMatchAriaSnapshot()	Element matches the Aria snapshot
+
+  page:
+    .toHaveScreenshot()	Page has a screenshot
+    .toHaveTitle()	Page has a title
+    .toHaveURL()	Page has a URL
+
+  response:
+    .toBeOK()	Response has an OK status
+}
+
+
+These assertions allow to test any conditions, but do not auto-retry. 
+Most of the time, web pages show information asynchronously, and using non-retrying assertions can lead to a flaky test.
+Non-retry: {
+  .toBe()	Value is the same
+  .toBeCloseTo()	Number is approximately equal
+  .toBeDefined()	Value is not undefined
+  .toBeFalsy()	Value is falsy, e.g. false, 0, null, etc.
+  .toBeGreaterThan()	Number is more than
+  .toBeGreaterThanOrEqual()	Number is more than or equal
+  .toBeInstanceOf()	Object is an instance of a class
+  .toBeLessThan()	Number is less than
+  .toBeLessThanOrEqual()	Number is less than or equal
+  .toBeNaN()	Value is NaN
+  .toBeNull()	Value is null
+  .toBeTruthy()	Value is truthy, i.e. not false, 0, null, etc.
+  .toBeUndefined()	Value is undefined
+  .toContain()	String contains a substring
+  .toContain()	Array or set contains an element
+  .toContainEqual()	Array or set contains a similar element
+  .toEqual()	Value is similar - deep equality and pattern matching
+  .toHaveLength()	Array or string has length
+  .toHaveProperty()	Object has a property
+  .toMatch()	String matches a regular expression
+  .toMatchObject()	Object contains specified properties
+  .toStrictEqual()	Value is similar, including property types
+  .toThrow()	Function throws an error
+  .any()	Matches any instance of a class/primitive
+  .anything()	Matches anything
+  .arrayContaining()	Array contains specific elements
+  .closeTo()	Number is approximately equal
+  .objectContaining()	Object contains specific properties
+  .stringContaining()	String contains a substring
+  .stringMatching()	String matches a regular expression
+}

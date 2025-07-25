@@ -1,0 +1,65 @@
+.check() - check the input checkbox
+.click() - click the element
+.uncheck() - uncheck the input checkbox
+.hover() - Hover mouse over element
+.fill() - Fill the form field | input text
+.focus() - Focus the element
+.press() - Press single key. Focuses the matching element and presses a combination of the keys.
+.setInputFiles() - Pick files to upload
+.selectOption() - Select option in the drop down
+
+check(?options)
+  options = {
+    force: boolean 
+    noWaitAfter: boolean 
+  }
+
+click(?options)
+  options = {
+    button:string ( left|middle|right )
+    clickCount: number 
+    delay: number (time to wait between click press and release in ms)
+    force: boolean (objct might be disabled, override)
+    modifiers:string[] (Alt | Control | ControlOrMeta | Meta | Shift )
+    position: objct {x, y} (relative to top left of element)
+    timeout: number (ms)
+    trial: boolean ()
+  }
+  
+hover(?options)
+  options = {
+    force: boolean
+    modifiers:string[] (Alt | Control | ControlOrMeta | Meta | Shift )
+    position: objct {x, y} (relative to top left of element)
+    button:string ( left|middle|right )
+    timeout: number (ms)
+    trial: boolean ()
+  }
+
+fill(string, ?options)
+  string = e.g. 'example value'
+  options = {
+    force: boolean
+    timeout: number (ms)
+  }
+
+focus(?options)
+  options = {
+    timeout: number (ms)
+  }
+
+press(key, ?options)
+  key: string = name of key to pressor a char to generate e.g 'ArrowLeft' or: 
+    F1 - F12, Digit0- Digit9, KeyA- KeyZ, Backquote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
+  options = {
+    delay: number (time to wait between click press and release in ms)
+    timeout: number (ms)
+  }
+
+setInputFiles(fileLocation)
+  fileLocation:string | string[] = path.join(__dirname, 'myfile.pdf') .use array to upload multiple files
+
+selectOption(value)
+  value = 'blue' for single selection to match text
+          {label: 'Blue'} for single selection matching label
+          ['blue', 'green', 'red'] for multiple selectOption

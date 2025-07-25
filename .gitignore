@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Test Reports
+test_report/
+
+# Package lock
+package-lock.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

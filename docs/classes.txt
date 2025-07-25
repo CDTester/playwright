@@ -1,0 +1,5 @@
+page - Isolated page for this test run.
+context - Isolated context for this test run. The page fixture belongs to this context as well. Learn how to configure context.
+browser - Browsers are shared across tests to optimize resources. Learn how to configure browsers.
+browserName - The name of the browser currently running the test. Either chromium, firefox or webkit.
+request - Isolated APIRequestContext instance for this test run.

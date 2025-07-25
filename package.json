@@ -1,0 +1,39 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "Sandbox to learn how to use and best set up Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CDTester/playwright.git"
+  },
+  "keywords": [
+    "playwright",
+    "typescript"
+  ],
+  "author": "Chris Day",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CDTester/playwright/issues"
+  },
+  "homepage": "https://github.com/CDTester/playwright#readme",
+  "dependencies": {
+    "playwright": "^1.54.1",
+    "playwright-core": "^1.54.1"
+  },
+  "devDependencies": {
+    "@playwright/browser-chromium": "^1.54.1",
+    "@playwright/browser-firefox": "^1.54.1",
+    "@playwright/browser-webkit": "^1.54.1",
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.1.0",
+    "create-playwright": "^1.17.136",
+    "eslint": "8.57.1",
+    "eslint-config-standard": "17.1.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^5.7.2"
+  }
+}
