@@ -28,7 +28,7 @@ test('Playwright Homepage - ', async ({ page }) => {
     await page.getByRole('link', { name: 'Get started' }).hover();
 
     // link must be change colour on hover
-    await expect(page.getByRole('link', { name: 'Get started' })).toHaveCSS('background-color', 'rgb(69, 186, 74)');
+    await expect(page.getByRole('link', { name: 'Get started' })).toHaveCSS('background-color', 'rgb(69, 186, 75)');
   });
 });
 
