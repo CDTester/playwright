@@ -25,7 +25,6 @@ test.describe('Playwright Tests using POM', () => {
 
       const link = homepage.link_getStarted;
       await expect(link).toBeVisible();
-      //const linkImg = await link.screenshot({ path: `./playwright-report/data/getStartedLink_${browser.browserType().name()}.png` });
       await test.info().attach('Get Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
 
       // link must have href attribute
