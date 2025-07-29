@@ -4,7 +4,9 @@
   "description": "Sandbox to learn how to use and best set up Playwright",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "playwright test",
+    "testChrome": "playwright test --project=chromium",
+    "testWebkit": "playwright test --project=webkit"
   },
   "repository": {
     "type": "git",
