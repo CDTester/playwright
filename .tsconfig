@@ -14,7 +14,7 @@
         "strictNullChecks": false,
         "noImplicitAny": false
     },
-    "include": ["./tests/**/*.ts", "./playwright.config.ts"],
+    "include": ["./pages/*.ts", "./tests/**/*.ts", "./playwright.config.ts" ],
     "exclude": ["*.js"],
     "ts-node": {
       "transpileOnly": true,
@@ -26,7 +26,7 @@
           "strictNullChecks": false,
           "noImplicitAny": false
       },
-      "include": ["./test/**/*.ts", "./src/**/*.ts", "./playwright.config.ts"],
+      "include": ["./test/**/*.ts", "./src/**/*.ts", "./playwright.config.ts", "./pages/*.ts"],
       "export": ["./node_modules"]
   }
 }

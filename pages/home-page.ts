@@ -5,7 +5,9 @@ import envData from '../utils/loadEnvData';
 
 export class homePage {
   readonly page: Page;
+  readonly link_docs_navbar: Locator;
   readonly link_getStarted: Locator;
+  readonly link_docs_footer: Locator;
   readonly env: any;
 
   constructor(page: Page) {
@@ -18,7 +20,9 @@ export class homePage {
     //      by atribute:  selector[attribute=value] | [attribute=value]
     this.env = new envData('home-page.ts').getEnvData;
     this.page = page;
-    this.link_getStarted = page.locator('//a[@href="/docs/intro"]', { hasText: 'Get started'});
+    this.link_docs_navbar = page.locator('//a[@href="/docs/intro"]').filter({ hasText: 'Docs' });
+    this.link_getStarted = page.locator('//a[@href="/docs/intro"]').filter({ hasText: 'Get Started' })
+    this.link_docs_footer = page.locator('//a[@href="/docs/intro"]').filter({ hasText: 'Getting Started' });
   }
 
   async goto() {

@@ -20,12 +20,36 @@ test.describe('Playwright Tests using POM', () => {
       await expect(page).toHaveTitle(/Playwright/);
     });
 
-    await test.step('Should have "Get started" link', async step => {
+    await test.step('Should have "Docs" link in nav bar', async step => {
+      // link must be visible
+
+      const link = homepage.link_docs_navbar;
+      await expect(link).toBeVisible();
+      await test.info().attach('Docs link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
+
+      // link must have href attribute
+      await expect(link).toHaveAttribute('href','/docs/intro');
+    });
+
+    await test.step('Should have "Getting started" link in footer', async step => {
+      // link must be visible
+
+      const link = homepage.link_docs_footer;
+      await expect(link).toBeVisible();
+      await test.info().attach('Get Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
+
+      // link must have href attribute
+      await expect(link).toHaveAttribute('href','/docs/intro');
+    });
+
+
+
+    await test.step('Should have "Get started" link in main body', async step => {
       // link must be visible
 
       const link = homepage.link_getStarted;
       await expect(link).toBeVisible();
-      await test.info().attach('Get Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
+      await test.info().attach('Getting Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
 
       // link must have href attribute
       await expect(link).toHaveAttribute('href','/docs/intro');
