@@ -23,36 +23,34 @@ test.describe('Playwright Tests using POM', () => {
     await test.step('Should have "Docs" link in nav bar', async step => {
       // link must be visible
 
-      const link = homepage.link_docs_navbar;
+      const link = homepage.linkDocsNavbar;
       await expect(link).toBeVisible();
       await test.info().attach('Docs link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
 
       // link must have href attribute
-      await expect(link).toHaveAttribute('href','/docs/intro');
+      await expect(link).toHaveAttribute('href', '/docs/intro');
     });
 
     await test.step('Should have "Getting started" link in footer', async step => {
       // link must be visible
 
-      const link = homepage.link_docs_footer;
+      const link = homepage.linkDocsFooter;
       await expect(link).toBeVisible();
       await test.info().attach('Get Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
 
       // link must have href attribute
-      await expect(link).toHaveAttribute('href','/docs/intro');
+      await expect(link).toHaveAttribute('href', '/docs/intro');
     });
-
-
 
     await test.step('Should have "Get started" link in main body', async step => {
       // link must be visible
 
-      const link = homepage.link_getStarted;
+      const link = homepage.linkGetStarted;
       await expect(link).toBeVisible();
       await test.info().attach('Getting Started Link', { body: await homepage.takeScreenshot(false, link), contentType: 'image/png' });
 
       // link must have href attribute
-      await expect(link).toHaveAttribute('href','/docs/intro');
+      await expect(link).toHaveAttribute('href', '/docs/intro');
 
       // link hover
       await link.hover();
@@ -63,7 +61,7 @@ test.describe('Playwright Tests using POM', () => {
 
     await test.step('When "get started" link is clicked', async step => {
       // Click the get started link.
-      const link = homepage.link_getStarted;
+      const link = homepage.linkGetStarted;
       await link.click();
     });
 

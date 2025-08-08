@@ -1,11 +1,11 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { TodoPage } from '../../pages/todo-page';
 let todo: TodoPage;
 const TODO_ITEMS = [
   'buy some cheese',
   'feed the cat',
   'book a doctors appointment'
-] as const;
+];
 
 test.describe('Add Todo', () => {
 
@@ -22,7 +22,7 @@ test.describe('Add Todo', () => {
       await todo.addToDo(TODO_ITEMS[0]);
     });
     await test.step('Then the item is visible in the list', async () => {
-      await expect(todo.todoLabel).toHaveText([ TODO_ITEMS[0] ]);
+      await expect(todo.todoLabel).toHaveText([TODO_ITEMS[0]]);
     });
   });
 

@@ -7,17 +7,23 @@ export class TodoPage {
   readonly todoLabel: Locator;
   readonly markAll: Locator;
   readonly deleteItem: Locator;
+  readonly counter: Locator;
+  readonly filters: Locator;
+  readonly clear: Locator;
 
-  constructor(page: Page) {
+  constructor (page: Page) {
     this.page = page;
     this.inputBox = this.page.locator('input.new-todo');
     this.todoItems = this.page.getByTestId('todo-item');
     this.todoLabel = this.page.getByTestId('todo-title');
     this.markAll = this.page.getByLabel('Mark all as complete');
     this.deleteItem = this.page.locator('button.destroy');
+    this.counter = this.page.getByTestId('todo-count');
+    this.filters = this.page.locator('ul.filters');
+    this.clear = this.page.getByRole('button', { name: 'Clear completed' });
   }
 
-  async goto() {
+  async goto () {
     const url = 'https://demo.playwright.dev/todomvc/';
     const maxRetries = 3;
     let attempt = 0;
@@ -27,7 +33,8 @@ export class TodoPage {
       try {
         await this.page.goto(url, { timeout: 5000, waitUntil: 'domcontentloaded' });
         success = true;
-      } catch (error) {
+      }
+      catch (error) {
         console.warn(`Attempt ${attempt + 1} failed: ${error.message}`);
         attempt++;
 
@@ -35,7 +42,8 @@ export class TodoPage {
           // Try reloading the page instead of a full goto
           try {
             await this.page.reload({ timeout: 5000, waitUntil: 'domcontentloaded' });
-          } catch (reloadError) {
+          }
+          catch (reloadError) {
             console.warn(`Reload failed: ${reloadError.message}`);
           }
         }
@@ -47,13 +55,13 @@ export class TodoPage {
     }
   }
 
-  async addToDo(text: string  | string[]) {
-    if (typeof(text) === 'string') {
+  async addToDo (text: string | string[]) {
+    if (typeof (text) === 'string') {
       await this.inputBox.fill(text);
       await this.inputBox.press('Enter');
     }
     else {
-      for(const add of text) {
+      for (const add of text) {
         await this.inputBox.fill(add);
         await this.inputBox.press('Enter');
       }
@@ -61,13 +69,13 @@ export class TodoPage {
   }
 
 
-  async editToDo(item: string, replacementText: string, save: string) {
+  async editToDo (item: string, replacementText: string, save: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.dblclick();
     await todo.getByLabel('Edit').fill(replacementText);
     if (save.toLowerCase() === 'blur') {
       await todo.getByLabel('Edit').dispatchEvent('blur');
-    } 
+    }
     else if (save.toLowerCase() === 'enter') {
       await todo.getByLabel('Edit').press('Enter');
     }
@@ -76,39 +84,44 @@ export class TodoPage {
     }
   }
 
-  async getCompleteCheckbox(item: string): Promise<Locator> {
+  async getCompleteCheckbox (item: string): Promise<Locator> {
     const todo = this.todoItems.filter({ hasText: item });
     return await todo.getByLabel('Toggle Todo');
   }
 
-  async completeToDo(item: string) {
+  async completeToDo (item: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.getByRole('checkbox').check();
   }
 
-  async uncompleteToDo(item: string) {
+  async uncompleteToDo (item: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.getByRole('checkbox').uncheck();
   }
 
-  async completeAllToDo() {
+  async completeAllToDo () {
     await this.markAll.check();
   }
 
-  async uncompleteAllToDo() {
+  async uncompleteAllToDo () {
     await this.markAll.uncheck();
   }
 
-  async remove(text: string) {
+  async remove (text: string) {
     const todo = this.todoItems.filter({ hasText: text });
     await todo.hover();
     await todo.getByLabel('Delete').click();
   }
 
-  async removeAll() {
+  async removeAll () {
     while ((await this.todoItems.count()) > 0) {
       await this.todoItems.first().hover();
       await this.todoItems.getByLabel('Delete').first().click();
     }
   }
+
+  async applyFilter (text: string) {
+    this.page.getByRole('link', { name: text }).click();
+  }
+
 }

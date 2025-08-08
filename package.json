@@ -6,7 +6,8 @@
   "scripts": {
     "test": "playwright test",
     "testChrome": "playwright test --project=chromium",
-    "testWebkit": "playwright test --project=webkit"
+    "testWebkit": "playwright test --project=webkit",
+    "eslint": "node node_modules/eslint/bin/eslint.js -f stylish"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,9 @@
     "@playwright/browser-firefox": "^1.54.1",
     "@playwright/browser-webkit": "^1.54.1",
     "@playwright/test": "^1.54.1",
-    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "5.57.0",
+    "@typescript-eslint/parser": "5.57.0",
+    "@types/node": "^24.2.0",
     "create-playwright": "^1.17.136",
     "eslint": "8.57.1",
     "eslint-config-standard": "17.1.0",

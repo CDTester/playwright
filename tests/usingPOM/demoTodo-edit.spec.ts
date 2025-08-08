@@ -1,4 +1,4 @@
-import { test, expect, type Page, Locator } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 import { TodoPage } from '../../pages/todo-page';
 let todo: TodoPage;
 const TODO_ITEMS = [
@@ -38,7 +38,7 @@ test.describe('Edit Todo', () => {
       await todo.editToDo(TODO_ITEMS[1], 'feed the dog', 'blur');
     });
     await test.step('Then the changes are saved', async () => {
-      await expect(todo.todoLabel).toHaveText([ TODO_ITEMS[0], 'feed the dog', TODO_ITEMS[2] ]);
+      await expect(todo.todoLabel).toHaveText([TODO_ITEMS[0], 'feed the dog', TODO_ITEMS[2]]);
       await expect(todo.todoItems).toHaveCount(3);
     });
   });
@@ -52,7 +52,7 @@ test.describe('Edit Todo', () => {
       await todo.editToDo(TODO_ITEMS[1], 'feed the fish', 'enter');
     });
     await test.step('Then the changes are saved', async () => {
-      await expect(todo.todoLabel).toHaveText([ TODO_ITEMS[0], 'feed the fish', TODO_ITEMS[2] ]);
+      await expect(todo.todoLabel).toHaveText([TODO_ITEMS[0], 'feed the fish', TODO_ITEMS[2]]);
       await expect(todo.todoItems).toHaveCount(3);
     });
   });
@@ -66,7 +66,7 @@ test.describe('Edit Todo', () => {
       await todo.editToDo(TODO_ITEMS[1], '    buy some sausages    ', 'enter');
     });
     await test.step('Then the spaces are removed when saved', async () => {
-      await expect(todo.todoLabel).toHaveText([ TODO_ITEMS[0], 'buy some sausages', TODO_ITEMS[2] ]);
+      await expect(todo.todoLabel).toHaveText([TODO_ITEMS[0], 'buy some sausages', TODO_ITEMS[2]]);
       await expect(todo.todoItems).toHaveCount(3);
     });
   });
