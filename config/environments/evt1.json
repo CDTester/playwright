@@ -1,6 +1,0 @@
-{
-  "name": "EVT1",
-  "playwright": {
-    "baseUrl": "https://playwright.dev/"
-  }
-}
