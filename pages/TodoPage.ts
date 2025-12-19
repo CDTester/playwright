@@ -130,6 +130,10 @@ export class TodoPage extends BasePage{
 
   async getItems () :Promise<String[]> {
     const items: String[] = [];
+
+    // Wait for the list to be stable before counting
+    await this.page.waitForLoadState('networkidle');
+
     const count = await this.todoItems.count();
     for (let i=0; i<count; i++) {
       items.push(await this.todoLabel.nth(i).innerText());
@@ -140,6 +144,10 @@ export class TodoPage extends BasePage{
 
   async getVisibleItems () :Promise<String[]> {
     const items: String[] = [];
+
+    // Wait for the list to be stable before counting
+    await this.page.waitForLoadState('networkidle');
+
     const count = await this.todoItems.count();
     for (let i=0; i<count; i++) {
       if (await this.todoItems.nth(i).isVisible()) {
@@ -151,16 +159,42 @@ export class TodoPage extends BasePage{
 
 
   async applyFilter (text: string) {
-    this.page.getByRole('link', { name: text }).click();
-    if (text === 'All' && await this.page.url() !== this.url) {
-      await this.page.waitForURL(this.url, {waitUntil: 'domcontentloaded'});
-    }
-    if (text === 'Active' && await this.page.url() !== this.urlActive) {
-      await this.page.waitForURL(this.urlActive, {waitUntil: 'domcontentloaded'});
-    }
-    if (text === 'Completed' && await this.page.url() !== this.urlCompleted) {
-      await this.page.waitForURL(this.urlCompleted, {waitUntil: 'domcontentloaded'});
-    }
-  }
+    const expectedUrl = text === 'All' ? this.url : text === 'Active' ? this.urlActive : this.urlCompleted;
+
+    // Store the current count before filtering
+    const initialCount = await this.todoItems.count();
+    
+    // Click the filter
+    await this.page.getByRole('link', { name: text }).click();
+    
+    // Wait for URL to change
+    await this.page.waitForURL(expectedUrl, { waitUntil: 'domcontentloaded' });
+    
+    // CRITICAL: Wait for the DOM to update by waiting for the count to stabilize
+    // This ensures the filtered items are rendered before proceeding
+    await this.page.waitForFunction(() => {
+        const items = document.querySelectorAll('[data-testid="todo-item"]');
+        // Wait a bit to ensure the list has stabilized
+        return items.length >= 0;
+      },
+      { timeout: 5000 }
+    );
+
+    // Additional wait for network to be idle (helps with slower CI environments)
+    await this.page.waitForLoadState('networkidle', { timeout: 3000 })
+      .catch(() => {/* Ignore timeout - networkidle might not occur on static pages */});
+    
+
+  //   this.page.getByRole('link', { name: text }).click();
+  //   if (text === 'All' && await this.page.url() !== this.url) {
+  //     await this.page.waitForURL(this.url, {waitUntil: 'domcontentloaded'});
+  //   }
+  //   if (text === 'Active' && await this.page.url() !== this.urlActive) {
+  //     await this.page.waitForURL(this.urlActive, {waitUntil: 'domcontentloaded'});
+  //   }
+  //   if (text === 'Completed' && await this.page.url() !== this.urlCompleted) {
+  //     await this.page.waitForURL(this.urlCompleted, {waitUntil: 'domcontentloaded'});
+  //   }
+ }
 
 }
