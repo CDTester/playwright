@@ -16,6 +16,10 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [22.11.0]
+
     steps:
       # checkout code
       - name: 📥 Checkout code
@@ -25,7 +29,7 @@ jobs:
       - name: 📦 Setup Node.js ${{ matrix.node-version}}
         uses: actions/setup-node@v6
         with: 
-          node-version: lts/*
+          node-version: ${{ matrix.node-version}}
           cache: 'npm'
 
       # Install test framework
