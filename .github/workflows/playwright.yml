@@ -65,6 +65,22 @@ jobs:
           allure_results: allure-results
           keep_reports: true
 
+      # Get Test results
+      - name: 📊 Parse test results
+        if: always()
+        id: test-results
+        run: |
+          if [ -f test-results/.last-run.json ]; then
+            STATUS=$(grep -oP '(?<=status": " )[^",]*' test-results/.last-run.json || echo "unknown")
+            FAILED=$(grep -oP '(?<=failedTests": [ )[^]]*' test_report/emailSummary.txt || echo "unknown")
+          
+            echo "status=$STATUS" >> $GITHUB_OUTPUT
+            echo "failedTests=$FAILED" >> $GITHUB_OUTPUT
+          else
+            echo "status=unknown" >> $GITHUB_OUTPUT
+            echo "failedTests=unknown" >> $GITHUB_OUTPUT
+          fi
+          
       # Archive test reports
       - name: 📦 Archive test reports
         uses: actions/upload-artifact@v5
@@ -84,4 +100,25 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-history, playwright-report
+
+      # Add report to summary
+      - name: 📝 Add report link to summary
+        if: always()
+        run: |
+          echo "## 🧪 Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Test Statistics" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status:** ${{ steps.test-results.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **❌ FailedTests:** ${{ steps.test-results.outputs.failedTests }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📄 Reports" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 [View Allure report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/summary-report.html)" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 [view Playwright report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/test-report.html)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          
+            if [ "${{ steps.tests.outcome }}" == "success" ]; then
+              echo "### ✅ Status: All tests passed!" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "### ❌ Status: Some tests failed" >> $GITHUB_STEP_SUMMARY
+            fi
