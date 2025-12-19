@@ -26,11 +26,20 @@ jobs:
         uses: actions/setup-node@v6
         with: 
           node-version: lts/*
-          cache: 'npm'        
+          cache: 'npm'
 
       # Install test framework
       - name: 🔨 Install Playwright framework
         run: npm ci
+
+      # get allure history
+      - name: 📚 Download Allure report history
+        uses: actions/checkout@v5
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       # Install test framework
       - name: 🔨 Install Playwright Browsers
