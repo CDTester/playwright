@@ -62,7 +62,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: target/allure-results
+          allure_results: allure-results
           keep_reports: true
 
       # Archive test reports
@@ -72,7 +72,8 @@ jobs:
         with:
           name: test-reports
           path: |
-            test_report/
+            allure_results/
+            test-results/
             retention-days: 90
 
       # Publish test reports
