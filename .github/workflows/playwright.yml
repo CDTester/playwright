@@ -74,6 +74,7 @@ jobs:
           path: |
             allure_results/
             test-results/
+            playwright-report/
             retention-days: 90
 
       # Publish test reports

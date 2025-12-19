@@ -153,13 +153,13 @@ export class TodoPage extends BasePage{
   async applyFilter (text: string) {
     this.page.getByRole('link', { name: text }).click();
     if (text === 'All' && await this.page.url() !== this.url) {
-      await this.page.waitForURL(this.url);
+      await this.page.waitForURL(this.url, {waitUntil: 'domcontentloaded'});
     }
     if (text === 'Active' && await this.page.url() !== this.urlActive) {
-      await this.page.waitForURL(this.urlActive);
+      await this.page.waitForURL(this.urlActive, {waitUntil: 'domcontentloaded'});
     }
     if (text === 'Completed' && await this.page.url() !== this.urlCompleted) {
-      await this.page.waitForURL(this.urlCompleted);
+      await this.page.waitForURL(this.urlCompleted, {waitUntil: 'domcontentloaded'});
     }
   }
 
