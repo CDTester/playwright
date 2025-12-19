@@ -52,7 +52,7 @@ jobs:
       # Run Playwright Tests
       - name: 🧪 Run Mocha tests
         id: tests
-        run: npm run test tests/Todo/filters.spec.ts --testenv=evt1
+        run: npm run test tests/Todo/*.spec.ts --testenv=evt1
         continue-on-error: true
 
       # Generate Allure Report

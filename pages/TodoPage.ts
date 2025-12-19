@@ -160,10 +160,7 @@ export class TodoPage extends BasePage{
 
   async applyFilter (text: string) {
     const expectedUrl = text === 'All' ? this.url : text === 'Active' ? this.urlActive : this.urlCompleted;
-
-    // Store the current count before filtering
-    const initialCount = await this.todoItems.count();
-    
+   
     // Click the filter
     await this.page.getByRole('link', { name: text }).click();
     
@@ -183,18 +180,6 @@ export class TodoPage extends BasePage{
     // Additional wait for network to be idle (helps with slower CI environments)
     await this.page.waitForLoadState('networkidle', { timeout: 3000 })
       .catch(() => {/* Ignore timeout - networkidle might not occur on static pages */});
-    
-
-  //   this.page.getByRole('link', { name: text }).click();
-  //   if (text === 'All' && await this.page.url() !== this.url) {
-  //     await this.page.waitForURL(this.url, {waitUntil: 'domcontentloaded'});
-  //   }
-  //   if (text === 'Active' && await this.page.url() !== this.urlActive) {
-  //     await this.page.waitForURL(this.urlActive, {waitUntil: 'domcontentloaded'});
-  //   }
-  //   if (text === 'Completed' && await this.page.url() !== this.urlCompleted) {
-  //     await this.page.waitForURL(this.urlCompleted, {waitUntil: 'domcontentloaded'});
-  //   }
- }
+  }
 
 }
