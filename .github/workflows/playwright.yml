@@ -65,6 +65,16 @@ jobs:
           allure_results: target/allure-results
           keep_reports: true
 
+      # Archive test reports
+      - name: 📦 Archive test reports
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: test-reports
+          path: |
+            test_report/
+            retention-days: 90
+
       # Publish test reports
       - name: 🚀 Publish test report
         uses: peaceiris/actions-gh-pages@v3
