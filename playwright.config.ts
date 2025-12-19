@@ -23,17 +23,51 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html', {open: 'always'}]],
+  reporter: [
+    ['html'],
+    ['allure-playwright',{
+      detail: true,
+      outputFolder: 'allure-results',
+      suiteTitle: false,
+      categories: [
+        { name: 'Critical failures', messageRegex: '.*critical.*' },
+        { name: 'test script failures', messageRegex: '.*Error: locator.*' }
+      ],
+      environmentInfo: { 
+        TEST_ENVIRONMENT: process.env.npm_config_testenv,
+        NODE_VERSION: process.version, 
+        OS: process.platform, 
+        PLAYWRIGHT_VERSION: require('playwright/package.json').version, 
+      },
+      links: {
+        issue: {
+          urlTemplate: 'https://jira.example.com/browse/%s',
+          nameTemplate: '%s'
+        },
+        tms: {
+          urlTemplate: 'https://tms.example.com/testcase/%s',
+          nameTemplate: '%s'
+        }
+      },
+      openAlluredir: 'playwright-report/allure-results',
+    }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    headless: true,
+    // set geolcation
+    geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Great Pyramid of Giza
+    permissions: ['geolocation'],
+    screenshot: 'only-on-failure', // on, off, retain-on-failure
+    video: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer 
+      when using allure, download trace and open zip using 'npm run showTrace <zip-file>'
+    */
+    trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
   },
 
   /* Configure projects for major browsers */
@@ -42,12 +76,10 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-/*
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-*/
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
@@ -65,12 +97,7 @@ export default defineConfig({
 
     /* Test against branded browsers. */
     // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    //   name: 'Microsof},
     // },
   ],
 
@@ -81,3 +108,8 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    // },
+    // {
+    //   name: 'Google Chrome',
+    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' 

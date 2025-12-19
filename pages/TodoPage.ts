@@ -1,7 +1,7 @@
 import type { Page, Locator } from '@playwright/test';
+import { BasePage } from './BasePage';
 
-export class TodoPage {
-  readonly page: Page;
+export class TodoPage extends BasePage{
   readonly inputBox: Locator;
   readonly todoItems: Locator;
   readonly todoLabel: Locator;
@@ -10,31 +10,39 @@ export class TodoPage {
   readonly counter: Locator;
   readonly filters: Locator;
   readonly clear: Locator;
+  readonly pageTitle: string = 'React • TodoMVC';
+  readonly header1: Locator;
+  readonly header1Text: string = 'todos';
+  readonly url: string = 'https://demo.playwright.dev/todomvc/#/';
+  readonly urlActive: string = 'https://demo.playwright.dev/todomvc/#/active';
+  readonly urlCompleted: string = 'https://demo.playwright.dev/todomvc/#/completed';
 
   constructor (page: Page) {
-    this.page = page;
-    this.inputBox = this.page.locator('input.new-todo');
-    this.todoItems = this.page.getByTestId('todo-item');
-    this.todoLabel = this.page.getByTestId('todo-title');
-    this.markAll = this.page.getByLabel('Mark all as complete');
-    this.deleteItem = this.page.locator('button.destroy');
-    this.counter = this.page.getByTestId('todo-count');
-    this.filters = this.page.locator('ul.filters');
-    this.clear = this.page.getByRole('button', { name: 'Clear completed' });
+    super(page)
+    this.url = this.url;
+    //page locators. list item locators are defined in methods since they are dynamic
+    this.header1 = page.getByRole('heading', { level: 1 }).first();  // the first h1 element
+    this.inputBox = page.locator('input.new-todo'); // input field with class='new-todo'
+    this.todoItems = page.getByTestId('todo-item'); // has data-testid='todo-item'
+    this.todoLabel = page.getByTestId('todo-title');
+    this.markAll = page.getByLabel('Mark all as complete');  // has label with text 'Mark all as complete'
+    this.deleteItem = page.locator('button.destroy');
+    this.counter = page.getByTestId('todo-count');
+    this.filters = page.locator('ul.filters');  // ul element with class='filters'
+    this.clear = page.getByRole('button', { name: 'Clear completed' });  // button with text 'Clear completed'
   }
 
   async goto () {
-    const url = 'https://demo.playwright.dev/todomvc/';
     const maxRetries = 3;
     let attempt = 0;
     let success = false;
 
     while (attempt < maxRetries && !success) {
       try {
-        await this.page.goto(url, { timeout: 5000, waitUntil: 'domcontentloaded' });
+        await this.page.goto(this.url, { timeout: 5000, waitUntil: 'domcontentloaded' });
         success = true;
       }
-      catch (error) {
+      catch (error: any) {
         console.warn(`Attempt ${attempt + 1} failed: ${error.message}`);
         attempt++;
 
@@ -43,7 +51,7 @@ export class TodoPage {
           try {
             await this.page.reload({ timeout: 5000, waitUntil: 'domcontentloaded' });
           }
-          catch (reloadError) {
+          catch (reloadError: any) {
             console.warn(`Reload failed: ${reloadError.message}`);
           }
         }
@@ -51,7 +59,7 @@ export class TodoPage {
     }
 
     if (!success) {
-      console.error(`Failed to navigate to ${url} after ${maxRetries} attempts.`);
+      console.error(`Failed to navigate to ${this.url} after ${maxRetries} attempts.`);
     }
   }
 
@@ -120,8 +128,39 @@ export class TodoPage {
     }
   }
 
+  async getItems () :Promise<String[]> {
+    const items: String[] = [];
+    const count = await this.todoItems.count();
+    for (let i=0; i<count; i++) {
+      items.push(await this.todoLabel.nth(i).innerText());
+    }
+    return items;
+  }
+
+
+  async getVisibleItems () :Promise<String[]> {
+    const items: String[] = [];
+    const count = await this.todoItems.count();
+    for (let i=0; i<count; i++) {
+      if (await this.todoItems.nth(i).isVisible()) {
+      items.push(await this.todoLabel.nth(i).innerText());
+      }
+    }
+    return items;
+  }
+
+
   async applyFilter (text: string) {
     this.page.getByRole('link', { name: text }).click();
+    if (text === 'All' && await this.page.url() !== this.url) {
+      await this.page.waitForURL(this.url);
+    }
+    if (text === 'Active' && await this.page.url() !== this.urlActive) {
+      await this.page.waitForURL(this.urlActive);
+    }
+    if (text === 'Completed' && await this.page.url() !== this.urlCompleted) {
+      await this.page.waitForURL(this.urlCompleted);
+    }
   }
 
 }

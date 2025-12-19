@@ -5,9 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "testHeaded": "playwright test --headed",
+    "testUi": "playwright test --ui",
     "testChrome": "playwright test --project=chromium",
     "testWebkit": "playwright test --project=webkit",
-    "eslint": "node node_modules/eslint/bin/eslint.js -f stylish"
+    "testFirefox": "playwright test --project=firefox",
+    "eslint": "node node_modules/eslint/bin/eslint.js -f stylish",
+    "showTrace": "playwright show-trace"
   },
   "repository": {
     "type": "git",
@@ -24,18 +28,19 @@
   },
   "homepage": "https://github.com/CDTester/playwright#readme",
   "dependencies": {
-    "playwright": "^1.54.1",
-    "playwright-core": "^1.54.1"
+    "playwright": "latest",
+    "playwright-core": "latest"
   },
   "devDependencies": {
-    "@playwright/browser-chromium": "^1.54.1",
-    "@playwright/browser-firefox": "^1.54.1",
-    "@playwright/browser-webkit": "^1.54.1",
-    "@playwright/test": "^1.54.1",
+    "@playwright/browser-chromium": "latest",
+    "@playwright/browser-firefox": "latest",
+    "@playwright/browser-webkit": "latest",
+    "@playwright/test": "latest",
+    "@types/node": "^24.2.0",
     "@typescript-eslint/eslint-plugin": "5.57.0",
     "@typescript-eslint/parser": "5.57.0",
-    "@types/node": "^24.2.0",
-    "create-playwright": "^1.17.136",
+    "allure-playwright": "latest",
+    "create-playwright": "latest",
     "eslint": "8.57.1",
     "eslint-config-standard": "17.1.0",
     "ts-node": "^10.7.0",
