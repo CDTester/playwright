@@ -1,7 +1,5 @@
 import { test, expect } from '../../fixtures/todoFixture';
-import type { Locator } from '@playwright/test';
 import * as allure from "allure-js-commons";
-import { step } from 'allure-js-commons';
 
 const TODO_ITEMS = [
   'keep me',
