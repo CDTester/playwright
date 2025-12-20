@@ -70,7 +70,7 @@ jobs:
       - name: 📊 Build Allure Report
         if: always()
         run: |
-          npm run allure:generate
+          allure generate
 
       # Create directory structure for GitHub Pages
       - name: 📁 Prepare reports for GitHub Pages
