@@ -1,8 +1,0 @@
-"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
-"0","Epic: TodoMVC","0","Feature: Edit ToDo Items","15","0","Story: Edit ToDo Items from the list","0"
-"0","Epic: TodoMVC","0","Feature: Filter ToDo Items","12","0","Story: Filter active and complete ToDo Items from the list","0"
-"0","Epic: TodoMVC","0","Feature: Add ToDo Item","9","0","Story: Add ToDo Item to the list","0"
-"0","Epic: TodoMVC","0","Feature: ToDo Item counter","12","0","Story: Counter for active ToDo Items","0"
-"0","Epic: TodoMVC","0","Feature: Clear ToDo Items","9","0","Story: Clear Completed ToDo Item from the list","0"
-"0","Epic: TodoMVC","0","Feature: Complete ToDo Items","15","0","Story: Complete ToDo Items from the list","0"
-"0","Epic: TodoMVC","0","Feature: Delete ToDo Items","9","0","Story: Delete ToDo Items from the list","0"
