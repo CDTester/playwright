@@ -11,7 +11,13 @@
     "testWebkit": "playwright test --project=webkit",
     "testFirefox": "playwright test --project=firefox",
     "eslint": "node node_modules/eslint/bin/eslint.js -f stylish",
-    "showTrace": "playwright show-trace"
+    "showTrace": "playwright show-trace",
+    "report": "playwright show-report",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "test:allure": "playwright test && npm run allure:generate && npm run allure:open",
+    "codegen": "playwright codegen"
   },
   "repository": {
     "type": "git",
