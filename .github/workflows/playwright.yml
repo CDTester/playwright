@@ -65,22 +65,50 @@ jobs:
           allure_results: allure-results
           keep_reports: true
 
-      # Get Test results
-      - name: 📊 Parse test results
+
+      # Create directory structure for GitHub Pages
+      - name: 📁 Prepare reports for GitHub Pages
         if: always()
-        id: test-results
         run: |
-          if [ -f test-results/.last-run.json ]; then
-            STATUS=$(grep -oP '(?<=status": " )[^",]*' test-results/.last-run.json || echo "unknown")
-            FAILED=$(grep -oP '(?<=failedTests": [ )[^]]*' test_report/emailSummary.txt || echo "unknown")
+          mkdir -p public/allure
+          mkdir -p public/playwright
+          cp -r allure-report/* public/allure/
+          cp -r playwright-report/* public/playwright/
           
-            echo "status=$STATUS" >> $GITHUB_OUTPUT
-            echo "failedTests=$FAILED" >> $GITHUB_OUTPUT
-          else
-            echo "status=unknown" >> $GITHUB_OUTPUT
-            echo "failedTests=unknown" >> $GITHUB_OUTPUT
-          fi
-          
+          # Create index.html to redirect or list reports
+          cat > public/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Test Reports</title>
+            <style>
+              body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+              h1 { color: #333; }
+              .report-links { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
+              .report-card { border: 2px solid #ddd; border-radius: 8px; padding: 20px; text-decoration: none; color: inherit;  transition: all 0.3s; }
+              .report-card:hover { border-color: #0066cc; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+              .report-card h2 { margin-top: 0; color: #0066cc; }
+              .report-card p { color: #666; margin: 10px 0 0 0; }
+            </style>
+          </head>
+          <body>
+            <h1>🧪 Test Reports</h1>
+            <p>Select a report to view:</p>
+            <div class="report-links">
+              <a href="./allure/index.html" class="report-card">
+                <h2>📊 Allure Report</h2>
+                <p>Comprehensive test report with detailed analytics, trends, and history</p>
+              </a>
+              <a href="./playwright/index.html" class="report-card">
+                <h2>🎭 Playwright Report</h2>
+                <p>Native Playwright HTML report with test results and traces</p>
+              </a>
+            </div>
+          </body>
+          </html>
+          EOF          
+
+
       # Archive test reports
       - name: 📦 Archive test reports
         uses: actions/upload-artifact@v5
@@ -100,7 +128,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history, playwright-report
+          publish_dir: ./public
+          keep_files: false
 
       # Add report to summary
       - name: 📝 Add report link to summary
@@ -108,17 +137,15 @@ jobs:
         run: |
           echo "## 🧪 Test Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📊 Test Statistics" >> $GITHUB_STEP_SUMMARY
-            echo "- **Status:** ${{ steps.test-results.outputs.status }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **❌ FailedTests:** ${{ steps.test-results.outputs.failedTests }}" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "### 📄 Reports" >> $GITHUB_STEP_SUMMARY
-            echo "🔗 [View Allure report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/summary-report.html)" >> $GITHUB_STEP_SUMMARY
-            echo "🔗 [view Playwright report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/test-report.html)" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📄 Reports" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View reports page](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View Allure report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [view Playwright report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/playwright/)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           
-            if [ "${{ steps.tests.outcome }}" == "success" ]; then
-              echo "### ✅ Status: All tests passed!" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "### ❌ Status: Some tests failed" >> $GITHUB_STEP_SUMMARY
-            fi
+          if [ "${{ steps.tests.outcome }}" == "success" ]; then
+            echo "### ✅ Status: All tests passed!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Status: Some tests failed" >> $GITHUB_STEP_SUMMARY
+          fi
