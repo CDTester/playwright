@@ -36,18 +36,29 @@ jobs:
       - name: 🔨 Install Playwright framework
         run: npm ci
 
+      # Install test framework
+      - name: 🎭 Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       # get allure history
       - name: 📚 Download Allure report history
-        uses: actions/checkout@v5
         if: always()
         continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+        run: |
+          REPO_OWNER="${{ github.repository_owner }}"
+          REPO_NAME="${{ github.event.repository.name }}"
+          PAGES_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
+          
+          echo "Attempting to download history from: ${PAGES_URL}/allure/history"
+          
+          # Create allure-results directory if it doesn't exist
+          mkdir -p allure-results/history
+          
+          # Try to download existing history
+          wget -q -r -np -nH -R "index.html*" --cut-dirs=2 \
+               -P allure-results/ \
+               "${PAGES_URL}/allure/history/" || echo "No previous history found"
 
-      # Install test framework
-      - name: 🔨 Install Playwright Browsers
-        run: npx playwright install --with-deps
 
       # Run Playwright Tests
       - name: 🧪 Run Mocha tests
@@ -57,14 +68,9 @@ jobs:
 
       # Generate Allure Report
       - name: 📊 Build Allure Report
-        uses: simple-elf/allure-report-action@v1.13
         if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: allure-results
-          keep_reports: true
-
+        run: |
+          npm run allure:generate
 
       # Create directory structure for GitHub Pages
       - name: 📁 Prepare reports for GitHub Pages
