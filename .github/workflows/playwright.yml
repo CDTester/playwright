@@ -16,10 +16,6 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.11.0]
-
     steps:
       # checkout code
       - name: 📥 Checkout code
@@ -29,7 +25,7 @@ jobs:
       - name: 📦 Setup Node.js ${{ matrix.node-version}}
         uses: actions/setup-node@v6
         with: 
-          node-version: ${{ matrix.node-version}}
+          node-version: "22.11.0"
           cache: 'npm'
 
       # Install test framework
@@ -40,25 +36,40 @@ jobs:
       - name: 🎭 Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # get allure history
-      - name: 📚 Download Allure report history
+      # Restore history from cache
+      - name: 📜 Restore Allure history from cache
+        id: cache-restore
+        uses: actions/cache/restore@v4
         if: always()
+        with:
+          path: allure-history
+          key: allure-history-${{ github.run_number }}
+          restore-keys: |
+            allure-history-
+
+      # Download history from GitHub Pages (fallback)
+      - name: 📜 Download Allure history from GitHub Pages
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
         continue-on-error: true
         run: |
           REPO_OWNER="${{ github.repository_owner }}"
           REPO_NAME="${{ github.event.repository.name }}"
           PAGES_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
           
-          echo "Attempting to download history from: ${PAGES_URL}/allure/history"
+          mkdir -p allure-history
           
-          # Create allure-results directory if it doesn't exist
-          mkdir -p allure-results/history
-          
-          # Try to download existing history
           wget -q -r -np -nH -R "index.html*" --cut-dirs=2 \
-               -P allure-results/ \
-               "${PAGES_URL}/allure/history/" || echo "No previous history found"
+               -P allure-history/ \
+               "${PAGES_URL}/allure/history/" || echo "No GitHub Pages history found"
 
+      # Copy history to allure-results
+      - name: 📋 Copy history to allure-results
+        if: always()
+        run: |
+          if [ -d "allure-history" ]; then
+            mkdir -p allure-results/history
+            cp -r allure-history/* allure-results/history/ 2>/dev/null || echo "No history to copy"
+          fi
 
       # Run Playwright Tests
       - name: 🧪 Run Mocha tests
@@ -66,10 +77,23 @@ jobs:
         run: npm run test tests/Todo/*.spec.ts --testenv=evt1
         continue-on-error: true
 
-      # Generate Allure Report
-      - name: 📊 Build Allure Report
+      # Generate Allure report using action (handles installation automatically)
+      - name: 📊 Generate Allure report
+        uses: simple-elf/allure-report-action@master
         if: always()
-        run: npm run allure:generate
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      # Save history to cache
+      - name: 💾 Save Allure history to cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: allure-history
+          key: allure-history-${{ github.run_number }}
 
       # Create directory structure for GitHub Pages
       - name: 📁 Prepare reports for GitHub Pages
@@ -111,8 +135,6 @@ jobs:
             </div>
           </body>
           </html>
-
-
 
       # Archive test reports
       - name: 📦 Archive test reports
