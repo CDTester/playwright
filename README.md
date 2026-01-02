@@ -113,6 +113,9 @@ The Allure reporter offers a richer report with historic run trends and displayi
  - Suites (when using allure parentSuite, suite and subSuite)
  - Behaviours (when using allure epic, feature and story)
  - Packages
+ - Errors (Categories)
+ - historical trend graphs
+ - test run timeline
 
 Some setup is required in the `playwright.config.ts` file. See [config](#config) section
 
@@ -121,20 +124,52 @@ In the scripts, the following functions can be added from `import * as allure fr
 - allure.tms('PLAY-012');
 - allure.issue('BUG-012');
 - allure.severity(allure.Severity.CRITICAL);
-- 
 - allure.parentSuite('ParentSuite: Playwright');
 - allure.suite('Suite: Menu Tests');
 - allure.subSuite('SubSuite: Menu - Large Screen');
 - allure.epic('Epic: TodoMVC');
 - allure.feature('Feature: Add ToDo Item');
 - allure.story('Story: Add ToDo Item to the list');
-- 
 - allure.step(`GIVEN ${homePage.url} has loaded`, async ( step ) => { await homePage.goto(); });
 - step.parameter('Page Title', await homePage.page.title());
 - allure.attachmentPath(filename, path, {contentType: allure.ContentType.PNG, fileExtension: 'png'});
 
+**Allure report: Overview**
+This screen of the report provides an overview of:
+- how many tests were run and their status. 
+- Environment information that is set up in the playwright config file.
+- Test failure category summary. Test failures are assigned categories that indicate whether tests failed due to product issues or test issues.
+- Trends from previous runs, how the current test run compares to previous runs.
+
+*attach screenshot*
+
+**Allure report: Suites**
+If you design your tests using parentSuite/suite/subSuite, then this page orders your tests using that suite structure. 
+
+![Allure suites](./docs/allure_report_suites.png)
+
+NOTE: this image shows suites for chromium, firefox and webkit. These come from tests that are designed using behaviour (epic/feature/story).
 
 
+**Allure report: Behaviors**
+If you design your tests using epic/feature/story, then this page orders your tests using that behaviour structure. 
+
+![Allure suites](./docs/allure_report_behavior.png)
+
+NOTE: this image shows tests that are not designed using behaviour features. These tests are show in an unstructured manor..
+
+
+**Allure report: Packages**
+The Packages pages shows the test run reports based by package name. Ignoring any suite/behaviour structure.
+
+![Allure suites](./docs/allure_report_package.png)
+
+
+
+**Allure report: Graphs**
+This screen of the report provides historic trends.... tbc
+
+*attach screenshot*
 
 ### Config
 The `playwright.config.ts` file configures how your test run.

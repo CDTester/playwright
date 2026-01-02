@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps
 
       # Restore history from cache
-      - name: 📜 Restore Allure history from cache
+      - name: 📜 Restore Allure history
         id: cache-restore
         #uses: actions/cache/restore@v4
         uses: actions/checkout@v5
