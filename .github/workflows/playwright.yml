@@ -74,7 +74,7 @@ jobs:
       # Run Playwright Tests
       - name: 🧪 Run Mocha tests
         id: tests
-        run: npm run test tests/Todo/*.spec.ts tests/Playwright/*.spec.ts--testenv=evt1
+        run: npm run test tests/Todo/*.spec.ts tests/Playwright/*.spec.ts --testenv=evt1
         continue-on-error: true
 
       # Generate Allure report using action (handles installation automatically)
