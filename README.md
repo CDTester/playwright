@@ -63,7 +63,7 @@ Then running the scripts using:
 npm run test --testenv=dev1
 ```
 
-### Reporter
+### Playwright Reporter
 Playwright comes with a built in reporters:
 - list. 
 ```shell
@@ -108,12 +108,68 @@ export default defineConfig({
 })
 ```
 
-### Playwright config
+### Allure Reporter
+The Allure reporter offers a richer report with historic run trends and displaying test run by:
+ - Suites (when using allure parentSuite, suite and subSuite)
+ - Behaviours (when using allure epic, feature and story)
+ - Packages
+
+Some setup is required in the `playwright.config.ts` file. See [config](#config) section
+
+In the scripts, the following functions can be added from `import * as allure from "allure-js-commons";` :
+- allure.owner('Chris');
+- allure.tms('PLAY-012');
+- allure.issue('BUG-012');
+- allure.severity(allure.Severity.CRITICAL);
+- 
+- allure.parentSuite('ParentSuite: Playwright');
+- allure.suite('Suite: Menu Tests');
+- allure.subSuite('SubSuite: Menu - Large Screen');
+- allure.epic('Epic: TodoMVC');
+- allure.feature('Feature: Add ToDo Item');
+- allure.story('Story: Add ToDo Item to the list');
+- 
+- allure.step(`GIVEN ${homePage.url} has loaded`, async ( step ) => { await homePage.goto(); });
+- step.parameter('Page Title', await homePage.page.title());
+- allure.attachmentPath(filename, path, {contentType: allure.ContentType.PNG, fileExtension: 'png'});
+
+
+
+
+### Config
 The `playwright.config.ts` file configures how your test run.
 - `testDir: './tests'` Location of tests. When running `npx playwright test` this is the location of the tests to be run
 - `fullyParallel: true`  Allows tests to be run in parallel mode. 
 - `workers: process.env.CI ? 4 : undefined` This tells the CI process to use 4 workers in parallel mode or use default number for local runs.
-- `reporter: [['html'], ['allure-playwright, {options}']]` This defines what reporters to be used including the config for each reporter.
+- `reporter: [
+  ['html'], 
+  ['allure-playwright',{
+    detail: true,
+    outputFolder: 'allure-results',
+    suiteTitle: false,
+    categories: [
+      { name: 'Critical failures', messageRegex: '.*critical.*' },
+      { name: 'test script failures', messageRegex: '.*Error: locator.*' }
+    ],
+    environmentInfo: { 
+      TEST_ENVIRONMENT: process.env.npm_config_testenv,
+      NODE_VERSION: process.version, 
+      OS: process.platform, 
+      PLAYWRIGHT_VERSION: require('playwright/package.json').version, 
+    },
+    links: {
+      issue: {
+        urlTemplate: 'https://jira.example.com/browse/%s',
+        nameTemplate: '%s'
+      },
+      tms: {
+        urlTemplate: 'https://tms.example.com/testcase/%s',
+        nameTemplate: '%s'
+      }
+    },
+    openAlluredir: 'playwright-report/allure-results',
+  }]
+  ]` This defines what reporters to be used including the config for each reporter.
 - `use: {}` Options:
     - `headless: true`. Sets whether tests are to be run headless or not.
     - `screenshot: 'only-on-failure'`. Other option are on, off, retain-on-failure
@@ -126,6 +182,30 @@ The `playwright.config.ts` file configures how your test run.
     - `{name: 'webkit', use: { ...devices['Desktop Safari'] } }`
     - `{name: 'Mobile Safari', use: { ...devices['iPhone 12'], isMobile: true } }`
 
+### Locators
+Use playwright getBy...() locators when possible as they have auto-waiting and retry-ability features. 
+- .getByRole() to locate by explicit and implicit accessibility attributes.
+- .getByText() to locate by text content.
+- .getByLabel() to locate a form control by associated label's text.
+- .getByPlaceholder() to locate an input by placeholder.
+- .getByAltText() to locate an element, usually image, by its text alternative.
+- .getByTitle() to locate an element by its title attribute.
+- .getByTestId() to locate an element based on its data-testid attribute (other attributes can be configured).
+
+See more details about those here [Locators](./docs/locators.txt).
+
+Other locators:
+  - text: text='text to find' (add single quotes for exact match)
+  - id: id='id value' (add single quotes for exact match)
+  - xpath: //selector[@attribute='value']
+  - css: 
+    - by class:     selector.classname | .classname
+    - by id:        selector#idname | #idname
+    - by atribute:  selector[attribute=value] | [attribute=value]
+
+
+
+
 ### Agent - Planner
 TBC
 
@@ -135,7 +215,3 @@ TBC
 ### Agent - Healer
 TBC
 
-
-
-## Allure
-TBC
