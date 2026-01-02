@@ -117,7 +117,8 @@ jobs:
           cp -r playwright-report/* gh-pages/playwright/
 
           # Create index.html to redirect or list reports
-          cat > public/index.html << 'EOF'
+          # cat > public/index.html << 'EOF'
+          cat > gh-pages/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
