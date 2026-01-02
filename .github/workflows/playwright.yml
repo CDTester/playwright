@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v5
 
       # set up Node.js
-      - name: 📦 Setup Node.js ${{ matrix.node-version}}
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v6
         with: 
           node-version: "22.11.0"
@@ -146,17 +146,22 @@ jobs:
             </style>
           </head>
           <body>
-            <h1>🧪 Test Reports</h1>
-            <p>Select a report to view:</p>
-            <div class="report-links">
-              <a href="./allure/index.html" class="report-card">
-                <h2>📊 Allure Report</h2>
-                <p>Comprehensive test report with detailed analytics, trends, and history</p>
-              </a>
-              <a href="./playwright/index.html" class="report-card">
-                <h2>🎭 Playwright Report</h2>
-                <p>Native Playwright HTML report with test results and traces</p>
-              </a>
+            <div class="container">
+              <h1>🧪 Test Reports Dashboard</h1>
+              <p class="subtitle">Automated Playwright Tests</p>
+              <div class="report-links">
+                <a href="./${{ github.run_number }}/index.html" class="report-card">
+                  <h2>📊 Latest Allure Report <span class="badge">✓ Trends</span></h2>
+                  <p>Comprehensive test report with historical trends and analytics</p>
+                </a>
+                <a href="./playwright-report/index.html" class="report-card">
+                  <h2>🎭 Playwright Report</h2>
+                  <p>Native Playwright report with traces and screenshots</p>
+                </a>
+              </div>
+              <div class="run-info">
+                Build #${{ github.run_number }} | <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Workflow Run</a>
+              </div>
             </div>
           </body>
           </html>
