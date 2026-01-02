@@ -263,7 +263,7 @@ jobs:
             allure-report/
             test-results/
             playwright-report/
-            retention-days: 90
+          retention-days: 90
 
       # Publish test reports
       - name: 🚀 Publish test report
