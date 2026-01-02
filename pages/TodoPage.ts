@@ -1,7 +1,7 @@
 import type { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
-export class TodoPage extends BasePage{
+export class TodoPage extends BasePage {
   readonly inputBox: Locator;
   readonly todoItems: Locator;
   readonly todoLabel: Locator;
@@ -33,34 +33,7 @@ export class TodoPage extends BasePage{
   }
 
   async goto () {
-    const maxRetries = 3;
-    let attempt = 0;
-    let success = false;
-
-    while (attempt < maxRetries && !success) {
-      try {
-        await this.page.goto(this.url, { timeout: 5000, waitUntil: 'domcontentloaded' });
-        success = true;
-      }
-      catch (error: any) {
-        console.warn(`Attempt ${attempt + 1} failed: ${error.message}`);
-        attempt++;
-
-        if (attempt < maxRetries) {
-          // Try reloading the page instead of a full goto
-          try {
-            await this.page.reload({ timeout: 5000, waitUntil: 'domcontentloaded' });
-          }
-          catch (reloadError: any) {
-            console.warn(`Reload failed: ${reloadError.message}`);
-          }
-        }
-      }
-    }
-
-    if (!success) {
-      console.error(`Failed to navigate to ${this.url} after ${maxRetries} attempts.`);
-    }
+    await this.navigate(this.url);
   }
 
   async addToDo (text: string | string[]) {
