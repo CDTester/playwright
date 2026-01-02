@@ -18,7 +18,8 @@
     "allure:serve": "allure serve allure-results",
     "test:allure": "playwright test && npm run allure:generate && npm run allure:open",
     "codegenMini": "playwright codegen --viewport-size=\"500,800\"",
-    "codegen": "playwright codegen"
+    "codegen": "playwright codegen",
+    "agentInit": "playwright init-agents --loop=vscode"
   },
   "repository": {
     "type": "git",

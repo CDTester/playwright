@@ -241,12 +241,93 @@ Other locators:
 
 
 
-### Agent - Planner
+### Agents
+Run init-agents to initialise AI agents
+
+Currently you can use vscode or claude as the AI agent (loop)
+
+```bash
+ playwright init-agents --loop=vscode
+
+ 🎭 Using project "chromium" as a primary project
+ 📝 specs\README.md - directory for test plans
+ 🌱 tests\seed.spec.ts - default environment seed file
+ 🤖 .github\agents\playwright-test-generator.agent.md - agent definition
+ 🤖 .github\agents\playwright-test-healer.agent.md - agent definition
+ 🤖 .github\agents\playwright-test-planner.agent.md - agent definition
+ 🔧 .vscode\mcp.json - mcp configuration
+ 🔧 .github\workflows\copilot-setup-steps.yml - GitHub Copilot setup steps
+
+
+ 🔧 TODO: GitHub > Settings > Copilot > Coding agent > MCP configuration
+------------------------------------------------------------------
+{
+  "mcpServers": {
+    "playwright-test": {
+------------------------------------------------------------------
+{
+  "mcpServers": {
+------------------------------------------------------------------
+{
+------------------------------------------------------------------
+{
+------------------------------------------------------------------
+------------------------------------------------------------------
+{
+  "mcpServers": {
+    "playwright-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "run-test-mcp-server"
+      ],
+      "tools": [
+        "*"
+      ]
+    }
+  }
+}
+------------------------------------------------------------------
+ ✅ Done.
+```
+
+This creates some folders in .github folder
+
+
+#### Agent- Planner
+Planner agent explores your app and produces a test plan for one or many scenarios and user flows.
+
+In the newly created `tests\seed.spec.ts` file, add any fixtures you may want to use. In this example I am using the ToDo fixture as I want to create a test plan of the todo app.
+
+```typescript
+import { test, expect } from '../fixtures/todoFixture';
+import * as allure from "allure-js-commons";
+
+test.describe('Test group', () => {
+  test('seed', async ({ page }) => {
+    // generate code here.
+  });
+});
+```
+
+Now open a chat window and select `playwright-test-planner` and ask:
+
+```
+generate a test plan for usong the ToDo app and save as Todo_Plan in the specs folder
+```
+
+The following is produced:
+
+![Planner](./docs/agentPlanner.png)
+
+The plan is saved [here](./specs/Todo_Plan.md)
+
+NEXT STEP TO COMPARE ORIGINAL TESTS TO TEST PLAN.......
+
+#### Agent - Generator
 TBC
 
-### Agent - Generator
-TBC
-
-### Agent - Healer
+#### Agent - Healer
 TBC
 
