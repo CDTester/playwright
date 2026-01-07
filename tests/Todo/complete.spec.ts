@@ -85,7 +85,7 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
   });
 
 
-  test('Completed item can be marked as incomplete', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Completed item can be marked as active again', {tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-123');
     await allure.issue('BUG-123');

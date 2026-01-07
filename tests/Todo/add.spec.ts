@@ -21,7 +21,7 @@ test.describe('Add Todo', {tag: ['@Todo', '@Add']}, async () => {
     });
   });
 
-  test('Allow an item to be added to ToDo', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('Item can be added to ToDo list', {tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Add ToDo Item to the list');
     await allure.tms('TODO-101');
     await allure.issue('BUG-101');
@@ -42,7 +42,7 @@ test.describe('Add Todo', {tag: ['@Todo', '@Add']}, async () => {
     });
   });
 
-  test('Item should be cleared from the input field when an item is added', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('The input field should be cleared when the item is added', {tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Add ToDo Item to the list');
     await allure.tms('TODO-102');
     await allure.issue('BUG-102');

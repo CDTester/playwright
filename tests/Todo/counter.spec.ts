@@ -23,7 +23,7 @@ test.describe('Todo Counter', {tag: ['@Todo', '@Counter']}, () => {
     });
   });
 
-  test('The counter should display the number of active items', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('The counter should increase when an item is added', {tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Counter for active ToDo Items');
     await allure.tms('TODO-131');
     await allure.issue('BUG-131');

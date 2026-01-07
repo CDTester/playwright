@@ -72,7 +72,7 @@ test.describe('Delete Todo', {tag: ['@Todo', '@Delete']}, () => {
     });
   });
 
-  test('An item can be removed WHEN an empty text string is entered during edit', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('An item can be removed when an empty text string is entered during edit', {tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Delete ToDo Items from the list');
     await allure.tms('TODO-143');
     await allure.issue('BUG-143');
