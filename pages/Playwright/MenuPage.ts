@@ -36,7 +36,7 @@ export class MenuPage extends BasePage {
 
   constructor (page: Page) {
     super(page);
-    this.env = new envData('home-page.ts').getEnvData;
+    this.env = new envData('MenuPage.ts').getEnvData;
     this.page = page;
     this.url=this.env.playwright.baseUrl;
     this.topNavMenu = page.getByRole('navigation', { name: 'Main' });

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+const config = require('../config/default.json');
 
 /**
  * class to get test env data
@@ -9,8 +10,8 @@ export default class envData {
   private _envData: object;
   private _test: string;
 
-  constructor (test) {
-    this._test = test;
+  constructor (test:string) {
+    this._test = test;  // Name of the test file requesting the env data
     this._envData = this.loadEnvironmentData(process.env.npm_config_testenv);
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -20,8 +21,12 @@ export default class envData {
     return JSON.parse(JSON.stringify(this._envData));
   }
 
-  private loadEnvironmentData (envName: string | undefined) {
+  private loadEnvironmentData (envName: string | undefined) : object {
     let envData;
+    if (!envName) {
+      envName = config.default_env;
+      console.log(`\x1b[93m No environment specified for test ${this._test}, using default: ${envName} \x1b[0m`);
+    }
 
     const pth = path.resolve(process.cwd(), 'config', 'environments', `${envName}.json`);
     console.log(`\x1b[92m Using environment config from ${pth} for test ${this._test}  \x1b[0m`);
