@@ -9,7 +9,13 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
   test.beforeEach('Setup items with mixed states and navigate to ToDo app', async ({ page }) => {
     await allure.step('GIVEN the app has loaded with mixed items', async () => {
       await page.goto('https://demo.playwright.dev/todomvc/#/');
-      
+      // Clear any existing todos (if present)
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
+      let count = await items.count();
+      for (let i = 0; i < count; i++) {
+        await items.nth(0).locator('button, .destroy, .delete').click({ force: true }).catch(() => {});
+      }
       // Add three items
       const inputField = page.getByRole('textbox', { name: 'What needs to be done?' });
       await inputField.fill('Buy milk');
@@ -18,7 +24,6 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
       await inputField.press('Enter');
       await inputField.fill('Read a book');
       await inputField.press('Enter');
-      
       // Mark first item as complete
       const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
       const checkbox = buyMilkItem.locator('input[type="checkbox"]');
@@ -37,7 +42,8 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 1. Given items with mixed completion states
     await allure.step('GIVEN items with mixed completion states', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Should have 3 items initially').toBe(3);
     });
@@ -50,15 +56,17 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 3. Then only completed items are displayed
     await allure.step('THEN only completed items ("Buy milk") are displayed', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Completed filter should show 1 item').toBe(1);
     });
 
     // 4. And active items are not visible
     await allure.step('AND active items are not visible', async (step) => {
-      const walkDogItem = page.locator('li').filter({ hasText: 'Walk the dog' });
-      const readBookItem = page.locator('li').filter({ hasText: 'Read a book' });
+      const todoList = page.locator('ul').first();
+      const walkDogItem = todoList.locator('li').filter({ hasText: 'Walk the dog' });
+      const readBookItem = todoList.locator('li').filter({ hasText: 'Read a book' });
       await expect(walkDogItem, 'Walk the dog should not be visible in Completed filter').toHaveCount(0);
       await expect(readBookItem, 'Read a book should not be visible in Completed filter').toHaveCount(0);
     });

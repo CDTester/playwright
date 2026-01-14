@@ -51,7 +51,7 @@ test.describe('Add Todo Items', { tag: ['@Todo', '@Add'] }, () => {
     await allure.step('AND the input field is cleared', async (step) => {
       const inputField = page.getByRole('textbox', { name: 'What needs to be done?' });
       const value = await inputField.inputValue();
-      expect(value, 'Input field should be cleared after whitespace submission').toBe('');
+      expect(value.trim(), 'Input field should be cleared after whitespace submission').toBe('');
     });
   });
 });

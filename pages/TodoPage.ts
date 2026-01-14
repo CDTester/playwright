@@ -50,10 +50,11 @@ export class TodoPage extends BasePage {
   }
 
 
-  async editToDo (item: string, replacementText: string, save: string) {
+  async editToDo (item: string, replacementText: string, save?: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.dblclick();
     await todo.getByLabel('Edit').fill(replacementText);
+    if (!save) save = 'enter';
     if (save.toLowerCase() === 'blur') {
       await todo.getByLabel('Edit').dispatchEvent('blur');
     }

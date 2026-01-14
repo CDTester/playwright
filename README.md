@@ -408,11 +408,11 @@ The allure severity levels assigned are not actual level.<br>
 ![Allure Severity](./docs/agentGenerator-allureSeverity.png)
 
 The levels should be:
-- BLOCKER
-- CRITICAL
-- NORMAL
-- MINOR
-- TRIVIAL
+* BLOCKER
+* CRITICAL
+* NORMAL
+* MINOR
+* TRIVIAL
 
 The epics, features and story are based on test structure. These should be based on actual epic/feature/story titles used for developing the feature. As this information has not been provided to the AI, we cannot expect it to know what those titles are. Therefore there would be a need to update those titles in the scripts, as well as adding `allure.tms()` and `allure.issue()`.
 
@@ -481,7 +481,28 @@ This should be
 
 Best Practices like a POM has not been implemented. 
 
+When Running these tests, 23 passed and 15 failed. Use the Healer agaent to fix these.
 
 #### Agent - Healer
-TBC
+When the test fails, the healer agent:
+* Replays the failing steps
+* Inspects the current UI to locate equivalent elements or flows
+* Suggests a patch (e.g., locator update, wait adjustment, data fix)
+* Re-runs the test until it passes or until guardrails stop the loop
+
+<br> **Input** <br>
+Now open a chat window:
+- attach test files
+- select agent `playwright-test-healer`
+- choose AI e.g. Claude
+- and ask: `run and fix the tests`
+
+
+<br>**Results**<br>
+![healer](./docs/agentHealer-fixSolution.png)
+
+The user is presented with options to keep or undo changes.
+
+The healer is not fixing the Typescript issues where it has used invalid enum values for the allure.Severity().
+
 

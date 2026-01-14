@@ -9,7 +9,13 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
   test.beforeEach('Setup items and navigate to ToDo app', async ({ page }) => {
     await allure.step('GIVEN the app has loaded with items', async () => {
       await page.goto('https://demo.playwright.dev/todomvc/#/');
-      
+      // Clear any existing todos (if present)
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
+      let count = await items.count();
+      for (let i = 0; i < count; i++) {
+        await items.nth(0).locator('button, .destroy, .delete').click({ force: true }).catch(() => {});
+      }
       // Add three items
       const inputField = page.getByRole('textbox', { name: 'What needs to be done?' });
       await inputField.fill('Buy milk');
@@ -32,7 +38,8 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 1. Given the app has items
     await allure.step('GIVEN the app has items "Buy milk", "Walk the dog", and "Read a book"', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Should have 3 items').toBe(3);
     });
@@ -45,7 +52,8 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 3. Then all items are marked as complete
     await allure.step('THEN all items are marked as complete', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const checkboxes = items.locator('input[type="checkbox"]');
       const count = await checkboxes.count();
       for (let i = 0; i < count; i++) {
@@ -55,21 +63,20 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 4. And all items are displayed with strike-through styling
     await allure.step('AND all items are displayed with strike-through styling', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       for (let i = 0; i < count; i++) {
-        const label = items.nth(i).locator('label');
-        const classList = await label.evaluate(el => el.className);
+        const liElement = items.nth(i);
+        const classList = await liElement.evaluate(el => el.className);
         expect(classList, `Item ${i + 1} should have completed class`).toContain('completed');
       }
     });
 
     // 5. And the counter displays '0 items left'
     await allure.step('AND the counter displays "0 items left"', async (step) => {
-      // When all items are complete, there should be no counter or it shows 0
-      const counter = page.getByText(/items? left/);
-      const isVisible = await counter.isVisible().catch(() => false);
-      expect(isVisible, 'Counter should not be visible when all items are complete').toBe(false);
+      const counter = page.getByText(/0 items? left/);
+      await expect(counter, 'Counter should display "0 items left"').toBeVisible();
     });
   });
 });

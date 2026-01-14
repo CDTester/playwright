@@ -20,22 +20,25 @@ test.describe('User Interface and Navigation', { tag: ['@Todo', '@UI'] }, () => 
       await page.goto('https://demo.playwright.dev/todomvc/#/');
     });
 
+
     // 2. Then the footer displays 'Double-click to edit a todo'
-    await allure.step('THEN the footer displays "Double-click to edit a todo"', async (step) => {
-      const footerText = page.locator('footer text');
-      const doubleClickText = page.getByText(/Double-click to edit/);
+    await allure.step('THEN the footer displays "Double-click to edit a todo"', async () => {
+      // The footer is expected to contain this text
+      const doubleClickText = page.getByText('Double-click to edit a todo', { exact: false });
       await expect(doubleClickText, 'Footer should contain edit instruction').toBeVisible();
     });
 
+
     // 3. And the footer displays creator information
-    await allure.step('AND the footer displays creator information', async (step) => {
-      const createdByText = page.getByText(/Created by/);
+    await allure.step('AND the footer displays creator information', async () => {
+      const createdByText = page.getByText('Created by', { exact: false });
       await expect(createdByText, 'Footer should display creator information').toBeVisible();
     });
 
     // 4. And the footer contains a link to TodoMVC
-    await allure.step('AND the footer contains a link to TodoMVC', async (step) => {
-      const todoMvcLink = page.getByRole('link', { name: 'TodoMVC' });
+    await allure.step('AND the footer contains a link to TodoMVC', async () => {
+      // There are two links with 'TodoMVC' in the name, but only one is exactly 'TodoMVC' (the footer link)
+      const todoMvcLink = page.getByRole('link', { name: 'TodoMVC', exact: true });
       await expect(todoMvcLink, 'Footer should contain link to TodoMVC').toBeVisible();
     });
   });

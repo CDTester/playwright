@@ -39,7 +39,8 @@ test.describe('Edge Cases and Error Handling', { tag: ['@Todo', '@EdgeCase'] }, 
 
     // 3. Then all items are visible in the list
     await allure.step('THEN all items are visible in the list', async (step) => {
-      const todoItems = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const todoItems = todoList.locator('li');
       const count = await todoItems.count();
       expect(count, 'All items should be added').toBe(100);
     });

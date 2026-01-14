@@ -37,7 +37,8 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 1. Given items with mixed completion states
     await allure.step('GIVEN items with mixed completion states', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Should have 3 items initially').toBe(3);
     });
@@ -50,14 +51,16 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 3. Then only active items are displayed
     await allure.step('THEN only active items ("Walk the dog" and "Read a book") are displayed', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Active filter should show 2 items').toBe(2);
     });
 
     // 4. And completed items are not visible
     await allure.step('AND completed items are not visible', async (step) => {
-      const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
+      const todoList = page.locator('ul').first();
+      const buyMilkItem = todoList.locator('li').filter({ hasText: 'Buy milk' });
       await expect(buyMilkItem, 'Buy milk should not be visible in Active filter').toHaveCount(0);
     });
 

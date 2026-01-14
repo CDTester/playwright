@@ -30,7 +30,8 @@ test.describe('Delete Todo Items', { tag: ['@Todo', '@Delete'] }, () => {
 
     // 1. Given the app has items 'Buy milk' and 'Walk the dog'
     await allure.step('GIVEN the app has items "Buy milk" and "Walk the dog"', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Should have 2 items').toBe(2);
     });
@@ -43,20 +44,23 @@ test.describe('Delete Todo Items', { tag: ['@Todo', '@Delete'] }, () => {
 
     // 3. And I click the delete button (×) for 'Buy milk'
     await allure.step('AND I click the delete button (×) for "Buy milk"', async (step) => {
-      const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
+      const todoList = page.locator('ul').first();
+      const buyMilkItem = todoList.locator('li').filter({ hasText: 'Buy milk' });
       const deleteButton = buyMilkItem.locator('button');
       await deleteButton.click();
     });
 
     // 4. Then 'Buy milk' is removed from the list
     await allure.step('THEN "Buy milk" is removed from the list', async (step) => {
-      const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
+      const todoList = page.locator('ul').first();
+      const buyMilkItem = todoList.locator('li').filter({ hasText: 'Buy milk' });
       await expect(buyMilkItem, '"Buy milk" should not be visible').toHaveCount(0);
     });
 
     // 5. And 'Walk the dog' is still in the list
     await allure.step('AND "Walk the dog" is still in the list', async (step) => {
-      const walkDogItem = page.locator('li').filter({ hasText: 'Walk the dog' });
+      const todoList = page.locator('ul').first();
+      const walkDogItem = todoList.locator('li').filter({ hasText: 'Walk the dog' });
       await expect(walkDogItem, '"Walk the dog" should still be visible').toBeVisible();
     });
 

@@ -57,8 +57,7 @@ test.describe('Keyboard Navigation and Accessibility', { tag: ['@Todo', '@Access
     // 6. And the state is properly indicated
     await allure.step('AND the state is properly indicated', async (step) => {
       const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
-      const label = buyMilkItem.locator('label');
-      const classList = await label.evaluate(el => el.className);
+      const classList = await buyMilkItem.evaluate(el => el.className);
       expect(classList, 'Completed class should be added').toContain('completed');
     });
   });

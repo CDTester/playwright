@@ -36,7 +36,8 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 1. Given all items are marked as complete
     await allure.step('GIVEN all items are marked as complete', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const checkboxes = items.locator('input[type="checkbox"]');
       const count = await checkboxes.count();
       for (let i = 0; i < count; i++) {
@@ -52,7 +53,8 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 3. Then all items are marked as incomplete
     await allure.step('THEN all items are marked as incomplete', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const checkboxes = items.locator('input[type="checkbox"]');
       const count = await checkboxes.count();
       for (let i = 0; i < count; i++) {
@@ -62,11 +64,12 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 4. And the strike-through styling is removed from all items
     await allure.step('AND the strike-through styling is removed from all items', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       for (let i = 0; i < count; i++) {
-        const label = items.nth(i).locator('label');
-        const classList = await label.evaluate(el => el.className);
+        const liElement = items.nth(i);
+        const classList = await liElement.evaluate(el => el.className);
         expect(classList, `Item ${i + 1} should not have completed class`).not.toContain('completed');
       }
     });

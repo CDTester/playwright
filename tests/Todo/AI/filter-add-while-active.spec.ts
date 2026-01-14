@@ -39,7 +39,8 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 1. Given items with one active and one completed
     await allure.step('GIVEN the Active filter is displayed with 1 active item', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Active filter should show 1 item').toBe(1);
     });
@@ -53,13 +54,15 @@ test.describe('Filter Todo Items', { tag: ['@Todo', '@Filter'] }, () => {
 
     // 3. Then the new item is immediately visible in the filtered list
     await allure.step('THEN the new item is immediately visible in the filtered list', async (step) => {
-      const readBookItem = page.locator('li').filter({ hasText: 'Read a book' });
+      const todoList = page.locator('ul').first();
+      const readBookItem = todoList.locator('li').filter({ hasText: 'Read a book' });
       await expect(readBookItem, 'New item should be visible in Active filter').toBeVisible();
     });
 
     // 4. And other active items are still visible
     await allure.step('AND other active items are still visible', async (step) => {
-      const walkDogItem = page.locator('li').filter({ hasText: 'Walk the dog' });
+      const todoList = page.locator('ul').first();
+      const walkDogItem = todoList.locator('li').filter({ hasText: 'Walk the dog' });
       await expect(walkDogItem, 'Walk the dog should still be visible').toBeVisible();
     });
   });

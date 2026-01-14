@@ -39,7 +39,8 @@ test.describe('Edge Cases and Error Handling', { tag: ['@Todo', '@EdgeCase'] }, 
 
     // 3. Then all 10 items are added in order
     await allure.step('THEN all 10 items are added in order', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'All 10 items should be added').toBe(10);
     });
@@ -53,7 +54,8 @@ test.describe('Edge Cases and Error Handling', { tag: ['@Todo', '@EdgeCase'] }, 
     // 5. And no items are skipped or lost
     await allure.step('AND no items are skipped or lost', async (step) => {
       for (let i = 1; i <= 10; i++) {
-        const item = page.getByText(`Rapid item ${i}`);
+        const todoList = page.locator('ul').first();
+        const item = todoList.locator('li').filter({ hasText: new RegExp(`^Rapid item ${i}$`) });
         await expect(item, `Item ${i} should be present`).toBeVisible();
       }
     });

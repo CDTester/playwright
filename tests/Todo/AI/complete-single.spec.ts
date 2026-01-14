@@ -9,7 +9,13 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
   test.beforeEach('Setup items and navigate to ToDo app', async ({ page }) => {
     await allure.step('GIVEN the app has loaded with items', async () => {
       await page.goto('https://demo.playwright.dev/todomvc/#/');
-      
+      // Clear any existing todos (if present)
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
+      let count = await items.count();
+      for (let i = 0; i < count; i++) {
+        await items.nth(0).locator('button, .destroy, .delete').click({ force: true }).catch(() => {});
+      }
       // Add two items for testing
       const inputField = page.getByRole('textbox', { name: 'What needs to be done?' });
       await inputField.fill('Buy milk');
@@ -30,7 +36,8 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 1. Given the app has items 'Buy milk' and 'Walk the dog'
     await allure.step('GIVEN the app has items "Buy milk" and "Walk the dog"', async (step) => {
-      const items = page.locator('li');
+      const todoList = page.locator('ul').first();
+      const items = todoList.locator('li');
       const count = await items.count();
       expect(count, 'Should have 2 items').toBe(2);
     });
@@ -51,9 +58,10 @@ test.describe('Complete Todo Items', { tag: ['@Todo', '@Complete'] }, () => {
 
     // 4. And 'Buy milk' is displayed with strike-through styling
     await allure.step('AND "Buy milk" is displayed with strike-through styling', async (step) => {
-      const buyMilkItem = page.locator('li').filter({ hasText: 'Buy milk' });
-      const label = buyMilkItem.locator('label');
-      const classList = await label.evaluate(el => el.className);
+      const todoList = page.locator('ul').first();
+      const buyMilkItem = todoList.locator('li').filter({ hasText: 'Buy milk' });
+      const liElement = buyMilkItem;
+      const classList = await liElement.evaluate(el => el.className);
       expect(classList, 'Completed item should have completed class').toContain('completed');
     });
 
