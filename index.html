@@ -5,93 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px; 
-      }
+    body { font-family: Arial; background: linear-gradient(135deg, #9dffff 0%, #4b7ea2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .container { background: white; border-radius: 16px; padding: 48px; max-width: 900px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-    h1 { color: #333; text-align: center; margin-bottom: 12px; font-size: 32px; }
-    .subtitle { text-align: center; color: #666; margin-bottom: 40px; font-size: 16px; }
+    h1 { color: #333; text-align: center; margin-bottom: 24px; font-size: 32px; }
     .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 32px; }
-    .report-card {
-      background: #f8f9fa;
-      border: 2px solid #e9ecef;
-      border-radius: 12px;
-      padding: 28px;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s ease;
-      display: block;
-      position: relative;
-      overflow: hidden;
-    }
-    .report-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    .report-card:hover {
-      border-color: #667eea;
-      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-      transform: translateY(-4px);
-    }
-    .report-card:hover::before { transform: scaleX(1); }
+    .report-card { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; padding: 28px; text-decoration: none; }
+    .report-card:hover { border-color: #667eea; }
     .report-icon { font-size: 48px; margin-bottom: 16px; display: block; }
     .report-card h2 { color: #333; font-size: 22px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
     .report-card p { color: #666; line-height: 1.6; font-size: 14px; }
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge-success { background: #d4edda; color: #155724; }
-    .badge-info { background: #d1ecf1; color: #0c5460; }
-    .info-bar {
-      background: #f8f9fa;
-      border-radius: 8px;
-      padding: 16px 24px;
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-      border: 1px solid #e9ecef;
-    }
-    .info-bar a { color: #667eea; text-decoration: none; font-weight: 500; }
-    .info-bar a:hover { text-decoration: underline; }
-    @media (max-width: 768px) {
-      .container { padding: 32px 24px; }
-      h1 { font-size: 24px; }
-      .report-grid { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🧪 Test Reports Dashboard</h1>
-    <p class="subtitle">CDTester/Playwright - Automated Testing</p>
+    <h1>🧪 Playwright Test Reports Dashboard</h1>
     
     <div class="report-grid">
       <a href="./allure-report/index.html" class="report-card">
         <div class="report-icon">📊</div>
-        <h2>
-          Allure Report
-          <span class="badge badge-success">✓ Trends</span>
-        </h2>
+        <h2>Allure Report</h2>
         <p>Comprehensive test analytics with historical trends, detailed execution data, and visual insights</p>
       </a>
       
@@ -100,10 +32,6 @@
         <h2>Playwright Report</h2>
         <p>Native Playwright HTML report with test traces, screenshots, and interactive debugging</p>
       </a>
-    </div>
-    
-    <div class="info-bar">
-      Latest test run from GitHub Actions
     </div>
   </div>
 </body>
