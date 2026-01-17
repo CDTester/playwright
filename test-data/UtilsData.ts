@@ -1,4 +1,4 @@
-export class ZUtilsData {
+export class UtilsData {
   static generateRandomEmail(): string {
     return `test${Date.now()}@example.com`;
   }
