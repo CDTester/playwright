@@ -59,7 +59,7 @@ In this repo, environment specific values are stored in a config file. This cont
 ```
 
 Then running the scripts using:
-```
+```bash
 npm run test --testenv=dev1
 ```
 
@@ -148,7 +148,8 @@ If you design your tests using parentSuite/suite/subSuite, then this page orders
 
 ![Allure suites](./docs/allure_report_suites.png)
 
-NOTE: this image shows suites for chromium, firefox and webkit. These come from tests that are designed using behaviour (epic/feature/story).
+> [!NOTE]<br/>
+> this image shows suites for chromium, firefox and webkit. These come from tests that are designed using behaviour (epic/feature/story).
 
 
 **Allure report: Behaviors**
@@ -156,7 +157,8 @@ If you design your tests using epic/feature/story, then this page orders your te
 
 ![Allure suites](./docs/allure_report_behavior.png)
 
-NOTE: this image shows tests that are not designed using behaviour features. These tests are show in an unstructured manor..
+> [!NOTE] <br/>
+> this image shows tests that are not designed using behaviour features. These tests are show in an unstructured manor..
 
 
 **Allure report: Packages**
@@ -176,7 +178,9 @@ The `playwright.config.ts` file configures how your test run.
 - `testDir: './tests'` Location of tests. When running `npx playwright test` this is the location of the tests to be run
 - `fullyParallel: true`  Allows tests to be run in parallel mode. 
 - `workers: process.env.CI ? 4 : undefined` This tells the CI process to use 4 workers in parallel mode or use default number for local runs.
-- `reporter: [
+- This defines what reporters to be used including the config for each reporter.
+```typescript
+reporter: [
   ['html'], 
   ['allure-playwright',{
     detail: true,
@@ -204,18 +208,27 @@ The `playwright.config.ts` file configures how your test run.
     },
     openAlluredir: 'playwright-report/allure-results',
   }]
-  ]` This defines what reporters to be used including the config for each reporter.
-- `use: {}` Options:
-    - `headless: true`. Sets whether tests are to be run headless or not.
-    - `screenshot: 'only-on-failure'`. Other option are on, off, retain-on-failure
-    - `video: 'retain-on-failure'`. Other options are on, off, on-first-retry
-    - `viewport: { width: 1200, height: 700 }`. Sets screen size. 
-    - `geolocation: { latitude: 29.97918, longitude: 31.13420 }`. Sets user location
-- `projects: []`. Configures projects for test to be run on different browsers
-    - `{name: 'chromium', use: { ...devices['Desktop Chrome'] } }`
-    - `{name: 'firefox', use: { ...devices['Desktop Firefox'] } }`
-    - `{name: 'webkit', use: { ...devices['Desktop Safari'] } }`
-    - `{name: 'Mobile Safari', use: { ...devices['iPhone 12'], isMobile: true } }`
+  ]
+  ```
+
+- The following rules determine the characteristics of the browser
+```typescript
+use: {}` Options:
+    `headless: true`. Sets whether tests are to be run headless or not.
+    `screenshot: 'only-on-failure'`. Other option are on, off, retain-on-failure
+    `video: 'retain-on-failure'`. Other options are on, off, on-first-retry
+    `viewport: { width: 1200, height: 700 }`. Sets screen size. 
+    `geolocation: { latitude: 29.97918, longitude: 31.13420 }
+```
+
+- Configures projects for test to be run on different browsers or individual test projects setup, test data and teardown process
+```typescript
+projects: []`. 
+    `{name: 'chromium', use: { ...devices['Desktop Chrome'] } }`
+    `{name: 'firefox', use: { ...devices['Desktop Firefox'] } }`
+    `{name: 'webkit', use: { ...devices['Desktop Safari'] } }`
+    `{name: 'Mobile Safari', use: { ...devices['iPhone 12'], isMobile: true } }
+```
 
 ### Locators
 Use playwright getBy...() locators when possible as they have auto-waiting and retry-ability features. 
@@ -227,7 +240,8 @@ Use playwright getBy...() locators when possible as they have auto-waiting and r
 - .getByTitle() to locate an element by its title attribute.
 - .getByTestId() to locate an element based on its data-testid attribute (other attributes can be configured).
 
-See more details about those here [Locators](./docs/locators.txt).
+> [!Important]<br/>
+> See more details about those here [Locators](./docs/locators.txt).
 
 Other locators:
   - text: text='text to find' (add single quotes for exact match)
@@ -242,36 +256,42 @@ Other locators:
 ### Session Storage
 Playwright allows you to save the browsers context storage state (cookies and localStorage) and load it later, bypassing the login flow.
 
-As the session storage allows access to your logged in state, care must be taken if your usernames and passwords are sensitive information. This goes for your login data files as well. Therefore you should never commit these fies to your version control. Add it to `.gitignore` file and handle it securely.
+> [!Caution]<br/>
+> As the session storage allows access to your logged in state, care must be taken if your usernames and passwords are sensitive information. This goes for your login data files as well. 
 
-These tokens have expiry dates in the format of Unix time in seconds, so if you version control is private then it would be a good idea to change the exiry date to a date much further into the future. Or you can add logic in your CI or test setup to refresh the session state.
+> [!TIP]<br/>
+> Therefore you should never commit these fies to your version control. Add it to `.gitignore` file and handle it securely.
+
+> [!WARNING]<br/>
+> These tokens have expiry dates in the format of Unix time in seconds, so if you version control is private then it would be a good idea to change the exiry date to a date much further into the future. Or you can add logic in your CI or test setup to refresh the session state.
+
 
 #### Setup to use storage session
 
-**Test Data and creation of auth state**
+**Test Data and creation of auth state**<br/>
 In /test-data/pages/LoginData there are 2 files:
 - [HerokuappData.ts](./test-data/pages/LoginData/HerokuappData.ts) is a test data file containing various user details. As the username and password are detailed on the herokuapp webpage, there is no need to place this file in a secrets manager.
 - [HerokuappAuth.ts](./test-data/pages/LoginData/HerokuappAuth.ts) is a class containing a setup method to log in to the herokuapp site using the the test data from the above file and stores the storageSession to a temporary file.
 
-**Fixture for Herokuapp**
-This [fixture file](./fixtures/loginHerokuappFixture.ts) contains:
-- fixtures for both POMs of the herokuapp site
-- test data from HerokuappData.ts
-- a fixture a logged in state which calls the HerokuappAuth.ts
+**Fixture for Herokuapp**<br/>
+This [fixture file](./fixtures/loginHerokuappFixture.ts) contains: 
+* fixtures for both POMs of the herokuapp site
+* test data from HerokuappData.ts
+* a fixture a logged in state which calls the HerokuappAuth.ts
 
-**Tests**
+**Tests**<br/>
 The [Login test](./tests/Login/herokuappLogin.spec.ts) contains tests:
-- uses the POMS along with the test data from the fixtuer to test the login process
-- uses the logged in POM file to test that the logged in page can be access via the storage session
+* uses the POMS along with the test data from the fixtuer to test the login process
+* uses the logged in POM file to test that the logged in page can be access via the storage session
 
 
 ### API
 Playwright can be used to get access to the REST API of your application.
 
 Sometimes you may want to send requests to the server directly from Node.js without loading a page and running js code in it. A few examples where it may come in handy:
-- Test your server API.
-- Prepare server side state before visiting the web application in a test.
-- Validate server side post-conditions after running some actions in the browser.
+* Test your server API.
+* Prepare server side state before visiting the web application in a test.
+* Validate server side post-conditions after running some actions in the browser.
 
 Each Playwright browser context has associated with it APIRequestContext instance which shares cookie storage with the browser context and can be accessed via browserContext.request or page.request. It is also possible to create a new APIRequestContext instance manually by calling apiRequest.newContext().
 
@@ -349,10 +369,14 @@ Now open a chat window:
 - attach seed.spec.ts file
 - select agent `playwright-test-planner`
 - choose AI e.g. Claude
-- and ask: `generate a test plan for usong the ToDo app and save as Todo_Plan in the specs folder`
-- improved ask: `generate a test plan for using the ToDo app https://demo.playwright.dev/todomvc/#/ and save as Todo_Plan in the specs folder. Write the test scenarios in BDD format. Each Scenario should test only one feature.`
+- prompt: `generate a test plan for usong the ToDo app and save as Todo_Plan in the specs folder`
 
-_Note: The scenarios were not given in BDD (Gherkin) format even though I asked for this. A further request was needed to convert them_
+> [!TIP]<br/>
+> improved Prompt:<br/>
+> `generate a test plan for using the ToDo app https://demo.playwright.dev/todomvc/#/ and save as Todo_Plan in the specs folder. Write the test scenarios in BDD format. Each Scenario should test only one feature.`
+
+> [!NOTE]<br/>
+> The scenarios were not given in BDD (Gherkin) format even though I asked for this. A further request was needed to convert them_
 
 **Results:**
 The following is produced:
@@ -411,15 +435,15 @@ Here is a comparison of test scenarios generated by Playwright from the first pr
 |5.3. Responsive layout (mobile viewport) | | This scenario was missed by myself | 
 
 
-My second attempt with the improved prompt, provided the scenerios below. Although there are separate counter scenarios, the add/delete/complete scenarios still include counter verifications. Also some scenarios that were missed with the first prompt are now created on the second prompt. The promt chat did include my README.md which had analysis of the first prompt (above), so it is not clear if the missed scenarios have been determined from that file.
-
-![Planner](./docs/agentPlanner_v2.png)
+> [!NOTE]<br/>
+> My second attempt with the improved prompt, provided the scenerios below. Although there are separate counter scenarios, the add/delete/complete scenarios still include counter verifications. Also some scenarios that were missed with the first prompt are now created on the second prompt. The promt chat did include my README.md which had analysis of the first prompt (above), so it is not clear if the missed scenarios have been determined from that file.
+> ![Planner](./docs/agentPlanner_v2.png)
 
 
 The plan is saved [here](./specs/Todo_Plan.md)
 
 
-**Analysis:**
+<br/>**Analysis:**<br/>
 On the whole the AI agent picks up most scenarios and more edge case/usability tests that were missed by myself. The only 3 cons to using this tool from what I can see are:
 - it can only be used when the application has been develeoped. It does not create scenarios during the planning stage.
 - it assumes that the application is currently bug free, tests are based on what it can currently do, not what it was intended to do.
@@ -431,31 +455,36 @@ Generator agent uses the Markdown plan to produce executable Playwright Tests. I
 
 <br> **Input** <br>
 Now open a chat window:
-- attach plan.md file
-- select agent `playwright-test-generator`
-- choose AI e.g. Claude
-- and ask: `generate a test file for each suite in the Todo_Plan. Write tests to the folder 'tests/Todo/AI'. Use best practices like POM and fixtures. Add Allure reporting along with allure steps to the scenarios. Add tags to the sceanrios. Add allure severity to the scenarios. Add error handling messages to the assertions. `
+* attach plan.md file
+* select agent `playwright-test-generator`
+* choose AI e.g. Claude
+* prompt: `generate a test file for each suite in the Todo_Plan. Write tests to the folder 'tests/Todo/AI'. Use best practices like POM and fixtures. Add Allure reporting along with allure steps to the scenarios. Add tags to the sceanrios. Add allure severity to the scenarios. Add error handling messages to the assertions. `
 
 <br> **Comparison of scripts:** <br>
 The AI agent generates a file per scenario, whereas I asked on the prompt to create a file per suite.<br>
 ![Files created](./docs/agentGenerator-files.png)
 
-There also some other errors in the scripts. e.g. [add-long-text.spec.ts](./tests/Todo/AI/add-long-text.spec.ts) has a step.parameter with a value as an integer that needs converting to a string.
+> [!CAUTION]<br/>
+> There also some other errors in the scripts. e.g. [add-long-text.spec.ts](./tests/Todo/AI/add-long-text.spec.ts) has a step.parameter with a value as an integer that needs converting to a string.
 
-<br>The allure reporting:<br>
-The allure severity levels assigned are not actual level.<br>
+<br>**The allure reporting:**<br>
 ![Allure Severity](./docs/agentGenerator-allureSeverity.png)
 
-The levels should be:
-* BLOCKER
-* CRITICAL
-* NORMAL
-* MINOR
-* TRIVIAL
+> [!CAUTION]<br/>
+>The allure severity levels assigned are not actual level.<br>
+>The levels should be:
+> * BLOCKER
+> * CRITICAL
+> * NORMAL
+> * MINOR
+> * TRIVIAL
 
-The epics, features and story are based on test structure. These should be based on actual epic/feature/story titles used for developing the feature. As this information has not been provided to the AI, we cannot expect it to know what those titles are. Therefore there would be a need to update those titles in the scripts, as well as adding `allure.tms()` and `allure.issue()`.
+<br/>
 
-<br>Error handling:<br>
+> [!NOTE]<br/>
+>The epics, features and story are based on test structure. These should be based on actual epic/feature/story titles used for developing the feature. As this information has not been provided to the AI, we cannot expect it to know what those titles are. Therefore there would be a need to update those titles in the scripts, as well as adding `allure.tms()` and `allure.issue()`.
+
+<br>**Error handling:**<br>
 ![error messages](./docs/agentGenerator-errorHandling.png)
 
 The Error handling has some issues, especially when not the right assertions are performed. e.g on the [add-special-chars.spec.ts](./tests/Todo/AI/add-special-chars.spec.ts). The step is meant to check that the characters are the same as how they were entered, however the script is just checking the element is visible. The web element was defined by the text, but if this was not preserved the web element would not be found and the error would be reported there.
@@ -477,7 +506,7 @@ Allure report from me:<br>
 ![AI](./docs/allure_valiadation_by_me.png)
 
 
-<br>Readable Test Structure:<br>
+<br>**Readable Test Structure:**<br>
 ![Readable](./docs/agentGenerator-BDD.png)
 
 There is one script that does not use the Gherkin language correctly, but this was created by the planner, not the generator:
@@ -498,7 +527,7 @@ This should be:
  5. Then...
  6. And...
 
-Also on:
+<br/>Also on:
 File: `tests/Todo/edge-unicode.spec.ts`
 Steps:
   1. Given the ToDo app has loaded
@@ -507,7 +536,7 @@ Steps:
   4. When I add item with Chinese characters '買牛奶'
   5. Then all Unicode characters are displayed correctly
 
-This should be 
+<br/>This should be 
  1. Given...
  2. When...
  4. And...
@@ -518,7 +547,8 @@ This should be
 <br>Maintainable Code:<br>
 ![Code](./docs/agentGenerator-maintainability.png)
 
-Best Practices like a POM has not been implemented. 
+> [!CAUTION] <br>
+> Best Practices like a POM has not been implemented. 
 
 When Running these tests, 23 passed and 15 failed. Use the Healer agaent to fix these.
 
@@ -534,7 +564,7 @@ Now open a chat window:
 - attach test files
 - select agent `playwright-test-healer`
 - choose AI e.g. Claude
-- and ask: `run and fix the tests`
+- prompt: `run and fix the tests`
 
 
 <br>**Results**<br>
