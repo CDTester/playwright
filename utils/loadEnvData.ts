@@ -13,7 +13,6 @@ export default class envData {
   constructor (test:string) {
     this._test = test;  // Name of the test file requesting the env data
     this._envData = this.loadEnvironmentData(process.env.npm_config_testenv);
-
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   }
 

@@ -1,6 +1,16 @@
 {
-  "name": "EVT1",
+  "name": "dev",
   "playwright": {
     "baseUrl": "https://playwright.dev/"
+  },
+  "apiUsers": {
+    "baseUrl": ""
+  },
+  "selenium": {
+    "baseUrl": "https://www.selenium.dev"
+  },
+  "herokuapp": {
+    "baseUrl": "https://the-internet.herokuapp.com"
   }
+
 }

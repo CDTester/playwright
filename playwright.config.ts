@@ -1,29 +1,15 @@
 /// <reference types="node" />
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
+// See https://playwright.dev/docs/test-configuration.
 export default defineConfig({
   testDir: './tests',
-  /* Run tests in files in parallel */
-  fullyParallel: true,
-  /* Opt out of parallel tests on CI by setting to 1. */
-  workers: process.env.CI ? 4 : undefined,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
+  fullyParallel: true,              // Run tests in files in parallel
+  workers: process.env.CI ? 4 : 1,  // Opt out of parallel tests on CI by setting to 1. 
+  forbidOnly: !!process.env.CI,     // Fail the build on CI if you accidentally left test.only in the source code.
+  retries: process.env.CI ? 2 : 0,  // Retry on CI only
+  reporter: [                       // Reporter to use. See https://playwright.dev/docs/test-reporters
     ['html'],
     ['allure-playwright',{
       detail: true,
@@ -52,29 +38,39 @@ export default defineConfig({
       openAlluredir: 'playwright-report/allure-results',
     }]
   ],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions.
   use: {
-    headless: true,
-    // set geolcation
-    geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Great Pyramid of Giza
+    headless: process.env.CI ? true : false,
+    geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Set geolocation to Great Pyramid of Giza
     permissions: ['geolocation'],
     screenshot: 'only-on-failure', // on, off, retain-on-failure
     video: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer 
-      when using allure, download trace and open zip using 'npm run showTrace <zip-file>'
-    */
     trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
-
+    // baseURL: 'http://localhost:3000',  // This setsbaseURL for all tests, I am setting baseURL is set in env files and loaded in helpers
+    // storageState: 'storageState.json',  // this sets storage state for all tests, I am setting storageState in fixtures where needed
   },
 
-  /* Configure projects for major browsers */
+  // Configure projects for major browsers or for projects that require setup and teardown. These can also be run in fixtures.
   projects: [
+    // {
+    //   name:  'setup_db',
+    //   testMatch: /.*\.setup\.ts/,
+    //   use: {storageState: 'storageState.json'},
+    //   teardown: 'cleanup_db'
+    // },
+    // {
+    //   name: 'cleanup_db',
+    //   testMatch: /.*\.teardown\.ts/
+    // },
+    // {
+    //   name: 'apiUsers',
+    //   use: { baseURL: env.apiUsers.baseUrl || process.env.BASE_URL || '' }
+    // },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      // dependencies: ['setup db'],
     },
     {
       name: 'firefox',

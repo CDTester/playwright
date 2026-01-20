@@ -239,7 +239,46 @@ Other locators:
     - by atribute:  selector[attribute=value] | [attribute=value]
 
 
+### Session Storage
+Playwright allows you to save the browsers context storage state (cookies and localStorage) and load it later, bypassing the login flow.
 
+As the session storage allows access to your logged in state, care must be taken if your usernames and passwords are sensitive information. This goes for your login data files as well. Therefore you should never commit these fies to your version control. Add it to `.gitignore` file and handle it securely.
+
+These tokens have expiry dates in the format of Unix time in seconds, so if you version control is private then it would be a good idea to change the exiry date to a date much further into the future. Or you can add logic in your CI or test setup to refresh the session state.
+
+#### Setup to use storage session
+
+**Test Data and creation of auth state**
+In /test-data/pages/LoginData there are 2 files:
+- [HerokuappData.ts](./test-data/pages/LoginData/HerokuappData.ts) is a test data file containing various user details. As the username and password are detailed on the herokuapp webpage, there is no need to place this file in a secrets manager.
+- [HerokuappAuth.ts](./test-data/pages/LoginData/HerokuappAuth.ts) is a class containing a setup method to log in to the herokuapp site using the the test data from the above file and stores the storageSession to a temporary file.
+
+**Fixture for Herokuapp**
+This [fixture file](./fixtures/loginHerokuappFixture.ts) contains:
+- fixtures for both POMs of the herokuapp site
+- test data from HerokuappData.ts
+- a fixture a logged in state which calls the HerokuappAuth.ts
+
+**Tests**
+The [Login test](./tests/Login/herokuappLogin.spec.ts) contains tests:
+- uses the POMS along with the test data from the fixtuer to test the login process
+- uses the logged in POM file to test that the logged in page can be access via the storage session
+
+
+### API
+Playwright can be used to get access to the REST API of your application.
+
+Sometimes you may want to send requests to the server directly from Node.js without loading a page and running js code in it. A few examples where it may come in handy:
+- Test your server API.
+- Prepare server side state before visiting the web application in a test.
+- Validate server side post-conditions after running some actions in the browser.
+
+Each Playwright browser context has associated with it APIRequestContext instance which shares cookie storage with the browser context and can be accessed via browserContext.request or page.request. It is also possible to create a new APIRequestContext instance manually by calling apiRequest.newContext().
+
+#### Cookie management
+APIRequestContext returned by browserContext.request and page.request shares cookie storage with the corresponding BrowserContext. Each API request will have Cookie header populated with the values from the browser context. If the API response contains Set-Cookie header it will automatically update BrowserContext cookies and requests made from the page will pick them up. This means that if you log in using this API, your e2e test will be logged in and vice versa.
+
+If you want API requests to not interfere with the browser cookies you should create a new APIRequestContext by calling apiRequest.newContext(). Such APIRequestContext object will have its own isolated cookie storage.
 
 ### Agents
 Run init-agents to initialise AI agents
