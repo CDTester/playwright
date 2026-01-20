@@ -1,0 +1,2 @@
+ Using environment config from /home/runner/work/playwright/playwright/config/environments/dev.json for test SeleniumLoginPage.ts  
+Dialog message: Please enter valid credentials

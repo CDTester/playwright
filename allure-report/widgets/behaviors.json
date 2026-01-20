@@ -1,1 +1,1 @@
-{"total":67,"items":[{"uid":"71e2c5d3b669ccca9195025a7a224873","name":"Epic: TodoMVC","statistic":{"failed":0,"broken":0,"skipped":0,"passed":7,"unknown":0,"total":7}}]}
+{"total":71,"items":[{"uid":"71e2c5d3b669ccca9195025a7a224873","name":"Epic: TodoMVC","statistic":{"failed":0,"broken":0,"skipped":0,"passed":18,"unknown":0,"total":18}},{"uid":"592f02a5e5d004520c850edbe256e348","name":"Epic: Login","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}
