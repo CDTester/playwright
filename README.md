@@ -6,8 +6,8 @@ Repo to learn Playwright
 [![Test Report](https://github.com/CDTester/playwright/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CDTester/playwright/actions/workflows/pages/pages-build-deployment)
 
 ## Latest CI/CD Build Report
-https://cdtester.github.io/playwright/playwright/
-https://cdtester.github.io/playwright/allure/
+https://cdtester.github.io/playwright/playwright-report/  <br/>
+https://cdtester.github.io/playwright/allure-report/
 
 
 
@@ -157,7 +157,7 @@ If you design your tests using epic/feature/story, then this page orders your te
 
 ![Allure suites](./docs/allure_report_behavior.png)
 
-> [!NOTE] <br/>
+> [!NOTE]<br/>
 > this image shows tests that are not designed using behaviour features. These tests are show in an unstructured manor..
 
 
@@ -286,6 +286,10 @@ The [Login test](./tests/Login/herokuappLogin.spec.ts) contains tests:
 
 
 ### API
+https://playwright.dev/docs/api-testing
+
+https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-storage-state
+
 Playwright can be used to get access to the REST API of your application.
 
 Sometimes you may want to send requests to the server directly from Node.js without loading a page and running js code in it. A few examples where it may come in handy:
@@ -299,6 +303,21 @@ Each Playwright browser context has associated with it APIRequestContext instanc
 APIRequestContext returned by browserContext.request and page.request shares cookie storage with the corresponding BrowserContext. Each API request will have Cookie header populated with the values from the browser context. If the API response contains Set-Cookie header it will automatically update BrowserContext cookies and requests made from the page will pick them up. This means that if you log in using this API, your e2e test will be logged in and vice versa.
 
 If you want API requests to not interfere with the browser cookies you should create a new APIRequestContext by calling apiRequest.newContext(). Such APIRequestContext object will have its own isolated cookie storage.
+
+
+
+### API Mocking
+Some web pages have dynamic data that you may want to be static so that the tests do not fail. With Playwright you can inercept the response and change the dynamic data with a value that can be repeateably tested. 
+```typescript
+await page.route('*/**/**urlEnding', async (route) =>  {
+  const resp = await route.fetch();
+  const json = await resp.json();
+  json.keyName = 'static value';  // keyName will be replaced buy the actual key whose value you want to change
+
+  await route.fulfill({res, json});
+});
+```
+
 
 ### Agents
 Run init-agents to initialise AI agents
@@ -573,5 +592,17 @@ Now open a chat window:
 The user is presented with options to keep or undo changes.
 
 The healer is not fixing the Typescript issues where it has used invalid enum values for the allure.Severity().
+
+
+#### using AI chat to create POM
+https://www.youtube.com/watch?v=emUaq9FPIcc
+
+> [!PROMPT]<br/>
+> Use playwright MCP to run the test scenario defined in `test location`. Refactor existing tests to use proper page object models located in `pages location`.Do not change the existing functionality and do not create new tests.
+
+This creates poms with assertions in the POM. The POM should not perform assertions as the methods in POMS should return values to the test so that the test verifies the value. For example a POM method could take in a value and perform an action with that data. The data could provide various results, therefore you want the test to have the assertions and the POM to do all the actions.
+
+> [!PROMPT]<br/>
+> Check the page object models in the POM directory and tell me if they are using best practices.
 
 

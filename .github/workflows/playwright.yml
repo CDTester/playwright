@@ -196,8 +196,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📄 Reports" >> $GITHUB_STEP_SUMMARY
           echo "🔗 [View reports page](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/)" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [View Allure report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure/)" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [view Playwright report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/playwright/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View Allure report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure-report/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [view Playwright report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/playwright-report/)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [ "${{ steps.tests.outcome }}" == "success" ]; then
