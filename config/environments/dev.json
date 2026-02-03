@@ -4,7 +4,23 @@
     "baseUrl": "https://playwright.dev/"
   },
   "apiUsers": {
-    "baseUrl": ""
+    "baseUrl": "https://jsonplaceholder.typicode.com"
+  },
+  "apiAuthApiKey": {
+    "baseUrl": "https://api.getpostman.com",
+    "authType": "X-API-Key",
+    "authKey": "ABCD-123456789101112-131415161718192021222324"
+  },
+  "apiAuthBearer": {
+    "baseUrl": "https://api-ssl.bitly.com",
+    "authType": "bearer",
+    "authKey": "INVALID_ACCESS_TOKEN"
+  },
+  "apiAdditionalHeader": {
+    "baseUrl": "https://icanhazdadjoke.com",
+    "header": {
+      "X-Requested-With": "XMLHttpRequest"
+    }
   },
   "selenium": {
     "baseUrl": "https://www.selenium.dev"

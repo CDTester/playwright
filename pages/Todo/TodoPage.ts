@@ -1,5 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from '../BasePage';
 
 export class TodoPage extends BasePage {
   readonly inputBox: Locator;

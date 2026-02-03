@@ -1,5 +1,5 @@
 import { test as base, Locator } from '@playwright/test';
-import { TodoPage } from '../pages/TodoPage';
+import { TodoPage } from '../pages/Todo/TodoPage';
 
 type PageFixtures = {
   todoPage: TodoPage;
