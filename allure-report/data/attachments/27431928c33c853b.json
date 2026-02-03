@@ -1,0 +1,13 @@
+{
+  "server": "nginx",
+  "date": "Tue, 03 Feb 2026 18:53:11 GMT",
+  "content-type": "application/json",
+  "content-length": "23",
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
+  "x-xss-protection": "1; mode=blockFilter",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "DENY",
+  "content-security-policy": "default-src 'none",
+  "via": "1.1 google",
+  "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+}

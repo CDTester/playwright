@@ -1,0 +1,18 @@
+{
+  "date": "Tue, 03 Feb 2026 18:53:11 GMT",
+  "content-type": "application/json",
+  "content-length": "120",
+  "connection": "keep-alive",
+  "cf-ray": "9c8421354be846c7-LAX",
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET,POST,PUT,DELETE",
+  "access-control-max-age": "5",
+  "access-control-expose-headers": "*",
+  "access-control-allow-headers": "Accept,X-Api-Key,Content-Type",
+  "x-envoy-upstream-service-time": "18",
+  "cf-cache-status": "DYNAMIC",
+  "set-cookie": "__cf_bm=n0G6JylcndTOqfhWSHG1F1IopoyWzM_J757Dh8ixugE-1770144791-1.0.1.1-eFJf8QBP3Jtg14Ke5ODinapooIIjYT_hORDgL4e0COLcBu6Ki4GBP.I70Gvnz7H08sg7._OVbfIIH8V4Y7uDI4gwLriArE7cMEO4NfJVStk; path=/; expires=Tue, 03-Feb-26 19:23:11 GMT; domain=.getpostman.com; HttpOnly; Secure; SameSite=None\n_cfuvid=5DYOZ_ElZ3oUyuAktkora6EK5fq8zvp_rNnD7Ptqu7Y-1770144791983-0.0.1.1-604800000; path=/; domain=.getpostman.com; HttpOnly; Secure; SameSite=None",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+  "x-content-type-options": "nosniff",
+  "server": "cloudflare"
+}

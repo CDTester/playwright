@@ -1,0 +1,8 @@
+GET https://api-ssl.bitly.com/v4/user
+Headers: {
+  "Accept": "*/*",
+  "connection": "keep-alive",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Cache-Control": "no-cache",
+  "Authorization": "Bearer INVALID_ACCESS_TOKEN"
+}

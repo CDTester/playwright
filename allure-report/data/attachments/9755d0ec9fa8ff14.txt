@@ -1,0 +1,8 @@
+GET https://api.getpostman.com/me
+Headers: {
+  "Accept": "*/*",
+  "connection": "keep-alive",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Cache-Control": "no-cache",
+  "x-api-key": "ABCD-123456789101112-131415161718192021222324"
+}
