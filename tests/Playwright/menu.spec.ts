@@ -6,6 +6,9 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   test.beforeEach('Navigate to Playwright Homepage', async ({ homePage }) => {
     await allure.parentSuite('ParentSuite: Playwright');
     await allure.suite('Suite: Menu Tests');
+
+    await allure.epic('Epic: Playwright');
+    await allure.feature('Feature: Menu Tests');
     await allure.owner('Chris');
 
     await allure.step(`GIVEN ${homePage.url} has loaded`, async ( step ) => {
@@ -16,6 +19,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have homepage link to 'Playwright'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-011');
     await allure.issue('BUG-011');
     await allure.severity(allure.Severity.BLOCKER);
@@ -29,6 +33,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have link for 'Docs'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-012');
     await allure.issue('BUG-012');
     await allure.severity(allure.Severity.CRITICAL);
@@ -43,6 +48,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have link for 'API'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-013');
     await allure.issue('BUG-013');
     await allure.severity(allure.Severity.NORMAL);
@@ -57,6 +63,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have link for 'Node.js'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-014');
     await allure.issue('BUG-014');
     await allure.severity(allure.Severity.MINOR);
@@ -72,6 +79,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have drop down menu for other languages`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-015');
     await allure.issue('BUG-015');
     await allure.severity(allure.Severity.MINOR);
@@ -106,6 +114,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should have link for 'Community'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-016');
     await allure.issue('BUG-016');
     await allure.severity(allure.Severity.TRIVIAL);
@@ -120,6 +129,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-017');
     await allure.issue('BUG-017');
     await allure.severity(allure.Severity.NORMAL);
@@ -150,6 +160,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should change menu links when Java language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-018');
     await allure.issue('BUG-018');
     await allure.severity(allure.Severity.NORMAL);
@@ -180,6 +191,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Large screen) should change menu links when .NET language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
+    await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-019');
     await allure.issue('BUG-019');
     await allure.severity(allure.Severity.NORMAL);
@@ -211,6 +223,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have homepage link to 'Playwright'`, {tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-020');
     await allure.issue('BUG-020');
     await allure.severity(allure.Severity.CRITICAL);
@@ -226,6 +239,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have link for 'Docs'`, {tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-021');
     await allure.issue('BUG-021');
     await allure.severity(allure.Severity.NORMAL);
@@ -253,6 +267,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have link for 'API'`, {tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-022');
     await allure.issue('BUG-022');
     await allure.severity(allure.Severity.NORMAL);
@@ -279,6 +294,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have link for 'Node.js'`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-023');
     await allure.issue('BUG-023');
     await allure.severity(allure.Severity.MINOR);
@@ -305,6 +321,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have drop down menu for other languages`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-024');
     await allure.issue('BUG-024');
     await allure.severity(allure.Severity.MINOR);
@@ -350,6 +367,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should have link for 'Community'`, {tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-025');
     await allure.issue('BUG-025');
     await allure.severity(allure.Severity.NORMAL);
@@ -377,6 +395,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-026');
     await allure.issue('BUG-026');
     await allure.severity(allure.Severity.NORMAL);
@@ -411,6 +430,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should change menu links when Java language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-027');
     await allure.issue('BUG-027');
     await allure.severity(allure.Severity.NORMAL);
@@ -445,6 +465,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   test(`Menu (Small screen) should change menu links when .NET language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
+    await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-028');
     await allure.issue('BUG-028');
     await allure.severity(allure.Severity.NORMAL);

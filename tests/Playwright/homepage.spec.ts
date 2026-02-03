@@ -6,6 +6,9 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
   test.beforeEach('Navigate to Playwright Homepage', async ({ homePage }) => {
     await allure.parentSuite('ParentSuite: Playwright');
     await allure.suite('Suite: Homepage Tests');
+    // add feature to clean up the report structure
+    await allure.epic('Epic: Playwright');
+    await allure.feature('Feature: Homepage Tests');
     await allure.owner('Chris');
 
 
@@ -17,6 +20,7 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
 
   test('Homepage should have correct page Title', {tag: ['@smoke']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
+    await allure.story('Story: Homepage content');
     await allure.tms('PLAY-001');
     await allure.issue('BUG-001');
     await allure.severity(allure.Severity.BLOCKER);
@@ -30,6 +34,7 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
 
   test('Homepage should have Navigation Menu', {tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
+    await allure.story('Story: Homepage content');
     await allure.tms('PLAY-002');
     await allure.issue('BUG-002');
     await allure.severity(allure.Severity.CRITICAL);
@@ -43,6 +48,7 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
 
   test('Homepage should have a Header section', {tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
+    await allure.story('Story: Homepage content');
     await allure.tms('PLAY-003');
     await allure.issue('BUG-003');
     await allure.severity(allure.Severity.NORMAL);
@@ -75,6 +81,7 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
 
     test('Homepage should have a Footer section', {tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
+    await allure.story('Story: Homepage content');
     await allure.tms('PLAY-004');
     await allure.issue('BUG-004');
     await allure.severity(allure.Severity.NORMAL);
