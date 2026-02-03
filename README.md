@@ -286,10 +286,6 @@ The [Login test](./tests/Login/herokuappLogin.spec.ts) contains tests:
 
 
 ### API
-https://playwright.dev/docs/api-testing
-
-https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-storage-state
-
 Playwright can be used to get access to the REST API of your application.
 
 Sometimes you may want to send requests to the server directly from Node.js without loading a page and running js code in it. A few examples where it may come in handy:
@@ -297,7 +293,56 @@ Sometimes you may want to send requests to the server directly from Node.js with
 * Prepare server side state before visiting the web application in a test.
 * Validate server side post-conditions after running some actions in the browser.
 
-Each Playwright browser context has associated with it APIRequestContext instance which shares cookie storage with the browser context and can be accessed via browserContext.request or page.request. It is also possible to create a new APIRequestContext instance manually by calling apiRequest.newContext().
+#### API calls to the same browser context
+Each Playwright browser context has associated with it APIRequestContext instance which shares cookie storage with the browser context and can be accessed via browserContext.request or page.request. 
+
+#### API calls to other base URLs
+It is also possible to create a new APIRequestContext instance manually by calling apiRequest.newContext().
+
+Looking at [tests/Api](./tests/Api/) there are tests for:
+- GET requests
+- POST requests
+- PUT requests
+- PATCH requests
+- DELETE requests
+- API authorization tests
+- API schema validation tests
+
+The structure for API tests is similar to the POM structure of the page tests:
+```shell
+├─ pages
+│  └─ Api/
+│     ├─ BaseApi.ts
+│     ├─ ApiBaseUrlExample1
+│     │   ├─ EndpointA.ts
+│     │   └─ EndpointB.ts
+├─ tests/
+│  └─ Api/
+│     ├─ BaseUrl
+│     │   ├─ EndpointA.spec.ts
+│     │   └─ EndpointB.spec.ts
+├─ test-data/
+│  |─ Api/
+│  │  └─ userData.ts
+│  |─ Schemas/
+│     └─ EndpointA.ts
+```
+
+**Page/Api/BaseApi.ts**
+Contains methods for GET, POST, PUT, PATCH, DELETE and schema validator. Thes methods contain Allure reporting of the request and reponse of the API calls.
+
+**Page/BaseUrl/EndpointA.ts**
+Extends BaseApi.ts. Contains methods for that endpoints and imports the relevant schema for that endpoint.
+
+**test-data/Schema/BaseUrl/EndpointA.ts**
+Contains the schemas for the responses of that endpoint.
+
+**test-data/Api/BaseUrl/data.ts**
+Contains the test data test scenarios.
+
+**test.spec.ts**
+Imports endpoints classes and test data. 
+
 
 #### Cookie management
 APIRequestContext returned by browserContext.request and page.request shares cookie storage with the corresponding BrowserContext. Each API request will have Cookie header populated with the values from the browser context. If the API response contains Set-Cookie header it will automatically update BrowserContext cookies and requests made from the page will pick them up. This means that if you log in using this API, your e2e test will be logged in and vice versa.
@@ -597,12 +642,12 @@ The healer is not fixing the Typescript issues where it has used invalid enum va
 #### using AI chat to create POM
 https://www.youtube.com/watch?v=emUaq9FPIcc
 
-> [!PROMPT]<br/>
+> [!IMPORTANT] <br/>
 > Use playwright MCP to run the test scenario defined in `test location`. Refactor existing tests to use proper page object models located in `pages location`.Do not change the existing functionality and do not create new tests.
 
 This creates poms with assertions in the POM. The POM should not perform assertions as the methods in POMS should return values to the test so that the test verifies the value. For example a POM method could take in a value and perform an action with that data. The data could provide various results, therefore you want the test to have the assertions and the POM to do all the actions.
 
-> [!PROMPT]<br/>
+> [!IMPORTANT] <br/>
 > Check the page object models in the POM directory and tell me if they are using best practices.
 
 

@@ -1,12 +1,12 @@
 import { test, expect, APIResponse } from '@playwright/test';
-import { JsonPlaceholderApi } from '../../pages/Api/Jsonplaceholder/JsonPlaceholderApi';
+import { PostsApi } from '../../pages/Api/Jsonplaceholder/PostsApi';
 import * as allure from "allure-js-commons";
 
-test.describe('User API', {tag: ['@api', '@posts', '@put']}, () => {
-  let api: JsonPlaceholderApi;
+test.describe('Posts API', {tag: ['@api', '@posts', '@put']}, () => {
+  let api: PostsApi;
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
-    api = new JsonPlaceholderApi();
+    api = new PostsApi();
     await allure.epic('Epic: API tests');
     await allure.feature('Feature: PUT API Tests');
     await allure.owner('Chris');

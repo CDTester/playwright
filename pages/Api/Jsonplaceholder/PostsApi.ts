@@ -2,7 +2,7 @@ import { BaseApi } from '../BaseApi';
 import envData from '../../../utils/loadEnvData';
 import { UserSchema, UsersSchema } from '../../../test-data/Schemas/UsersSchema';
 
-export class JsonPlaceholderApi extends BaseApi {
+export class PostsApi extends BaseApi {
   readonly schemaUser = UserSchema;
   readonly schemaUsers = UsersSchema;
 
@@ -19,30 +19,6 @@ export class JsonPlaceholderApi extends BaseApi {
     super(baseURL, headers);
   }
 
-
-  // Get all users
-  async getAllUsers(): Promise<any> {
-    const response = await this.get('/users');
-    return response;
-  }
-
-  // Get user by ID
-  async getUserById(userId: string): Promise<any> {
-    const response = await this.get(`/users/${userId}`);
-    return response;
-  }
-
-  // Get user by username
-  async getUserByUsername(username: string): Promise<any> {
-    const response =  await this.get('/users', { params: { "username": username } });
-    return response;
-  }
-
-  // Get user by username
-  async getUserByCity(city: string): Promise<any> {
-    const response =  await this.get('/users', { params: { "address.city": city } });
-    return response;
-  }
 
   // Get all posts
   async getAllPosts(): Promise<any> {
