@@ -75,10 +75,12 @@ export default defineConfig({
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      testIgnore: 'tests/Api/*', // ignoring API tests for Webkit as they are not relevant
     },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      testIgnore: 'tests/Api/*', // ignoring API tests for Webkit as they are not relevant
     },
 
     /* Test against mobile viewports. */
