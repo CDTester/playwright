@@ -116,7 +116,7 @@ export class MenuPage extends BasePage {
     else if ( currentURL.includes('/dotnet/') ) currentLanguage = 'dotnet';
     else currentLanguage = 'nodejs';
 
-    if (await this.isMenuMini()) {
+    if (!await this.isMenuMini()) {
       await this.OpenMiniMenu();
       if (currentLanguage === 'nodejs') await this.menuLanguageSelectedNodeJS.click();
       else if (currentLanguage === 'python') await this.menuLanguageSelectedPython.click();

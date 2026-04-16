@@ -17,12 +17,12 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     await allure.severity(allure.Severity.BLOCKER);
 
     await allure.step(`GIVEN the user is not logged in`, async (step) => {
-      await step.parameter('Logged in', "False");
+      step.parameter('Logged in', "False");
     });
 
     await allure.step(`WHEN the user naviagates to the secure page`, async (step) => {
       await securePage.goto();
-      await step.parameter('Url', securePage.page.url());
+      step.parameter('Url', securePage.page.url());
     });
 
     await allure.step(`THEN the user is redirected to the login page`, async (step) => {
@@ -111,9 +111,9 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     await allure.severity(allure.Severity.MINOR);
 
     await allure.step(`GIVEN the user is logged in via a saved session state`, async (step) => {
-      await step.parameter('Logged in', "True");
+      step.parameter('Logged in', "True");
       const state = await loggedInState.page.context().storageState();
-      await step.parameter('Storage State', JSON.stringify(state, null, 2));
+      step.parameter('Storage State', JSON.stringify(state, null, 2));
     });
 
     await allure.step(`WHEN the user goes to the secure page`, async (step) => {
@@ -143,9 +143,9 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     await allure.severity(allure.Severity.MINOR);
 
     await allure.step(`GIVEN the user is logged in via a saved session state`, async (step) => {
-      await step.parameter('Logged in', "True");
+      step.parameter('Logged in', "True");
       const state = await loggedInState.page.context().storageState();
-      await step.parameter('Storage State', JSON.stringify(state, null, 2));
+      step.parameter('Storage State', JSON.stringify(state, null, 2));
     });
 
     await allure.step(`WHEN the user goes to the secure page`, async (step) => {

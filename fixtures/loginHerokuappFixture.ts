@@ -27,7 +27,7 @@ export const test = base.extend<PageFixtures>({
   },
   loggedInState: async ({ browser }, use) => {
     const auth = new HerokuappAuth();
-    const sessionPath = '../test-data/pages/LoginData/authState.herokuapp.json';
+    const sessionPath = 'test-data/pages/LoginData/authState.herokuapp.json';
     if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already created');
     }
