@@ -1,2 +1,0 @@
- Using environment config from /home/runner/work/playwright/playwright/config/environments/dev.json for test home-page.ts  
- Using environment config from /home/runner/work/playwright/playwright/config/environments/dev.json for test MenuPage.ts  

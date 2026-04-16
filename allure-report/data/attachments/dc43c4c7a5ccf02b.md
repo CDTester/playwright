@@ -1,0 +1,265 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Skip to main content":
+    - link "Skip to main content" [ref=e3]:
+      - /url: "#__docusaurus_skipToContent_fallback"
+  - navigation "Main" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - link "Playwright logo Playwright" [ref=e7]:
+          - /url: /
+          - img "Playwright logo" [ref=e9]
+          - generic [ref=e10]: Playwright
+        - link "Docs" [ref=e11]:
+          - /url: /docs/intro
+        - link "MCP" [ref=e12]:
+          - /url: /mcp/introduction
+        - link "CLI" [ref=e13]:
+          - /url: /agent-cli/introduction
+        - link "API" [ref=e14]:
+          - /url: /docs/api/class-playwright
+        - button "Node.js" [ref=e16]
+      - generic [ref=e17]:
+        - link "GitHub repository" [ref=e18]:
+          - /url: https://github.com/microsoft/playwright
+        - link "Discord server" [ref=e19]:
+          - /url: https://aka.ms/playwright/discord
+        - button "Switch between dark and light mode (currently system mode)" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Search (Ctrl+K)" [ref=e25] [cursor=pointer]:
+          - generic [ref=e26]:
+            - img [ref=e27]
+            - generic [ref=e29]: Search
+          - generic [ref=e30]:
+            - img [ref=e32]
+            - generic [ref=e34]: K
+  - generic [ref=e35]:
+    - banner [ref=e36]:
+      - generic [ref=e37]:
+        - heading "Playwright enables reliable web automation for testing, scripting, and AI agents." [level=1] [ref=e38]
+        - paragraph [ref=e39]:
+          - text: One API to drive Chromium, Firefox, and WebKit — in your tests, your scripts, and your agent workflows. Available for
+          - link "TypeScript" [ref=e40]:
+            - /url: https://playwright.dev/docs/intro
+          - text: ","
+          - link "Python" [ref=e41]:
+            - /url: https://playwright.dev/python/docs/intro
+          - text: ","
+          - link ".NET" [ref=e42]:
+            - /url: https://playwright.dev/dotnet/docs/intro
+          - text: ", and"
+          - link "Java" [ref=e43]:
+            - /url: https://playwright.dev/java/docs/intro
+          - text: .
+        - generic [ref=e44]:
+          - link "Get started" [ref=e45]:
+            - /url: /docs/intro
+          - generic [ref=e46]:
+            - link "Star microsoft/playwright on GitHub" [ref=e47] [cursor=pointer]:
+              - /url: https://github.com/microsoft/playwright
+              - text: Star
+            - link "85k+ stargazers on GitHub" [ref=e49] [cursor=pointer]:
+              - /url: https://github.com/microsoft/playwright/stargazers
+              - text: 85k+
+    - main [ref=e50]:
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - heading "Playwright Test" [level=3] [ref=e55]
+          - paragraph [ref=e56]: Full-featured test runner with auto-waiting, assertions, tracing, and parallelism across Chromium, Firefox, and WebKit.
+          - code [ref=e57]: npm init playwright@latest
+          - link "Testing documentation" [ref=e59]:
+            - /url: /docs/intro
+        - generic [ref=e60]:
+          - heading "Playwright CLI" [level=3] [ref=e61]
+          - paragraph [ref=e62]: Token-efficient browser automation for coding agents like Claude Code and GitHub Copilot. Skill-based workflows without large context overhead.
+          - code [ref=e63]: npm i -g @playwright/cli@latest
+          - link "CLI documentation" [ref=e65]:
+            - /url: https://github.com/microsoft/playwright-cli
+        - generic [ref=e66]:
+          - heading "Playwright MCP" [level=3] [ref=e67]
+          - paragraph [ref=e68]: Model Context Protocol server that gives AI agents full browser control through structured accessibility snapshots.
+          - code [ref=e69]: npx @playwright/mcp@latest
+          - link "MCP documentation" [ref=e71]:
+            - /url: https://github.com/microsoft/playwright-mcp
+      - generic [ref=e73]:
+        - heading "Built for testing" [level=2] [ref=e74]
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - heading "Auto-wait and web-first assertions" [level=4] [ref=e78]
+            - paragraph [ref=e79]: Playwright waits for elements to be actionable before performing actions. Assertions automatically retry until conditions are met. No artificial timeouts, no flaky tests.
+            - heading "Test isolation" [level=4] [ref=e80]
+            - paragraph [ref=e81]: Each test gets a fresh browser context — equivalent to a brand new browser profile. Full isolation with near-zero overhead. Save authentication state once and reuse it across tests.
+          - generic [ref=e82]:
+            - heading "Resilient locators" [level=4] [ref=e83]
+            - paragraph [ref=e84]:
+              - text: "Find elements with selectors that mirror how users see the page:"
+              - code [ref=e85]: getByRole
+              - text: ","
+              - code [ref=e86]: getByLabel
+              - text: ","
+              - code [ref=e87]: getByPlaceholder
+              - text: ","
+              - code [ref=e88]: getByTestId
+              - text: . No brittle CSS paths.
+            - heading "Parallelism and sharding" [level=4] [ref=e89]
+            - paragraph [ref=e90]: Tests run in parallel by default across all configured browsers. Shard across multiple machines for faster CI. Full cross-browser coverage on every commit.
+      - generic [ref=e92]:
+        - heading "Built for AI agents" [level=2] [ref=e93]
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - heading "Accessibility snapshots, not screenshots" [level=4] [ref=e97]
+            - paragraph [ref=e98]: Agents interact with pages through structured accessibility trees — element roles, names, and refs. Deterministic and unambiguous, no vision models required.
+            - heading "MCP server" [level=4] [ref=e99]
+            - paragraph [ref=e100]:
+              - text: Drop-in
+              - link "Model Context Protocol" [ref=e101]:
+                - /url: https://modelcontextprotocol.io
+              - text: server for VS Code, Cursor, Claude Desktop, Windsurf, and any MCP client. Full browser control through standard tool calls.
+          - generic [ref=e102]:
+            - heading "CLI for coding agents" [level=4] [ref=e103]
+            - paragraph [ref=e104]: Token-efficient command-line interface with installable skills. Purpose-built for Claude Code, GitHub Copilot, and similar coding agents that need to balance browser automation with large codebases.
+            - heading "Session monitoring" [level=4] [ref=e105]
+            - paragraph [ref=e106]: Visual dashboard with live screencast previews of all running browser sessions. Click any session to zoom in and take control.
+      - generic [ref=e108]:
+        - heading "Powerful tooling" [level=2] [ref=e109]
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - heading "Test generator" [level=4] [ref=e113]:
+              - link "Test generator" [ref=e114]:
+                - /url: docs/codegen
+            - paragraph [ref=e115]: Record your actions in the browser and Playwright writes the test code. Generate assertions from the recording toolbar. Pick locators by clicking on elements.
+          - generic [ref=e116]:
+            - heading "Trace Viewer" [level=4] [ref=e117]:
+              - link "Trace Viewer" [ref=e118]:
+                - /url: docs/trace-viewer-intro
+            - paragraph [ref=e119]: Full timeline of test execution with DOM snapshots, network requests, console logs, and screenshots at every step. Investigate failures without re-running.
+          - generic [ref=e120]:
+            - heading "VS Code extension" [level=4] [ref=e121]:
+              - link "VS Code extension" [ref=e122]:
+                - /url: docs/getting-started-vscode
+            - paragraph [ref=e123]: Run, debug, and generate tests directly in the editor. Set breakpoints, live-inspect locators in the browser, and view full execution traces in the sidebar.
+      - generic [ref=e125]:
+        - img "Chromium, Firefox, WebKit" [ref=e126]
+        - paragraph [ref=e127]:
+          - text: Any browser. Any platform. Chromium, Firefox, and WebKit on Linux, macOS, and Windows. Headless and headed. Also available for
+          - link "Python" [ref=e128]:
+            - /url: https://playwright.dev/python/docs/intro
+          - text: ","
+          - link ".NET" [ref=e129]:
+            - /url: https://playwright.dev/dotnet/docs/intro
+          - text: ", and"
+          - link "Java" [ref=e130]:
+            - /url: https://playwright.dev/java/docs/intro
+          - text: .
+      - generic [ref=e134]:
+        - heading "Chosen by companies and open source projects" [level=2] [ref=e135]
+        - list [ref=e136]:
+          - listitem [ref=e137]:
+            - link "VS Code" [ref=e138]:
+              - /url: https://code.visualstudio.com
+              - img "VS Code" [ref=e139]
+          - listitem [ref=e140]:
+            - link "Bing" [ref=e141]:
+              - /url: https://bing.com
+              - img "Bing" [ref=e142]
+          - listitem [ref=e143]:
+            - link "Outlook" [ref=e144]:
+              - /url: https://outlook.com
+              - img "Outlook" [ref=e145]
+          - listitem [ref=e146]:
+            - link "Disney+ Hotstar" [ref=e147]:
+              - /url: https://www.hotstar.com/
+              - img "Disney+ Hotstar" [ref=e148]
+          - listitem [ref=e149]:
+            - link "Material UI" [ref=e150]:
+              - /url: https://github.com/mui-org/material-ui
+              - img "Material UI" [ref=e151]
+          - listitem [ref=e152]:
+            - link "ING" [ref=e153]:
+              - /url: https://github.com/ing-bank/lion
+              - img "ING" [ref=e154]
+          - listitem [ref=e155]:
+            - link "Adobe" [ref=e156]:
+              - /url: https://github.com/adobe/spectrum-web-components
+              - img "Adobe" [ref=e157]
+          - listitem [ref=e158]:
+            - link "React Navigation" [ref=e159]:
+              - /url: https://github.com/react-navigation/react-navigation
+              - img "React Navigation" [ref=e160]
+          - listitem [ref=e161]:
+            - link "Accessibility Insights" [ref=e162]:
+              - /url: https://accessibilityinsights.io/
+              - img "Accessibility Insights" [ref=e163]
+  - contentinfo [ref=e164]:
+    - generic [ref=e165]:
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - generic [ref=e168]: Learn
+          - list [ref=e169]:
+            - listitem [ref=e170]:
+              - link "Getting started" [ref=e171]:
+                - /url: /docs/intro
+            - listitem [ref=e172]:
+              - link "Playwright Training" [ref=e173]:
+                - /url: https://learn.microsoft.com/en-us/training/modules/build-with-playwright/
+                - text: Playwright Training
+                - img [ref=e174]
+            - listitem [ref=e176]:
+              - link "Learn Videos" [ref=e177]:
+                - /url: /community/learn-videos
+            - listitem [ref=e178]:
+              - link "Feature Videos" [ref=e179]:
+                - /url: /community/feature-videos
+        - generic [ref=e180]:
+          - generic [ref=e181]: Community
+          - list [ref=e182]:
+            - listitem [ref=e183]:
+              - link "Stack Overflow" [ref=e184]:
+                - /url: https://stackoverflow.com/questions/tagged/playwright
+                - text: Stack Overflow
+                - img [ref=e185]
+            - listitem [ref=e187]:
+              - link "Discord" [ref=e188]:
+                - /url: https://aka.ms/playwright/discord
+                - text: Discord
+                - img [ref=e189]
+            - listitem [ref=e191]:
+              - link "Twitter" [ref=e192]:
+                - /url: https://twitter.com/playwrightweb
+                - text: Twitter
+                - img [ref=e193]
+            - listitem [ref=e195]:
+              - link "LinkedIn" [ref=e196]:
+                - /url: https://www.linkedin.com/company/playwrightweb
+                - text: LinkedIn
+                - img [ref=e197]
+        - generic [ref=e199]:
+          - generic [ref=e200]: More
+          - list [ref=e201]:
+            - listitem [ref=e202]:
+              - link "GitHub" [ref=e203]:
+                - /url: https://github.com/microsoft/playwright
+                - text: GitHub
+                - img [ref=e204]
+            - listitem [ref=e206]:
+              - link "YouTube" [ref=e207]:
+                - /url: https://www.youtube.com/channel/UC46Zj8pDH5tDosqm1gd7WTg
+                - text: YouTube
+                - img [ref=e208]
+            - listitem [ref=e210]:
+              - link "Blog" [ref=e211]:
+                - /url: https://dev.to/playwright
+                - text: Blog
+                - img [ref=e212]
+            - listitem [ref=e214]:
+              - link "Ambassadors" [ref=e215]:
+                - /url: /community/ambassadors
+            - listitem [ref=e216]:
+              - link "Microsoft Privacy Statement" [ref=e217]:
+                - /url: https://go.microsoft.com/fwlink/?LinkId=521839
+                - text: Microsoft Privacy Statement
+                - img [ref=e218]
+      - generic [ref=e221]: Copyright © 2026 Microsoft
+```
