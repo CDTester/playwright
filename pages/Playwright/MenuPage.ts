@@ -22,7 +22,8 @@ export class MenuPage extends BasePage {
   readonly menuJava: Locator;
   readonly menuLanguageSelectedDotNet: Locator;
   readonly menuDotNet: Locator;
-  readonly menuCommunity: Locator;
+  //readonly menuCommunity: Locator;
+  readonly closeMiniMenuButton: Locator;
 
   private linkDocs: string = '/docs/intro';
   private linkAPI: string = '/docs/api/class-playwright';
@@ -31,7 +32,7 @@ export class MenuPage extends BasePage {
   private linkPython: string = '/python/';
   private linkJava: string = '/java/';
   private linkDotNet: string = '/dotnet/';
-  private linkCommunity: string = '/community/welcome';
+  //private linkCommunity: string = '/community/welcome';  // No longer an option in the menu, but keeping for test purposes
 
 
   constructor (page: Page) {
@@ -45,7 +46,7 @@ export class MenuPage extends BasePage {
     this.menuPlaywright = page.getByRole('link', { name: /^Playwright logo/ });
     this.menuDocs = page.getByRole('link', { name: 'Docs' });
     this.menuAPI = page.getByRole('link', { name: 'API' });
-    this.menuCommunity = page.getByRole('link', { name: 'Community' });
+    //this.menuCommunity = page.getByRole('link', { name: 'Community' });
 
     // Language options
     this.menuLanguageSelectedNodeJS = page.getByRole('button', { name: 'Node.js' });
@@ -60,14 +61,17 @@ export class MenuPage extends BasePage {
     // Smaller Menu screen locators
     this.topNavMenuMiniOpen = page.getByRole('button', { name: 'Toggle navigation bar' });
     this.topNavMenuMini = page.locator('div.theme-layout-navbar-sidebar');  //__item menu
+    this.closeMiniMenuButton = page.getByRole('button', { name: 'Close navigation bar' });
 
     // links
     page.url()
   }
 
   async goto () {
-    await this.page.goto(this.url);
-    await this.page.waitForLoadState('networkidle'); // or 'domcontentloaded'
+    await this.navigate(this.url);
+    // wait untill this.topNavMenu is visible to ensure page has loaded, instead of relying on load state which can be inconsistent
+    await this.topNavMenu.waitFor({ state: 'visible', timeout: 10000 });
+    //await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
   }
 
   /**
@@ -84,7 +88,7 @@ export class MenuPage extends BasePage {
       case 'python': return this.linkPython;
       case 'java': return this.linkJava;
       case 'dotnet': return this.linkDotNet;
-      case 'community': return this.linkCommunity;
+      //case 'community': return this.linkCommunity;
       default: throw new Error(`Unsupported menu item: ${menuItem}`);
     }
   }
@@ -100,6 +104,7 @@ export class MenuPage extends BasePage {
   
   async OpenMiniMenu() {
     await this.topNavMenuMiniOpen.click();
+    this.closeMiniMenuButton.waitFor({ state: 'visible', timeout: 5000 });
   }
 
   async changeLanguageTo ( language: string ) {
@@ -131,28 +136,28 @@ export class MenuPage extends BasePage {
         this.url = this.env.playwright.baseUrl;
         this.linkDocs = '/docs/intro';
         this.linkAPI = '/docs/api/class-playwright';
-        this.linkCommunity = '/community/welcome';
+        // this.linkCommunity = '/community/welcome';
         break;
       case 'python': 
         await this.menuPython.click();
         this.url = this.env.playwright.baseUrl + 'python/';
         this.linkDocs = '/python/docs/intro';
         this.linkAPI = '/python/docs/api/class-playwright';
-        this.linkCommunity = '/python/community/welcome';
+        // this.linkCommunity = '/python/community/welcome';
         break;
       case 'java': 
         await this.menuJava.click();
         this.url = this.env.playwright.baseUrl + 'java/';
         this.linkDocs = '/java/docs/intro';
         this.linkAPI = '/java/docs/api/class-playwright';
-        this.linkCommunity = '/java/community/welcome';
+        // this.linkCommunity = '/java/community/welcome';
         break;
       case 'dotnet': 
         await this.menuDotNet.click();
         this.url = this.env.playwright.baseUrl + 'dotnet/';
         this.linkDocs = '/dotnet/docs/intro';
         this.linkAPI = '/dotnet/docs/api/class-playwright';
-        this.linkCommunity = '/dotnet/community/welcome';
+        // this.linkCommunity = '/dotnet/community/welcome';
         break;
       default:
         throw new Error(`Unsupported language: ${language}`);

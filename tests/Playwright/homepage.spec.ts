@@ -59,7 +59,7 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
 
     await allure.step('Should have top heading text', async (step) => {
-      let expectedText = 'Playwright enables reliable end-to-end testing for modern web apps.';
+      let expectedText = 'Playwright enables reliable web automation for testing, scripting, and AI agents.';
       step.parameter('Header Text', await homePage.headerText.innerText());
       await expect(homePage.headerText, `Expect header text to be visible`).toBeVisible();
       await expect(homePage.headerText, `Expect header text to be ${expectedText}`).toHaveText(expectedText);

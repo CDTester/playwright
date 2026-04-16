@@ -9,7 +9,7 @@ export class HerokuappAuth {
   async setup() {
     // check if auth state already exists
     const sessionPath = '../test-data/pages/LoginData/authState.herokuapp.json';
-    if (!await fs.existsSync(sessionPath)) {
+    if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already exists, skipping setup');
     }
     else {

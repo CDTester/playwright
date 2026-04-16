@@ -41,6 +41,7 @@ export class HomePage extends BasePage {
 
   async goto () {
     await this.navigate(this.url);
+    await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
   }
 
 
