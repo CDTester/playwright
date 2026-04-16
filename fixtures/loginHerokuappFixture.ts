@@ -27,18 +27,17 @@ export const test = base.extend<PageFixtures>({
   },
   loggedInState: async ({ browser }, use) => {
     const auth = new HerokuappAuth();
-    await auth.setup();
     const sessionPath = '../test-data/pages/LoginData/authState.herokuapp.json';
     if (await fs.existsSync(sessionPath)) {
-      console.log('Auth state created successfully');
+      console.log('StorageState already created');
     }
     else {
-      console.log('Auth state was not created successfully');
+      await auth.setup();
     }
 
     // Create new context with stored authentication
     const context = await browser.newContext({ storageState: sessionPath });
-    console.log(JSON.stringify(await context.storageState(), null, 2));
+    //console.log(JSON.stringify(await context.storageState(), null, 2));
     const page = await context.newPage();
     const securePage = new HerokuappSecurePage(page);
     await use(securePage);

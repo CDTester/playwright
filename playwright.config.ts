@@ -44,7 +44,7 @@ export default defineConfig({
     geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Set geolocation to Great Pyramid of Giza
     permissions: ['geolocation'],
     screenshot: 'only-on-failure', // on, off, retain-on-failure
-    video: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
+    video: 'off', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
     trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     // baseURL: 'http://localhost:3000',  // This setsbaseURL for all tests, I am setting baseURL is set in env files and loaded in helpers

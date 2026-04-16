@@ -35,7 +35,7 @@ export class SeleniumLoginPage extends BasePage {
 
   async goto() {
     await this.navigate(this.url);
-    await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded' networkidle
+    //await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded' networkidle
   }
 
   async login(username: string, password: string): Promise<string> {

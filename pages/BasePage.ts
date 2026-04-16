@@ -16,7 +16,7 @@ export class BasePage {
 
     while (attempt < maxRetries && !success) {
       try {
-        await this.page.goto(url, { timeout: 5000, waitUntil: 'domcontentloaded' });
+        await this.page.goto(url, { waitUntil: 'commit' });
         success = true;
       }
       catch (error: any) {
@@ -26,7 +26,7 @@ export class BasePage {
         if (attempt < maxRetries) {
           // Try reloading the page instead of a full goto
           try {
-            await this.page.reload({ timeout: 5000, waitUntil: 'domcontentloaded' });
+            await this.page.reload({ waitUntil: 'domcontentloaded' });
           }
           catch (reloadError: any) {
             console.warn(`Reload failed: ${reloadError.message}`);

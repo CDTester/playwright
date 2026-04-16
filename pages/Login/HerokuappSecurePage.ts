@@ -22,12 +22,12 @@ export class HerokuappSecurePage extends BasePage {
 
   async goto() {
     await this.navigate(this.url);
-    await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded' networkidle
+    //await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded' networkidle
   }
 
   
   async isLoggedIn(): Promise<boolean> {
-    await this.page.waitForURL(this.url);
+    await this.page.waitForURL(this.url, { waitUntil: 'domcontentloaded' });
     // await this.page.waitForLoadState('domcontentloaded');
     return await this.isVisible(this.welcomeMessage);
   }

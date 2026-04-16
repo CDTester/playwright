@@ -3,7 +3,7 @@ import * as allure from "allure-js-commons";
 
 test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@selenium', '@noStorageState']}, () => {
 
-  test.beforeEach(async ({page, loginPage}) => {
+  test.beforeEach(async ({}) => {
     await allure.epic('Epic: Login');
     await allure.feature('Feature: StorageState Tests');
     await allure.owner('Chris');
@@ -104,7 +104,7 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
   });
 
 
-  test('The user can access the secure page when storage state is used', async ({ securePage, loggedInState }) => {
+  test('The user can access the secure page when storage state is used', async ({ loggedInState }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-014');
     await allure.issue('BUG-114');
@@ -122,15 +122,50 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
 
     await allure.step(`THEN the user is not redirected to the login page`, async (step) => {
       step.parameter('Current URL', loggedInState.page.url());
-      await expect(loggedInState.page, 'Expected URL to be secure page').toHaveURL(securePage.url);
+      await expect(loggedInState.page, 'Expected URL to be secure page').toHaveURL(loggedInState.url);
+      await expect(loggedInState.isLoggedIn()).toBeTruthy();
+      await expect(loggedInState.headerText).toBeVisible();
     });
 
     await allure.step(`AND the user is not presented with logged in message`, async (step) => {
-      const message = await securePage.getMessage(securePage.loggedInMessage);
+      const message = await loggedInState.getMessage(loggedInState.loggedInMessage);
       step.parameter('Expected Message', 'The logged in message is not visible because the login screen calls /authenticate which post the message to the secure area');
       await expect(message).not.toBeVisible();
     });
 
   });
+
+
+  test('Re-run storage state test to check it runs faster as storagestate now saved', async ({ loggedInState }) => {
+    await allure.story('Story: Access the-internet.herokuapp Secure Area');
+    await allure.tms('LOGIN-015');
+    await allure.issue('BUG-115');
+    await allure.severity(allure.Severity.MINOR);
+
+    await allure.step(`GIVEN the user is logged in via a saved session state`, async (step) => {
+      await step.parameter('Logged in', "True");
+      const state = await loggedInState.page.context().storageState();
+      await step.parameter('Storage State', JSON.stringify(state, null, 2));
+    });
+
+    await allure.step(`WHEN the user goes to the secure page`, async (step) => {
+      await loggedInState.goto();
+      await expect(loggedInState.isLoggedIn()).toBeTruthy();
+    });
+
+    await allure.step(`THEN the user is not redirected to the login page`, async (step) => {
+      step.parameter('Current URL', loggedInState.page.url());
+      await expect(loggedInState.page, 'Expected URL to be secure page').toHaveURL(loggedInState.url);
+      await expect(loggedInState.headerText).toBeVisible();
+    });
+
+    await allure.step(`AND the user is not presented with logged in message`, async (step) => {
+      const message = await loggedInState.getMessage(loggedInState.loggedInMessage);
+      step.parameter('Expected Message', 'The logged in message is not visible because the login screen calls /authenticate which post the message to the secure area');
+      await expect(message).not.toBeVisible();
+    });
+
+  });
+
 
 });
