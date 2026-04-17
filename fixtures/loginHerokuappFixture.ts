@@ -27,17 +27,21 @@ export const test = base.extend<PageFixtures>({
   },
   loggedInState: async ({ browser }, use) => {
     const auth = new HerokuappAuth();
-    const sessionPath = 'test-data/pages/LoginData/authState.herokuapp.json';
+    const device = browser.browserType().name();
+
+    // storage state file created by chrome cannot be used by webkit as it enforces stricter rules on cookies and origins
+    const sessionPath = `tmp/auth/herokuapp/authState.${device}.json`;
     if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already created');
     }
     else {
-      await auth.setup();
+      await auth.setup(device, sessionPath);
     }
 
     // Create new context with stored authentication
     const context = await browser.newContext({ storageState: sessionPath });
-    //console.log(JSON.stringify(await context.storageState(), null, 2));
+    // const cookies = await context.cookies();
+    // console.log(JSON.stringify(cookies, null, 2));
     const page = await context.newPage();
     const securePage = new HerokuappSecurePage(page);
     await use(securePage);

@@ -1,21 +1,29 @@
 import { HerokuappLoginPage } from '../../../pages/Login/HerokuappLoginPage';
 import { HerokuappSecurePage } from '../../../pages/Login/HerokuappSecurePage';
 import { HerokuappData } from './HerokuappData';
-import { chromium } from '@playwright/test';
+import { chromium, firefox, webkit } from '@playwright/test';
 import fs from 'fs';
 
 export class HerokuappAuth {
 
-  async setup() {
+  async setup(_browser: string, sessionPath: string) {
     // check if auth state already exists
-    const sessionPath = 'test-data/pages/LoginData/authState.herokuapp.json';
     if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already exists, skipping setup');
     }
     else {
       console.log('StorageState does not exist, creating new storage state');
       const userData = HerokuappData;
-      const browser = await chromium.launch();
+      let browser: any;
+      if (_browser === 'chromium') {
+        browser = await chromium.launch();
+      } 
+      else if (_browser === 'firefox') {
+        browser = await firefox.launch();
+      }
+      else if (_browser === 'webkit') {
+        browser = await webkit.launch();
+      }
       const context = await browser.newContext();
       const page = await context.newPage();
       const loginPage = new HerokuappLoginPage(page);
@@ -27,7 +35,7 @@ export class HerokuappAuth {
 
       await context.storageState({ path: sessionPath });
       if (await fs.existsSync(sessionPath)) {
-        console.log('StorageState created successfully');
+        console.log(`StorageState ${sessionPath} created successfully`);
       }
       else {
         console.log('StorageState was not created successfully');
