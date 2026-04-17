@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Reports</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; background: linear-gradient(135deg, #9dffff 0%, #4b7ea2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .container { background: white; border-radius: 16px; padding: 48px; max-width: 900px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    h1 { color: #333; text-align: center; margin-bottom: 24px; font-size: 32px; }
+    .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 32px; }
+    .report-card { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; padding: 28px; text-decoration: none; }
+    .report-card:hover { border-color: #667eea; }
+    .report-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+    .report-card h2 { color: #333; font-size: 22px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .report-card p { color: #666; line-height: 1.6; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Playwright Test Reports Dashboard</h1>
+    
+    <div class="report-grid">
+      <a href="./allure-report/index.html" class="report-card">
+        <div class="report-icon">📊</div>
+        <h2>Allure Report</h2>
+        <p>Comprehensive test analytics with historical trends, detailed execution data, and visual insights</p>
+      </a>
+      
+      <a href="./playwright-report/index.html" class="report-card">
+        <div class="report-icon">🎭</div>
+        <h2>Playwright Report</h2>
+        <p>Native Playwright HTML report with test traces, screenshots, and interactive debugging</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

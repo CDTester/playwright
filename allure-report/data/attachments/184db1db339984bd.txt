@@ -1,0 +1,13 @@
+PUT https://jsonplaceholder.typicode.com/posts/1
+Headers: {
+  "Accept": "*/*",
+  "connection": "keep-alive",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Cache-Control": "no-cache"
+}
+Body: {
+  "id": 1,
+  "title": "PUT an updated post",
+  "body": "this is the updated body of the post",
+  "userId": 1
+}
