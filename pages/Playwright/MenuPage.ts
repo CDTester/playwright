@@ -99,7 +99,8 @@ export class MenuPage extends BasePage {
 
 
   async isMenuMini() {
-    return await this.menuDocs.isVisible() ? false : true;
+    // return true if page width is greater than 996px
+    return await this.page.evaluate(() => window.innerWidth > 996);
   }
   
   async OpenMiniMenu() {
