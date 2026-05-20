@@ -12,8 +12,10 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
     await allure.owner('Chris');
 
     await allure.step(`GIVEN ${login.url} has loaded`, async () => {
-      await login.goto();
-      await expect(page.locator('html')).toMatchAriaSnapshot(login.pageSnapshot);
+      await test.step(`GIVEN ${login.url} has loaded`, async () => {
+        await login.goto();
+        await expect(page.locator('html')).toMatchAriaSnapshot(login.pageSnapshot);
+      });
     });
   });
 
@@ -30,15 +32,20 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
     await allure.step(`GIVEN user has valid credential`, async (step) => {
       await step.parameter('Username', username);
       await step.parameter('Password', password);
+      await test.step(`GIVEN user has valid credential`, async () => {});
     });
 
     await allure.step(`WHEN the user logs in`, async (step) => {
-      message = await login.login(username, password);
       step.parameter('Alert Message', message);
+      await test.step(`WHEN the user logs in`, async () => {
+        message = await login.login(username, password);
+      });
     });
 
     await allure.step(`THEN a successful login message is presented`, async (step) => {
-      expect(message, `expect message to be "${login.successMessage}"`).toBe(login.successMessage);
+      await test.step(`THEN a successful login message is presented`, async () => {
+        expect(message, `expect message to be "${login.successMessage}"`).toBe(login.successMessage);
+      });
     });
 
   });
@@ -57,15 +64,19 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
     await allure.step(`GIVEN user has invalid credential`, async (step) => {
       await step.parameter('Username', username);
       await step.parameter('Password', password);
+      await test.step(`GIVEN user has invalid credential`, async () => {});
     });
 
     await allure.step(`WHEN the user logs in`, async (step) => {
-      message = await login.login(username, password);
-      step.parameter('Alert Message', message);
+      await test.step(`WHEN the user logs in`, async () => {
+        message = await login.login(username, password);
+      });
     });
 
     await allure.step(`THEN an error login message is presented`, async (step) => {
-      expect(message, `expect message to be "${login.errorMessage}"`).toBe(login.errorMessage);
+      await test.step(`THEN an error login message is presented`, async () => {
+        expect(message, `expect message to be "${login.errorMessage}"`).toBe(login.errorMessage);
+      });
     });
 
   });

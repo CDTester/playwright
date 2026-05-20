@@ -12,32 +12,28 @@ export class BasePage {
   async navigate (url: string) {
     const maxRetries = 3;
     let attempt = 0;
-    let success = false;
+    let lastError: any;
 
-    while (attempt < maxRetries && !success) {
+    while (attempt < maxRetries) {
       try {
-        await this.page.goto(url, { waitUntil: 'commit' });
-        success = true;
+        await this.page.goto(url, { waitUntil: 'commit', timeout: 30000 });
+        return; // Success
       }
       catch (error: any) {
-        console.warn(`Attempt ${attempt + 1} failed: ${error.message}`);
+        lastError = error;
         attempt++;
-
+        console.warn(`Navigation attempt ${attempt} failed: ${error.message}`);
+        
         if (attempt < maxRetries) {
-          // Try reloading the page instead of a full goto
-          try {
-            await this.page.reload({ waitUntil: 'domcontentloaded' });
-          }
-          catch (reloadError: any) {
-            console.warn(`Reload failed: ${reloadError.message}`);
-          }
+          // Wait a bit before retrying
+          await new Promise(resolve => setTimeout(resolve, 1000));
         }
       }
     }
 
-    if (!success) {
-      console.error(`Failed to navigate to ${url} after ${maxRetries} attempts.`);
-    }
+    // After all retries failed
+    console.error(`Failed to navigate to ${url} after ${maxRetries} attempts.`);
+    throw lastError;
   }
 
   async waitForPageLoad() {

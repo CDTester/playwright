@@ -48,6 +48,7 @@ export default defineConfig({
     video: 'off', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
     trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
+    ignoreHTTPSErrors: true, // Ignore HTTPS errors to handle SSL certificate issues
     // baseURL: 'http://localhost:3000',  // This setsbaseURL for all tests, I am setting baseURL is set in env files and loaded in helpers
     // storageState: 'storageState.json',  // this sets storage state for all tests, I am setting storageState in fixtures where needed
   },
