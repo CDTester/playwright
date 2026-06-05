@@ -17,7 +17,7 @@ export class TodoPage extends BasePage {
   readonly urlActive: string = 'https://demo.playwright.dev/todomvc/#/active';
   readonly urlCompleted: string = 'https://demo.playwright.dev/todomvc/#/completed';
 
-  constructor (page: Page) {
+  public constructor (page: Page) {
     super(page)
     this.url = this.url;
     //page locators. list item locators are defined in methods since they are dynamic
@@ -32,11 +32,11 @@ export class TodoPage extends BasePage {
     this.clear = page.getByRole('button', { name: 'Clear completed' });  // button with text 'Clear completed'
   }
 
-  async goto () {
+  public async goto () {
     await this.navigate(this.url);
   }
 
-  async addToDo (text: string | string[]) {
+  public async addToDo (text: string | string[]) {
     if (typeof (text) === 'string') {
       await this.inputBox.fill(text);
       await this.inputBox.press('Enter');
@@ -50,7 +50,7 @@ export class TodoPage extends BasePage {
   }
 
 
-  async editToDo (item: string, replacementText: string, save?: string) {
+  public async editToDo (item: string, replacementText: string, save?: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.dblclick();
     await todo.getByLabel('Edit').fill(replacementText);
@@ -66,43 +66,43 @@ export class TodoPage extends BasePage {
     }
   }
 
-  async getCompleteCheckbox (item: string): Promise<Locator> {
+  public async getCompleteCheckbox (item: string): Promise<Locator> {
     const todo = this.todoItems.filter({ hasText: item });
     return await todo.getByLabel('Toggle Todo');
   }
 
-  async completeToDo (item: string) {
+  public async completeToDo (item: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.getByRole('checkbox').check();
   }
 
-  async uncompleteToDo (item: string) {
+  public async uncompleteToDo (item: string) {
     const todo = this.todoItems.filter({ hasText: item });
     await todo.getByRole('checkbox').uncheck();
   }
 
-  async completeAllToDo () {
+  public async completeAllToDo () {
     await this.markAll.check();
   }
 
-  async uncompleteAllToDo () {
+  public async uncompleteAllToDo () {
     await this.markAll.uncheck();
   }
 
-  async remove (text: string) {
+  public async remove (text: string) {
     const todo = this.todoItems.filter({ hasText: text });
     await todo.hover();
     await todo.getByLabel('Delete').click();
   }
 
-  async removeAll () {
+  public async removeAll () {
     while ((await this.todoItems.count()) > 0) {
       await this.todoItems.first().hover();
       await this.todoItems.getByLabel('Delete').first().click();
     }
   }
 
-  async getItems () :Promise<String[]> {
+  public async getItems () :Promise<String[]> {
     const items: String[] = [];
 
     // Wait for the list to be stable before counting
@@ -116,7 +116,7 @@ export class TodoPage extends BasePage {
   }
 
 
-  async getVisibleItems () :Promise<String[]> {
+  public async getVisibleItems () :Promise<String[]> {
     const items: String[] = [];
 
     // Wait for the list to be stable before counting
@@ -132,7 +132,7 @@ export class TodoPage extends BasePage {
   }
 
 
-  async applyFilter (text: string) {
+  public async applyFilter (text: string) {
     const expectedUrl = text === 'All' ? this.url : text === 'Active' ? this.urlActive : this.urlCompleted;
    
     // Click the filter

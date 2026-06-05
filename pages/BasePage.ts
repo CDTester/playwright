@@ -1,8 +1,9 @@
 import { Page, Locator } from '@playwright/test';
 import * as allure from "allure-js-commons";
 
-export class BasePage {
+export abstract class BasePage {
   readonly page: Page;
+  readonly env: any;
 
   constructor(page: Page) {
     this.page = page;
@@ -40,21 +41,10 @@ export class BasePage {
     await this.page.waitForLoadState('networkidle');
   }
 
-  async clickElement(locator: Locator) {
-    await locator.click();
-  }
-
-  async fillInput(locator: Locator, text: string) {
-    await locator.fill(text);
-  }
-
   async getText(locator: Locator): Promise<string> {
     return await locator.textContent() || '';
   }
 
-  async isVisible(locator: Locator): Promise<boolean> {
-    return await locator.isVisible();
-  }
 
   async waitForElement(locator: Locator, timeout: number = 5000) {
     await locator.waitFor({ state: 'visible', timeout });

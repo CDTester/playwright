@@ -1,22 +1,19 @@
-import { test, expect, APIResponse } from '@playwright/test';
-import { UsersApi } from '../../pages/Api/Jsonplaceholder/UsersApi';
+import { test, expect, APIResponse } from '../../fixtures/apiFixture';
 import * as allure from "allure-js-commons";
 
 test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
-  let api: UsersApi;
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
-    api = new UsersApi();
     await allure.epic('Epic: API tests');
     await allure.feature('Feature: GET API Tests');
     await allure.owner('Chris');
   });
 
-  test.afterEach(async () => {
-    await api.dispose();
+  test.afterEach(async ({ usersApi }) => {
+    await usersApi.dispose();
   });
 
-  test('Get all users', {tag: ['@smoke']}, async () => {
+  test('Get all users', {tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-001');
     await allure.issue('BUG-001');
@@ -25,12 +22,12 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await usersApi.init();
+      await step.parameter('base URL', usersApi.getBaseUrl);
     });
 
-    await allure.step('WHEN a request is made to get all users', async (step) => {
-      response = await api.getAllUsers();
+    await allure.step('WHEN a request is made to get all users', async () => {
+      response = await usersApi.getAllUsers();
       respBody = await response.json();
     });
 
@@ -47,7 +44,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by id', {tag: ['@smoke']}, async () => {
+  test('Get user by id', {tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-002');
     await allure.issue('BUG-002');
@@ -56,12 +53,12 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await usersApi.init();
+      await step.parameter('base URL', usersApi.getBaseUrl);
     });
 
-    await allure.step('WHEN a request is made to get a user by id', async (step) => {
-      response = await api.getUserById('1');
+    await allure.step('WHEN a request is made to get a user by id', async () => {
+      response = await usersApi.getUserById('1');
       respBody = await response.json();
     });
 
@@ -78,7 +75,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by username', {tag: ['@smoke']}, async () => {
+  test('Get user by username', {tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-003');
     await allure.issue('BUG-003');
@@ -87,12 +84,12 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await usersApi.init();
+      await step.parameter('base URL', usersApi.getBaseUrl);
     });
 
     await allure.step('WHEN a request is made to get a user by username', async (step) => {
-      response = await api.getUserByUsername('Samantha');
+      response = await usersApi.getUserByUsername('Samantha');
       respBody = await response.json();
     });
 
@@ -109,7 +106,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by city', {tag: ['@smoke']}, async () => {
+  test('Get user by city', {tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-004');
     await allure.issue('BUG-004');
@@ -118,12 +115,12 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await usersApi.init();
+      await step.parameter('base URL', usersApi.getBaseUrl);
     });
 
     await allure.step('WHEN a request is made to get a user by city', async (step) => {
-      response = await api.getUserByCity('South Elvis');
+      response = await usersApi.getUserByCity('South Elvis');
       respBody = await response.json();
     });
 

@@ -4,51 +4,60 @@ import { HerokuappSecurePage } from '../pages/Login/HerokuappSecurePage';
 import { HerokuappData } from '../test-data/pages/LoginData/HerokuappData';
 import { HerokuappAuth } from '../test-data/pages/LoginData/HerokuappAuth';
 import { attachment } from 'allure-js-commons';
+import envData from '../utils/loadEnvData';
 import * as fs from 'fs';
 
-type PageFixtures = {
+type TestFixtures = {
   loginPage: HerokuappLoginPage;
   securePage: HerokuappSecurePage;
   userData: typeof HerokuappData;
-  loggedInState: HerokuappSecurePage;
+  envData: object;
 };
 
-export const test = base.extend<PageFixtures>({
-  loginPage: async ({ page }, use) => {
-    const loginPage = new HerokuappLoginPage(page);
+type WorkerFixtures = {
+  loggedInState: HerokuappSecurePage;
+  envData: object;
+};
+
+export const test = base.extend<TestFixtures, WorkerFixtures>({
+  envData: [async ({}, use: (data:object) => Promise<void>) => {
+    const data = envData.getEnvData();
+    await use(data); 
+  }, { scope: 'worker' }],
+  loginPage: async ({ page, envData }, use) => {
+    const loginPage = new HerokuappLoginPage(page, envData);
     await use(loginPage);
   },
-  securePage: async ({ page }, use) => {
-    const securePage = new HerokuappSecurePage(page);
+  securePage: async ({ page, envData }, use) => {
+    const securePage = new HerokuappSecurePage(page, envData);
     await use(securePage);
   },
   userData: async ({}, use) => {
     await use(HerokuappData);
   },
-  loggedInState: async ({ browser }, use) => {
+  loggedInState: [async ({ browser, envData }, use) => {
     const auth = new HerokuappAuth();
     const device = browser.browserType().name();
 
     // storage state file created by chrome cannot be used by webkit as it enforces stricter rules on cookies and origins
     const sessionPath = `tmp/auth/herokuapp/authState.${device}.json`;
+
     if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already created');
     }
     else {
-      await auth.setup(device, sessionPath);
+      await auth.setup(device, sessionPath, envData);
     }
 
     // Create new context with stored authentication
     const context = await browser.newContext({ storageState: sessionPath });
-    // const cookies = await context.cookies();
-    // console.log(JSON.stringify(cookies, null, 2));
     const page = await context.newPage();
-    const securePage = new HerokuappSecurePage(page);
+    const securePage = new HerokuappSecurePage(page, envData);
     await use(securePage);
     
     // Cleanup
     await context.close();
-  }
+  }, { scope: 'worker' }]
 });
 
 // Fixture to automatically attach trace on test failure

@@ -1,21 +1,21 @@
 import { BaseApi } from '../BaseApi';
-import envData from '../../../utils/loadEnvData';
 
 export class BitlyApi extends BaseApi {
+  readonly envConfig: any;
 
-  constructor() {
-    const env = new envData('BitlyApi');
-    const envConfig = env.getEnvData as any;
-    const baseURL = envConfig.apiAuthBearer.baseUrl;
+
+  constructor(envData: any) {
+    const baseURL = envData.apiAuthBearer.baseUrl;
     const headers = { 
       "connection": "keep-alive", 
       "Accept-Encoding": "gzip, deflate, br", 
       "Cache-Control": "no-cache" 
     };
     super(baseURL, headers);
+    this.envConfig = envData;
 
     // set Bearer token for authentication, this can be modified by tests if needed
-    this.setAuthToken(envConfig.apiAuthBearer.authType, envConfig.apiAuthBearer.authKey);
+    this.setAuthToken(this.envConfig.apiAuthBearer.authType, this.envConfig.apiAuthBearer.authKey);
   }
 
 

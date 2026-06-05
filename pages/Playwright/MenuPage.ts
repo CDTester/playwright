@@ -1,7 +1,6 @@
 // pages/login.page.ts
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import envData from '../../utils/loadEnvData';
 
 
 export class MenuPage extends BasePage {
@@ -22,7 +21,6 @@ export class MenuPage extends BasePage {
   readonly menuJava: Locator;
   readonly menuLanguageSelectedDotNet: Locator;
   readonly menuDotNet: Locator;
-  //readonly menuCommunity: Locator;
   readonly closeMiniMenuButton: Locator;
 
   private linkDocs: string = '/docs/intro';
@@ -32,12 +30,11 @@ export class MenuPage extends BasePage {
   private linkPython: string = '/python/';
   private linkJava: string = '/java/';
   private linkDotNet: string = '/dotnet/';
-  //private linkCommunity: string = '/community/welcome';  // No longer an option in the menu, but keeping for test purposes
 
 
-  constructor (page: Page) {
+  constructor (page: Page, envData: object) {
     super(page);
-    this.env = new envData('MenuPage.ts').getEnvData;
+    this.env = envData;
     this.page = page;
     this.url=this.env.playwright.baseUrl;
     this.topNavMenu = page.getByRole('navigation', { name: 'Main' });
@@ -46,16 +43,16 @@ export class MenuPage extends BasePage {
     this.menuPlaywright = page.getByRole('link', { name: /^Playwright logo/ });
     this.menuDocs = page.getByRole('link', { name: 'Docs' });
     this.menuAPI = page.getByRole('link', { name: 'API' });
-    //this.menuCommunity = page.getByRole('link', { name: 'Community' });
 
     // Language options
     this.menuLanguageSelectedNodeJS = page.getByRole('button', { name: 'Node.js' });
-    this.menuNodeJS = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Node.js' });
     this.menuLanguageSelectedPython = page.getByRole('button', { name: 'Python' });
-    this.menuPython = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Python' });
+    this.menuLanguageSelectedPython = page.getByRole('button', { name: 'Python' });
     this.menuLanguageSelectedJava = page.getByRole('button', { name: 'Java' });
-    this.menuJava = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Java' });
     this.menuLanguageSelectedDotNet = page.getByRole('button', { name: '.NET' });
+    this.menuNodeJS = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Node.js' });
+    this.menuPython = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Python' });
+    this.menuJava = page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Java' });
     this.menuDotNet = page.getByLabel('Main', { exact: true }).getByRole('link', { name: '.NET' });
 
     // Smaller Menu screen locators
@@ -64,7 +61,7 @@ export class MenuPage extends BasePage {
     this.closeMiniMenuButton = page.getByRole('button', { name: 'Close navigation bar' });
 
     // links
-    page.url()
+    page.url();
   }
 
   async goto () {
@@ -104,8 +101,16 @@ export class MenuPage extends BasePage {
   }
   
   async OpenMiniMenu() {
-    await this.topNavMenuMiniOpen.click();
-    this.closeMiniMenuButton.waitFor({ state: 'visible', timeout: 5000 });
+    try {
+      await this.topNavMenuMiniOpen.click({timeout: 5000});
+      await this.closeMiniMenuButton.waitFor({ state: 'visible', timeout: 5000 });
+    }
+    catch (error) {
+      console.error('Error opening mini menu:');
+      // try one more time, as sometimes the first click might not register due to animation or other factors
+      await this.topNavMenuMiniOpen.click({delay: 1000, force: true });
+      await this.closeMiniMenuButton.waitFor({ state: 'visible', timeout: 5000 });
+    }
   }
 
   async changeLanguageTo ( language: string ) {
@@ -137,28 +142,24 @@ export class MenuPage extends BasePage {
         this.url = this.env.playwright.baseUrl;
         this.linkDocs = '/docs/intro';
         this.linkAPI = '/docs/api/class-playwright';
-        // this.linkCommunity = '/community/welcome';
         break;
       case 'python': 
         await this.menuPython.click();
         this.url = this.env.playwright.baseUrl + 'python/';
         this.linkDocs = '/python/docs/intro';
         this.linkAPI = '/python/docs/api/class-playwright';
-        // this.linkCommunity = '/python/community/welcome';
         break;
       case 'java': 
         await this.menuJava.click();
         this.url = this.env.playwright.baseUrl + 'java/';
         this.linkDocs = '/java/docs/intro';
         this.linkAPI = '/java/docs/api/class-playwright';
-        // this.linkCommunity = '/java/community/welcome';
         break;
       case 'dotnet': 
         await this.menuDotNet.click();
         this.url = this.env.playwright.baseUrl + 'dotnet/';
         this.linkDocs = '/dotnet/docs/intro';
         this.linkAPI = '/dotnet/docs/api/class-playwright';
-        // this.linkCommunity = '/dotnet/community/welcome';
         break;
       default:
         throw new Error(`Unsupported language: ${language}`);

@@ -1,11 +1,9 @@
 import { BaseApi } from '../BaseApi';
-import envData from '../../../utils/loadEnvData';
 
 export class PostmanApi extends BaseApi {
 
-  constructor() {
-    const env = new envData('PostmanApi');
-    const envConfig = env.getEnvData as any;
+  constructor(envData: any) {
+    const envConfig = envData;
     const baseURL = envConfig.apiAuthApiKey.baseUrl;
     const headers = { 
       "connection": "keep-alive", 

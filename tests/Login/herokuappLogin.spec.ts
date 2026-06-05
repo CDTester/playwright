@@ -103,7 +103,14 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     });
   });
 
+});
 
+// The following tests use storage state, which is created in the loggedInState fixture.
+// The fixture checks if the storage state exist, if not it will run the login processs and save the storage state.
+// when run in parallel both script were running the login process 
+// So these tests run in serial mode under one worker 
+test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@selenium', '@noStorageState']}, () => {
+  test.describe.configure({ mode: 'serial' });
   test('The user can access the secure page when storage state is used', async ({ loggedInState }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-014');
@@ -132,7 +139,6 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
       step.parameter('Expected Message', 'The logged in message is not visible because the login screen calls /authenticate which post the message to the secure area');
       await expect(message).not.toBeVisible();
     });
-
   });
 
 
@@ -166,6 +172,5 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     });
 
   });
-
 
 });

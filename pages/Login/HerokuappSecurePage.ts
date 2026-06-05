@@ -1,20 +1,19 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import envData from '../../utils/loadEnvData';
 
 export class HerokuappSecurePage extends BasePage {
-  readonly env: any;
   readonly url: string;
   readonly headerText: Locator;
   readonly logoutButton: Locator;
   readonly loggedInMessage:string = 'You logged into a secure area!';
   readonly welcomeMessage: Locator;
+  readonly env: any;
 
-  constructor(page: Page) {
+  constructor(page: Page, envData: object) {
     super(page);
+    this.env = envData;
     this.headerText = page.getByRole('heading', { name: 'Secure Area', exact: true });
     this.logoutButton = page.getByRole('link', { name: 'Logout' });
-    this.env = new envData('HerokuappLoginPage.ts').getEnvData;
     this.url = this.env.herokuapp.baseUrl + '/secure';
     this.welcomeMessage = page.getByText(this.loggedInMessage);
   }
@@ -29,7 +28,7 @@ export class HerokuappSecurePage extends BasePage {
   async isLoggedIn(): Promise<boolean> {
     await this.page.waitForURL(this.url, { waitUntil: 'domcontentloaded' });
     // await this.page.waitForLoadState('domcontentloaded');
-    return await this.isVisible(this.welcomeMessage);
+    return await this.welcomeMessage.isVisible();
   }
 
   async logout() {

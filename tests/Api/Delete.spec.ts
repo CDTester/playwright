@@ -1,22 +1,19 @@
-import { test, expect, APIResponse } from '@playwright/test';
-import { PostsApi } from '../../pages/Api/Jsonplaceholder/PostsApi';
+import { test, expect, APIResponse } from '../../fixtures/apiFixture';
 import * as allure from "allure-js-commons";
 
 test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
-  let api: PostsApi;
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
-    api = new PostsApi();
     await allure.epic('Epic: API tests');
     await allure.feature('Feature: DELETE API Tests');
     await allure.owner('Chris');
   });
 
-  test.afterEach(async () => {
-    await api.dispose();
+  test.afterEach(async ({ postsApi }) => {
+    await postsApi.dispose();
   });
 
-  test('DELETE an existing post', {tag: ['@smoke']}, async () => {
+  test('DELETE an existing post', {tag: ['@smoke']}, async ({ postsApi }) => {
     await allure.story('Story: Delete an existing post');
     await allure.tms('USER-011');
     await allure.issue('BUG-011');
@@ -25,12 +22,12 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the posts API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await postsApi.init();
+      await step.parameter('base URL', postsApi.getBaseUrl);
     });
 
-    await allure.step('WHEN a request is made to delete an existing post', async (step) => {
-      response = await api.deletePost('1');
+    await allure.step('WHEN a request is made to delete an existing post', async () => {
+      response = await postsApi.deletePost('1');
       respBody = await response.json();
     });
 

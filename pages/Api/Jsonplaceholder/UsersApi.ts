@@ -1,5 +1,4 @@
 import { BaseApi } from '../BaseApi';
-import envData from '../../../utils/loadEnvData';
 import { UserSchema, UsersSchema } from '../../../test-data/Schemas/UsersSchema';
 
 export class UsersApi extends BaseApi {
@@ -7,9 +6,8 @@ export class UsersApi extends BaseApi {
   readonly schemaUsers = UsersSchema;
 
 
-  constructor() {
-    const env = new envData('UserApi');
-    const envConfig = env.getEnvData as any;
+  constructor(envData: any) {
+    const envConfig = envData;
     const baseURL = envConfig.apiUsers.baseUrl;
     const headers = { 
       "connection": "keep-alive", 

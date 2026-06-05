@@ -1,22 +1,19 @@
-import { test, expect, APIResponse } from '@playwright/test';
-import { PostsApi } from '../../pages/Api/Jsonplaceholder/PostsApi';
+import { test, expect, APIResponse } from '../../fixtures/apiFixture';
 import * as allure from "allure-js-commons";
 
 test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
-  let api: PostsApi;
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
-    api = new PostsApi();
     await allure.epic('Epic: API tests');
     await allure.feature('Feature: POST API Tests');
     await allure.owner('Chris');
   });
 
-  test.afterEach(async () => {
-    await api.dispose();
+  test.afterEach(async ({ postsApi }) => {
+    await postsApi.dispose();
   });
 
-  test('POST a new post', {tag: ['@smoke']}, async () => {
+  test('POST a new post', {tag: ['@smoke']}, async ({ postsApi }) => {
     await allure.story('Story: Create a new post');
     await allure.tms('USER-008');
     await allure.issue('BUG-008');
@@ -25,17 +22,17 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the posts API can be connected to', async (step) => {
-      await api.init();
-      await step.parameter('base URL', api.getBaseUrl);
+      await postsApi.init();
+      await step.parameter('base URL', postsApi.getBaseUrl);
     });
 
-    await allure.step('WHEN a request is made to create a new post', async (step) => {
+    await allure.step('WHEN a request is made to create a new post', async () => {
       const data = {
         title: 'POST a new post',
         body: 'this is the body of the new post',
         userId: 1
       };
-      response = await api.createPost(data);
+      response = await postsApi.createPost(data);
       respBody = await response.json();
     });
 

@@ -1,7 +1,6 @@
 // pages/login.page.ts
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import envData from '../../utils/loadEnvData';
 
 
 export class HomePage extends BasePage {
@@ -19,13 +18,12 @@ export class HomePage extends BasePage {
   readonly linkGetStarted: string = '/docs/intro';
   readonly linkGithub: string = 'https://github.com/microsoft/playwright';
   readonly FooterGettingStarted: Locator;
-
   readonly env: any;
 
 
-  constructor (page: Page) {
+  constructor (page: Page, envData: object) {
     super(page);
-    this.env = new envData('home-page.ts').getEnvData;
+    this.env = envData;
     this.page = page;
     this.url=this.env.playwright.baseUrl;
     this.topNavMenu = page.getByRole('navigation', { name: 'Main' });
@@ -43,6 +41,5 @@ export class HomePage extends BasePage {
     await this.navigate(this.url);
     await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
   }
-
 
 }

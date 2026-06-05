@@ -112,22 +112,6 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  /* This Menu is no longer available as of 16/04/2026
-  test(`Menu (Large screen) should have link for 'Community'`, {tag: ['@smoke']}, async ({ menuPage }) => {
-    await allure.subSuite('SubSuite: Menu - Large Screen');
-    await allure.story('Story: Menu - Large Screen');
-    await allure.tms('PLAY-016');
-    await allure.issue('BUG-016');
-    await allure.severity(allure.Severity.TRIVIAL);
-
-    await allure.step('Should have link to "Community"', async step => {
-      await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_LargeScreen');
-      await expect(menuPage.menuCommunity).toBeVisible();
-      await expect(menuPage.menuCommunity, `link text should be "Community"`).toHaveText('Community');
-      await expect(menuPage.menuCommunity, `Expect link href to be '${menuPage.getLinkHref('community')}'`).toHaveAttribute('href', menuPage.getLinkHref('community'));
-    });
-  });
-  */
 
   test(`Menu (Large screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
@@ -154,10 +138,6 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.step('Should have \'API\' link to Python API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
-
-    // await allure.step('Should have \'Community\' link to Python community', async () => {
-    //   await expect(menuPage.menuCommunity, `Expect link href to be '${menuPage.getLinkHref('community')}'`).toHaveAttribute('href', menuPage.getLinkHref('community'));
-    // });
   });
 
   test(`Menu (Large screen) should change menu links when Java language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
@@ -186,9 +166,6 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 
-    // await allure.step('Should have \'Community\' link to Java community', async () => {
-    //   await expect(menuPage.menuCommunity, `Expect link href to be '${menuPage.getLinkHref('community')}'`).toHaveAttribute('href', menuPage.getLinkHref('community'));
-    // });
   });
 
   test(`Menu (Large screen) should change menu links when .NET language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
@@ -216,10 +193,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.step('Should have \'API\' link to .NET API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
-
-    // await allure.step('Should have \'Community\' link to .NET community', async () => {
-    //   await expect(menuPage.menuCommunity, `Expect link href to be '${menuPage.getLinkHref('community')}'`).toHaveAttribute('href', menuPage.getLinkHref('community'));
-    // });
+;
   });
 
 
@@ -367,34 +341,6 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  /* This Menu is no longer available as of 16/04/2026
-  test(`Menu (Small screen) should have link for 'Community'`, {tag: ['@regression']}, async ({ menuPage }) => {
-    await allure.subSuite('SubSuite: Menu - Small Screen');
-    await allure.story('Story: Menu - Small Screen');
-    await allure.tms('PLAY-025');
-    await allure.issue('BUG-025');
-    await allure.severity(allure.Severity.NORMAL);
-
-    await allure.step('Should not show link to "Community" when menu is closed', async step => {
-      await menuPage.smallScreenSize();
-      await expect(menuPage.topNavMenuMini).not.toBeVisible();
-      await expect(menuPage.menuCommunity).not.toBeVisible();
-    });
-
-    await allure.step('Should click menu icon to open the menu', async step => {
-      await expect(menuPage.topNavMenuMiniOpen).toBeVisible();
-      await menuPage.OpenMiniMenu();
-    });
-
-    await allure.step('Should have link to "Community"', async step => {
-      await menuPage.takeLocatorScreenshot(menuPage.topNavMenuMini, 'Menu_SmallScreenOpened');
-      await expect(menuPage.topNavMenuMini).toBeVisible();
-      await expect(menuPage.menuCommunity, `link text should be "Community"`).toHaveText('Community');
-      await expect(menuPage.menuCommunity).toBeVisible();
-      await expect(menuPage.menuCommunity, `Expect link href to be '${menuPage.getLinkHref('community')}'`).toHaveAttribute('href', menuPage.getLinkHref('community'));
-    });
-  });
-  */
 
   test(`Menu (Small screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');

@@ -6,7 +6,7 @@ import fs from 'fs';
 
 export class HerokuappAuth {
 
-  async setup(_browser: string, sessionPath: string) {
+  async setup(_browser: string, sessionPath: string, envData: object) {
     // check if auth state already exists
     if (await fs.existsSync(sessionPath)) {
       console.log('StorageState already exists, skipping setup');
@@ -26,8 +26,8 @@ export class HerokuappAuth {
       }
       const context = await browser.newContext();
       const page = await context.newPage();
-      const loginPage = new HerokuappLoginPage(page);
-      const securePage = new HerokuappSecurePage(page);
+      const loginPage = new HerokuappLoginPage(page, envData);
+      const securePage = new HerokuappSecurePage(page, envData);
 
       await loginPage.goto();
       await loginPage.login(userData.validUser.username, userData.validUser.password);

@@ -1,9 +1,8 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import envData from '../../utils/loadEnvData';
 
 export class SeleniumLoginPage extends BasePage {
-  readonly env: any;
+  readonly baseUrl: string = 'https://www.selenium.dev';
   readonly url: string;
   readonly headerText: Locator;
   readonly usernameInput: Locator;
@@ -21,15 +20,14 @@ export class SeleniumLoginPage extends BasePage {
         - button "Login"
     `;
 
-  constructor(page: Page) {
+  public constructor(page: Page) {
     super(page);
     this.headerText = page.getByRole('heading', { name: 'Login' });
     this.usernameInput = page.getByRole('textbox', { name: 'Username' });
     this.passwordInput = page.getByRole('textbox', { name: 'Password' });
     this.loginButton = page.getByRole('button', { name: 'Login' });
     this.alertMessage = '';
-    this.env = new envData('SeleniumLoginPage.ts').getEnvData;
-    this.url = this.env.selenium.baseUrl + '/selenium/web/login.html';
+    this.url = this.baseUrl + '/selenium/web/login.html';
   }
 
 
@@ -39,8 +37,8 @@ export class SeleniumLoginPage extends BasePage {
   }
 
   async login(username: string, password: string): Promise<string> {
-    await this.fillInput(this.usernameInput, username);
-    await this.fillInput(this.passwordInput, password);
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
 
     await this.page.on('dialog', dialog => {
       console.log(`Dialog message: ${dialog.message()}`);
@@ -53,11 +51,11 @@ export class SeleniumLoginPage extends BasePage {
   }
 
   async enterUsername(username: string) {
-    await this.fillInput(this.usernameInput, username);
+    await this.usernameInput.fill(username);
   }
 
   async enterPassword(password: string) {
-    await this.fillInput(this.passwordInput, password);
+    await this.passwordInput.fill(password);
   }
 
   async clickLogin(): Promise<string> {
