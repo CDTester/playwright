@@ -1,33 +1,29 @@
 import { BaseApi } from '../BaseApi';
 import { UserSchema, UsersSchema } from '../../../test-data/Schemas/UsersSchema';
+import { APIResponse } from 'playwright-core';
 
 export class PostsApi extends BaseApi {
   readonly schemaUser = UserSchema;
   readonly schemaUsers = UsersSchema;
-
+  private config: any;
 
   constructor(envData: any) {
-    const envConfig = envData;
-    const baseURL = envConfig.apiUsers.baseUrl;
-    const headers = { 
-      "connection": "keep-alive", 
-      "Accept-Encoding": "gzip, deflate, br", 
-      "Cache-Control": "no-cache" 
-    };
-    super(baseURL, headers);
+    super(envData.apiUsers);
   }
 
-
   // Get all posts
-  async getAllPosts(): Promise<any> {
-    const response = await this.get('/posts');
+  async getAllPosts(): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    const response = await this.buildRequest('GET', '/posts');
+
     return response;
   }
 
 
   // Get post (GET)
-  async getPost(postId: string): Promise<any> {
-    const response = await this.get(`/posts/${postId}`);
+  async getPost(postId: string): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    const response = await this.buildRequest('GET', `/posts/${postId}`);
     return response;
   }
 
@@ -36,8 +32,10 @@ export class PostsApi extends BaseApi {
    * @param formdata - {title: string, body: string, userId: number}
    * @returns - APIResponse
    */
-  async createPost(data: any): Promise<any> {
-    const response = await this.post('/posts', { data: data });
+  async createPost(data: any): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    this.setData(data);
+    const response = await this.buildRequest('POST', '/posts');
     return response;
   }
 
@@ -48,8 +46,11 @@ export class PostsApi extends BaseApi {
    * @param formdata {id: number, title: string, body: string, userId: number}
    * @returns APIResponse
    */ 
-  async updatePost(postId: string, postData: any): Promise<any> {
-    const response = await this.put(`/posts/${postId}`, { data: postData });
+  async updatePost(postId: string, postData: object): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    this.setData(postData);
+    const response = await this.buildRequest('PUT', `/posts/${postId}`);
+
     return response;
   }
 
@@ -60,8 +61,10 @@ export class PostsApi extends BaseApi {
    * @param formdata {title: string} or {body: string} or {userId: number}
    * @returns APIResponse
    */ 
-  async patchPost(postId: string, postData: any): Promise<any> {
-    const response = await this.patch(`/posts/${postId}`, { data: postData });
+  async patchPost(postId: string, postData: object): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    this.setData(postData);
+    const response = await this.buildRequest('PATCH', `/posts/${postId}`);
     return response;
   }
 
@@ -71,8 +74,10 @@ export class PostsApi extends BaseApi {
    * @param postId id of the post to delete
    * @returns APIResponse
    */ 
-  async deletePost(postId: string): Promise<any> {
-    const response = await this.delete(`/posts/${postId}`);
+  async deletePost(postId: string): Promise<APIResponse> {
+    await this.init(); // Ensure the request context is initialized before making API calls
+    const response = await this.buildRequest('DELETE', `/posts/${postId}`);
+
     return response;
   }
  

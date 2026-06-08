@@ -18,18 +18,17 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@patch']}, () => {
     await allure.tms('USER-010');
     await allure.issue('BUG-010');
     await allure.severity(allure.Severity.NORMAL);
+
+    
     let response: APIResponse;
     let respBody: any;
 
     await allure.step('GIVEN the posts API can be connected to', async (step) => {
-      await postsApi.init();
-      await step.parameter('base URL', postsApi.getBaseUrl);
+      await step.parameter('base URL', postsApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to patch an existing post', async () => {
-      const data = {
-        title: 'PATCH an existing post'
-      };
+      const data = { title: 'PATCH an existing post' };
       response = await postsApi.patchPost('1', data);
       respBody = await response.json();
     });

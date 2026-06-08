@@ -22,8 +22,7 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the posts API can be connected to', async (step) => {
-      await postsApi.init();
-      await step.parameter('base URL', postsApi.getBaseUrl);
+      await step.parameter('base URL', postsApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to delete an existing post', async () => {
@@ -32,7 +31,7 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
     });
 
     await allure.step('THEN the response code should be 200', async (step) => {
-      await step.parameter('response Status', `${response.status} ${response.statusText()}`);
+      await step.parameter('response Status ???', `${response.status()} ${response.statusText()}`);
       expect(response.status(), 'Expected status code 200').toBe(200);
     });
 

@@ -22,8 +22,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await usersApi.init();
-      await step.parameter('base URL', usersApi.getBaseUrl);
+      await step.parameter('base URL', usersApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get all users', async () => {
@@ -53,8 +52,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await usersApi.init();
-      await step.parameter('base URL', usersApi.getBaseUrl);
+      await step.parameter('base URL', usersApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get a user by id', async () => {
@@ -84,8 +82,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await usersApi.init();
-      await step.parameter('base URL', usersApi.getBaseUrl);
+      await step.parameter('base URL', usersApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get a user by username', async (step) => {
@@ -115,8 +112,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await usersApi.init();
-      await step.parameter('base URL', usersApi.getBaseUrl);
+      await step.parameter('base URL', usersApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get a user by city', async (step) => {

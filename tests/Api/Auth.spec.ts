@@ -23,8 +23,7 @@ test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
     let response: APIResponse;
 
     await allure.step('GIVEN the bitly API can be connected to', async (step) => {
-      await bitlyApi.init();
-      await step.parameter('base URL', bitlyApi.getBaseUrl);
+      await step.parameter('base URL', bitlyApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get user with an invalid Bearer token', async (step) => {
@@ -38,7 +37,7 @@ test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
   });
 
 });
-  
+
 test.describe('Postman API', {tag: ['@api', '@auth']}, () => {
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
@@ -60,11 +59,10 @@ test.describe('Postman API', {tag: ['@api', '@auth']}, () => {
     let response: APIResponse;
 
     await allure.step('GIVEN the postman API can be connected to', async (step) => {
-      await postmanApi.init();
-      await step.parameter('base URL', postmanApi.getBaseUrl);
+      await step.parameter('base URL', postmanApi.baseURL);
     });
 
-    await allure.step('WHEN a request is made to get user with an invalid Bearer token', async (step) => {
+    await allure.step('WHEN a request is made to get user with an invalid X-API-Key token', async (step) => {
       response = await postmanApi.getMe();
     });
 

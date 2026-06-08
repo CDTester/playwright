@@ -23,8 +23,7 @@ test.describe('Users API', {tag: ['@api', '@users']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the users API can be connected to', async (step) => {
-      await usersApi.init();
-      await step.parameter('base URL', usersApi.getBaseUrl);
+      await step.parameter('base URL', usersApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to get all users', async (step) => {

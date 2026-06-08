@@ -18,7 +18,7 @@
   },
   "apiAdditionalHeader": {
     "baseUrl": "https://icanhazdadjoke.com",
-    "header": {
+    "headers": {
       "X-Requested-With": "XMLHttpRequest"
     }
   },

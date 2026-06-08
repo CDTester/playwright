@@ -22,12 +22,11 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
     let respBody: any;
 
     await allure.step('GIVEN the posts API can be connected to', async (step) => {
-      await postsApi.init();
-      await step.parameter('base URL', postsApi.getBaseUrl);
+      await step.parameter('base URL', postsApi.baseURL);
     });
 
     await allure.step('WHEN a request is made to create a new post', async () => {
-      const data = {
+      const data:object = {
         title: 'POST a new post',
         body: 'this is the body of the new post',
         userId: 1
