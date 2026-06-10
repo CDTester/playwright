@@ -356,8 +356,13 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
 
     await allure.step('Should have homepage link to "Playwright for Python"', async () => {
-      await menuPage.OpenMiniMenu();
-      await expect(menuPage.topNavMenuMini).toBeVisible();
+
+      // expect(async () => {code block}).toPass - retries step at a polled interval untill pass or timeout
+      await expect(async () => {
+        await menuPage.OpenMiniMenu();
+        await expect(menuPage.topNavMenuMini).toBeVisible();
+      }).toPass({intervals:[1000, 1500], timeout: 10000});
+
       await menuPage.takeScreenshot(false, 'Menu_SmallScreen_Python');
 
       await expect(menuPage.menuPlaywright.nth(1), `link text should be "Playwright for Python"`).toHaveText('Playwright for Python');
