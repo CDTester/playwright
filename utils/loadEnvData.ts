@@ -6,6 +6,18 @@ const config = require('../config/default.json');
  * class to get test env data
  * This class loads environment specific data from config files
 */
+
+export interface EnvConfig {
+  // name: string,
+  baseUrl: string,
+  authType?: string,
+  authKey?: string,
+  headers?: Record<string, string>,
+  [key: string]:  string | number | Record<string, string> | undefined;
+}
+
+
+
 export default class envData {
   private static instance: envData;
   private _envData: object = {};
