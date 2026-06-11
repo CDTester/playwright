@@ -7,14 +7,13 @@ export class HerokuappSecurePage extends BasePage {
   readonly logoutButton: Locator;
   readonly loggedInMessage:string = 'You logged into a secure area!';
   readonly welcomeMessage: Locator;
-  readonly env: any;
 
   constructor(page: Page, envData: object) {
     super(page);
-    this.env = envData;
+    this.env = envData['herokuapp'];
     this.headerText = page.getByRole('heading', { name: 'Secure Area', exact: true });
     this.logoutButton = page.getByRole('link', { name: 'Logout' });
-    this.url = this.env.herokuapp.baseUrl + '/secure';
+    this.url = this.env.baseUrl + '/secure';
     this.welcomeMessage = page.getByText(this.loggedInMessage);
   }
 

@@ -4,9 +4,7 @@ import { BasePage } from '../BasePage';
 
 
 export class MenuPage extends BasePage {
-  readonly env: any;
   protected url: string;
-  readonly page: Page;
   readonly topNavMenu: Locator;
   readonly topNavMenuMiniOpen: Locator;
   readonly topNavMenuMini: Locator;
@@ -34,9 +32,9 @@ export class MenuPage extends BasePage {
 
   constructor (page: Page, envData: object) {
     super(page);
-    this.env = envData;
+    this.env = envData['playwright'];
     this.page = page;
-    this.url=this.env.playwright.baseUrl;
+    this.url=this.env.baseUrl;
     this.topNavMenu = page.getByRole('navigation', { name: 'Main' });
 
     // Menu screen locators
@@ -139,25 +137,25 @@ export class MenuPage extends BasePage {
     switch ( language.toLowerCase() ) {
       case 'nodejs': 
         await this.menuNodeJS.click();
-        this.url = this.env.playwright.baseUrl;
+        this.url = this.env.baseUrl;
         this.linkDocs = '/docs/intro';
         this.linkAPI = '/docs/api/class-playwright';
         break;
       case 'python': 
         await this.menuPython.click();
-        this.url = this.env.playwright.baseUrl + 'python/';
+        this.url = this.env.baseUrl + 'python/';
         this.linkDocs = '/python/docs/intro';
         this.linkAPI = '/python/docs/api/class-playwright';
         break;
       case 'java': 
         await this.menuJava.click();
-        this.url = this.env.playwright.baseUrl + 'java/';
+        this.url = this.env.baseUrl + 'java/';
         this.linkDocs = '/java/docs/intro';
         this.linkAPI = '/java/docs/api/class-playwright';
         break;
       case 'dotnet': 
         await this.menuDotNet.click();
-        this.url = this.env.playwright.baseUrl + 'dotnet/';
+        this.url = this.env.baseUrl + 'dotnet/';
         this.linkDocs = '/dotnet/docs/intro';
         this.linkAPI = '/dotnet/docs/api/class-playwright';
         break;

@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "commonjs",
+    "ignoreDeprecations": "6.0",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./types",
+    "types": ["node"],
+    "typeRoots": [ "./node_modules/@types", "./node_modules/*/types" ],
+    "declarationMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "noImplicitReturns": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false
+  },
+  "include": ["./pages/*.ts", "./tests/**/*.ts", "./playwright.config.ts", "./utils/**/*.ts" ],
+  "exclude": ["*.js"],
+  "ts-node": {
+    "transpileOnly": true,
+    "esm": false,
+    "files": true,
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./node_modules/*/types"],
+    "compilerOptions": {
+      "target": "es2024",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strictNullChecks": false,
+      "noImplicitAny": false
+    },
+    "include": ["./test/**/*.ts", "./src/**/*.ts", "./playwright.config.ts", "./pages/*.ts", "./utils/**/*.ts"],
+    "export": ["./node_modules"]
+  }
+}

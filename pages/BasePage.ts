@@ -1,9 +1,10 @@
 import { Page, Locator } from '@playwright/test';
 import * as allure from "allure-js-commons";
+import {EnvConfig} from '../utils/loadEnvData'
 
 export abstract class BasePage {
-  readonly page: Page;
-  readonly env: any;
+  protected page: Page;
+  protected env: EnvConfig;
 
   constructor(page: Page) {
     this.page = page;

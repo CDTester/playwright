@@ -5,10 +5,9 @@ import { APIResponse } from '../../../fixtures/apiFixture';
 export class UsersApi extends BaseApi {
   readonly schemaUser = UserSchema;
   readonly schemaUsers = UsersSchema;
-  private config: any;
 
-  constructor(envData: any) {
-    super(envData.apiUsers);
+  constructor(envData: object) {
+    super(envData['apiUsers']);
   }
 
   // Get all users

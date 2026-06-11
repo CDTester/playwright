@@ -1,8 +1,10 @@
-import { APIRequestContext, APIResponse, expect, request as playwrightRequest } from '@playwright/test';
+import { APIRequestContext, APIResponse, request as playwrightRequest } from '@playwright/test';
 import { attachment } from 'allure-js-commons';
 import Ajv from 'ajv';
 import { Serializable } from 'child_process';
 import { ReadStream } from 'fs';
+import {EnvConfig} from '../../utils/loadEnvData'
+
 
 interface Options {
   data?: string | Buffer | Serializable;
@@ -22,7 +24,7 @@ export abstract class BaseApi {
   protected ajv: Ajv.Ajv; //InstanceType<typeof Ajv>;
 
 
-  constructor(config: any) {
+  constructor(config: EnvConfig) {
     this.baseURL = ''; //baseUrl;
     this.defaultHeaders = { 
       "connection": "keep-alive", 
@@ -34,14 +36,14 @@ export abstract class BaseApi {
 
 
     const auth:boolean = config.authType ? true : false;
-    const authType:"bearer" | "basic" | "x-api-key" | undefined = auth ? config.authType : undefined;
-    const authKey: string = auth ? config.authKey : 'undefined';
-    const headers = { ...this.defaultHeaders, ...config.headers };
+    const authType: string | undefined = auth ? config.authType : undefined;
+    const authKey: string | undefined = auth ? config.authKey : 'undefined';
+    const allHeaders = { ...this.defaultHeaders, ...config.headers };
 
     // start building the api client by setting the base URL and headers, 
     // authentication can be set if authType and authKey are provided in envData 
     this.setBaseUrl(config.baseUrl);
-    this.setHeaders(headers);
+    this.setHeaders(allHeaders);
     auth ? this.setAuthToken(authType, authKey) : null;
 
 
@@ -72,7 +74,7 @@ export abstract class BaseApi {
   }
 
   /* Set authorization token */
-  setAuthToken(type: 'bearer' | 'basic' | 'x-api-key' = 'bearer', token: string): void {
+  setAuthToken(type: string, token: string): void {
     if (!this.options.headers) {
       this.options.headers = {};
     }

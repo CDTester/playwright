@@ -2,10 +2,9 @@ import { APIResponse } from 'playwright-core';
 import { BaseApi } from '../BaseApi';
 
 export class BitlyApi extends BaseApi {
-  private config: any;
 
-  constructor(envData: any) {
-    super(envData.apiAuthBearer);
+  constructor(envData: object) {
+    super(envData['apiAuthBearer']);
   }
 
   // Get user

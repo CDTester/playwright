@@ -2,7 +2,6 @@ import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
 export class HerokuappLoginPage extends BasePage {
-  readonly env: any;
   readonly url: string;
   readonly headerText: Locator;
   readonly usernameInput: Locator;
@@ -12,14 +11,14 @@ export class HerokuappLoginPage extends BasePage {
   readonly errorMessage:string = 'You must login to view the secure area!';
 
 
-  constructor(page: Page, envData: any) {
+  constructor(page: Page, envData: object) {
     super(page);
-    this.env = envData;
+    this.env = envData['herokuapp'];
     this.headerText = page.getByRole('heading', { name: 'Login Page' });
     this.usernameInput = page.getByRole('textbox', { name: 'Username' });
     this.passwordInput = page.getByRole('textbox', { name: 'Password' });
     this.loginButton = page.getByRole('button', { name: ' Login' });
-    this.url = this.env.herokuapp.baseUrl + '/login';
+    this.url = this.env.baseUrl + '/login';
   }
 
   async goto() {

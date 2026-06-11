@@ -2,10 +2,9 @@ import { APIResponse } from '../../../fixtures/apiFixture';
 import { BaseApi } from '../BaseApi';
 
 export class PostmanApi extends BaseApi {
-  private config: any;
 
-  constructor(envData: any) {
-    super(envData.apiAuthApiKey);
+  constructor(envData: object) {
+    super(envData['apiAuthApiKey']);
   }
 
 

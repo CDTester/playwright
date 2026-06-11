@@ -4,7 +4,6 @@ import { BasePage } from '../BasePage';
 
 
 export class HomePage extends BasePage {
-  readonly page: Page;
   readonly url: string;
   readonly pageTitle: string = 'Fast and reliable end-to-end testing for modern web apps | Playwright';
   readonly topNavMenu: Locator;
@@ -18,14 +17,13 @@ export class HomePage extends BasePage {
   readonly linkGetStarted: string = '/docs/intro';
   readonly linkGithub: string = 'https://github.com/microsoft/playwright';
   readonly FooterGettingStarted: Locator;
-  readonly env: any;
 
 
   constructor (page: Page, envData: object) {
     super(page);
-    this.env = envData;
+    this.env = envData['playwright'];
     this.page = page;
-    this.url=this.env.playwright.baseUrl;
+    this.url=this.env.baseUrl;
     this.topNavMenu = page.getByRole('navigation', { name: 'Main' });
     this.banner = page.getByRole('banner');
     this.main = page.getByRole('main');
