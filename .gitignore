@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+.env
 
 # Playwright
 /allure-results/

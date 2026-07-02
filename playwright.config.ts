@@ -6,10 +6,11 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,              // Run tests in files in parallel
+  globalSetup: require.resolve('./utils/set-env'), // global setup script to set environment variables before tests run
   globalTeardown: require.resolve('./utils/global_teardown'), // global teardown script to clean up any resources after all tests have run
-  workers: process.env.CI ? 4 : 2,  // Opt out of parallel tests on CI by setting to 1. 
+  workers: process.env.CI ? 4 : 1,  // Opt out of parallel tests on CI by setting to 1. 
   forbidOnly: !!process.env.CI,     // Fail the build on CI if you accidentally left test.only in the source code.
-  retries: process.env.CI ? 2 : 0,  // Retry on CI only
+  retries: process.env.CI ? 0 : 2,  // Retry on Local only
   reporter: [                       // Reporter to use. See https://playwright.dev/docs/test-reporters
     ['html'],
     ['allure-playwright',{
@@ -21,7 +22,7 @@ export default defineConfig({
         { name: 'test script failures', messageRegex: '.*Error: locator.*' }
       ],
       environmentInfo: { 
-        TEST_ENVIRONMENT: process.env.npm_config_testenv,
+        TEST_ENVIRONMENT: process.env.TESTENV,
         NODE_VERSION: process.version, 
         OS: process.platform, 
         PLAYWRIGHT_VERSION: require('playwright/package.json').version, 
@@ -56,23 +57,13 @@ export default defineConfig({
   // Configure projects for major browsers or for projects that require setup and teardown. These can also be run in fixtures.
   projects: [
     // {
-    //   name:  'setup_db',
-    //   testMatch: /.*\.setup\.ts/,
-    //   use: {storageState: 'storageState.json'},
-    //   teardown: 'cleanup_db'
-    // },
-    // {
-    //   name: 'cleanup_db',
-    //   testMatch: /.*\.teardown\.ts/
-    // },
-    // {
-    //   name: 'apiUsers',
-    //   use: { baseURL: env.apiUsers.baseUrl || process.env.BASE_URL || '' }
+    //   name: 'setup_env_vars',
+    //   testMatch: /.*\.set-env\.js/
     // },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      // dependencies: ['setup db'],
+      // dependencies: ['setup_env_vars'],
     },
     {
       name: 'firefox',
@@ -83,7 +74,18 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
       testIgnore: 'tests/Api/*', // ignoring API tests for Webkit as they are not relevant
-    },
+    }
+
+    // {
+    //   name:  'setup_db',
+    //   testMatch: /.*\.setup\.ts/,
+    //   use: {storageState: 'storageState.json'},
+    //   teardown: 'cleanup_db'
+    // },
+    // {
+    //   name: 'cleanup_db',
+    //   testMatch: /.*\.teardown\.ts/
+    // },
 
     /* Test against mobile viewports. */
     // {

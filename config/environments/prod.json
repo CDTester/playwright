@@ -1,5 +1,5 @@
 {
-  "name": "dev",
+  "name": "prod",
   "playwright": {
     "baseUrl": "https://playwright.dev/"
   },
@@ -9,12 +9,12 @@
   "apiAuthApiKey": {
     "baseUrl": "https://api.getpostman.com",
     "authType": "X-API-Key",
-    "secretAuthKey": "DEV_API_AUTH_KEY"
+    "secretAuthKey": "PROD_API_AUTH_KEY"
   },
   "apiAuthBearer": {
     "baseUrl": "https://api-ssl.bitly.com",
     "authType": "bearer",
-    "secretAuthKey": "DEV_AUTH_BEARER"
+    "secretAuthKey": "PROD_AUTH_BEARER"
   },
   "apiAdditionalHeader": {
     "baseUrl": "https://icanhazdadjoke.com",

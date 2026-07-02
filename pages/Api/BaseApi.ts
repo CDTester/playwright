@@ -37,7 +37,8 @@ export abstract class BaseApi {
 
     const auth:boolean = config.authType ? true : false;
     const authType: string | undefined = auth ? config.authType : undefined;
-    const authKey: string | undefined = auth ? config.authKey : 'undefined';
+    const secretAuthKey: string = auth ? String(config.secretAuthKey) : 'undefined';
+    const authKey: string | undefined = auth ? process.env[secretAuthKey] : undefined;
     const allHeaders = { ...this.defaultHeaders, ...config.headers };
 
     // start building the api client by setting the base URL and headers, 

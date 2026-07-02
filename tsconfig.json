@@ -2,12 +2,12 @@
   "compilerOptions": {
     "target": "es2024",
     "module": "commonjs",
-    "ignoreDeprecations": "6.0",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "declaration": true,
     "declarationDir": "./types",
     "types": ["node"],
     "typeRoots": [ "./node_modules/@types", "./node_modules/*/types" ],
+    "rootDir": ".",
     "declarationMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -28,7 +28,7 @@
     "compilerOptions": {
       "target": "es2024",
       "module": "commonjs",
-      "moduleResolution": "node",
+      "moduleResolution": "bundler",
       "resolveJsonModule": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,

@@ -19,7 +19,7 @@ jobs:
     steps:
       # checkout code
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # set up Node.js
       - name: 📦 Setup Node.js
@@ -38,7 +38,7 @@ jobs:
 
       # Setup Java (required for Allure)
       - name: ☕ Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         if: always()
         with:
           distribution: 'temurin'
@@ -55,7 +55,7 @@ jobs:
 
      # Get existing gh-pages content (for history)
       - name: 📜 Download existing gh-pages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         if: always()
         continue-on-error: true
         with:
@@ -77,9 +77,23 @@ jobs:
             echo "No previous history found - this is the first run"
           fi
 
+      # Set TESTENV from branch
+      - name: 💾 Set TESTENV from branch
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "TESTENV=prod" >> $GITHUB_ENV
+          else
+            echo "TESTENV=dev" >> $GITHUB_ENV
+          fi
+
       # Run Playwright Tests
       - name: 🧪 Run Playwright tests
         id: tests
+        env:
+          DEV_API_AUTH_KEY: ${{secrets.DEV_API_AUTH_KEY}}
+          DEV_AUTH_BEARER: ${{secrets.DEV_AUTH_BEARER}}
+          PROD_API_AUTH_KEY: ${{secrets.PROD_API_AUTH_KEY}}
+          PROD_AUTH_BEARER: ${{secrets.PROD_AUTH_BEARER}}
         run: npm run test --testenv=dev
         continue-on-error: true
 
@@ -166,7 +180,7 @@ jobs:
 
       # Archive test reports
       - name: 📦 Archive test reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-reports-${{ github.run_number }}

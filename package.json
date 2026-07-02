@@ -19,7 +19,8 @@
     "test:allure": "playwright test && npm run allure:generate && npm run allure:open",
     "codegenMini": "playwright codegen --viewport-size=\"500,800\"",
     "codegen": "playwright codegen",
-    "agentInit": "playwright init-agents --loop=vscode"
+    "agentInit": "playwright init-agents --loop=vscode",
+    "tscode": "npx ts-node --project tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -36,23 +37,25 @@
   },
   "homepage": "https://github.com/CDTester/playwright#readme",
   "dependencies": {
+    "ajv": "latest",
     "playwright": "latest",
-    "playwright-core": "latest",
-    "ajv": "latest"
+    "playwright-core": "latest"
   },
   "devDependencies": {
     "@playwright/browser-chromium": "latest",
     "@playwright/browser-firefox": "latest",
     "@playwright/browser-webkit": "latest",
-    "@playwright/test": "latest",
-    "@types/node": "^24.2.0",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^24.13.2",
     "@typescript-eslint/eslint-plugin": "5.57.0",
     "@typescript-eslint/parser": "5.57.0",
     "allure-playwright": "latest",
     "create-playwright": "latest",
+    "config": "latest",
+    "dotenv": "latest",
     "eslint": "8.57.1",
     "eslint-config-standard": "17.1.0",
-    "ts-node": "^10.7.0",
-    "typescript": "^5.7.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }

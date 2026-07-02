@@ -25,24 +25,19 @@ export default class envData {
 
   // Singleton pattern to ensure only one instance of envData is created per test run
   private constructor() {
-    this.env = process.env.npm_config_testenv;
+    this.env = process.env.TESTENV || 'dev';
     if (this.env !== 'production' && this.env !== 'prod') {
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
-    console.log(`envData constructed`);
+    console.log(`envData constructed for ${this.env}`);
   }
 
 	public static getEnvData(): object {
 		if (!envData.instance) {
 			envData.instance = new envData();
 		}
-    if (!envData.instance.env) {
-      envData.instance.env = config.default_env;
-      console.log(`\x1b[93m No environment specified for test run, using default: ${envData.instance.env} \x1b[0m`);
-    }
 
     const pth = path.resolve(process.cwd(), 'config', 'environments', `${envData.instance.env}.json`);
-    //console.log(`\x1b[92m Using environment config from ${pth} for test ${this._test}  \x1b[0m`);
 
     if (fs.existsSync(pth)) {
       try {
@@ -50,12 +45,12 @@ export default class envData {
       }
       catch (error) {
         if (error instanceof Error) {
-          throw new Error(`<FATAL> Cannot load/parse the environment data: ${error.message}`);
+          throw new Error(`<ERROR> Cannot load/parse the environment data: ${error.message}`);
         }
       }
     }
     else {
-      throw new Error(`<FATAL> Cannot find the environment file: ${pth}`);
+      throw new Error(`<ERROR> Cannot find the environment file: ${pth}`);
     }
 	return JSON.parse(JSON.stringify(envData.instance._envData));
 	}

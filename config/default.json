@@ -1,3 +1,10 @@
 {
-  "default_env": "dev"
+  "envData": {
+    "TESTENV": "dev",
+    "PROJECT_NAME": "Playwright Playground",
+    "PROJECT_VERSION": "1",
+    "PROJECT_CYCLE_NAME": "Cycle 123",
+    "ZEPHYR_URL": "https://company.domain/jira/browse/",
+    "ZEPHYR_USER": "CDTester"
+  }
 }
