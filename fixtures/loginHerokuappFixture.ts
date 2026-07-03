@@ -4,7 +4,6 @@ import { HerokuappSecurePage } from '../pages/Login/HerokuappSecurePage';
 import { HerokuappData } from '../test-data/pages/LoginData/HerokuappData';
 import { HerokuappAuth } from '../test-data/pages/LoginData/HerokuappAuth';
 import { attachment } from 'allure-js-commons';
-import envData from '../utils/loadEnvData';
 import * as fs from 'fs';
 
 type TestFixtures = {
@@ -21,7 +20,7 @@ type WorkerFixtures = {
 
 export const test = base.extend<TestFixtures, WorkerFixtures>({
   envData: [async ({}, use: (data:object) => Promise<void>) => {
-    const data = envData.getEnvData();
+    const data: object = JSON.parse(process.env.envData);
     await use(data); 
   }, { scope: 'worker' }],
   loginPage: async ({ page, envData }, use) => {

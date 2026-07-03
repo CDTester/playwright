@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,              // Run tests in files in parallel
-  globalSetup: require.resolve('./utils/set-env'), // global setup script to set environment variables before tests run
+  globalSetup: require.resolve('./utils/setEnvData'), // global setup script to set environment variables before tests run
   globalTeardown: require.resolve('./utils/global_teardown'), // global teardown script to clean up any resources after all tests have run
   workers: process.env.CI ? 4 : 1,  // Opt out of parallel tests on CI by setting to 1. 
   forbidOnly: !!process.env.CI,     // Fail the build on CI if you accidentally left test.only in the source code.
@@ -45,10 +45,10 @@ export default defineConfig({
     headless: process.env.CI ? true : false,
     geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Set geolocation to Great Pyramid of Giza
     permissions: ['geolocation'],
+    trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     screenshot: 'only-on-failure', // on, off, retain-on-failure
     video: 'off', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
-    trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
     ignoreHTTPSErrors: true, // Ignore HTTPS errors to handle SSL certificate issues
     // baseURL: 'http://localhost:3000',  // This setsbaseURL for all tests, I am setting baseURL is set in env files and loaded in helpers
     // storageState: 'storageState.json',  // this sets storage state for all tests, I am setting storageState in fixtures where needed

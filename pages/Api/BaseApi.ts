@@ -3,7 +3,7 @@ import { attachment } from 'allure-js-commons';
 import Ajv from 'ajv';
 import { Serializable } from 'child_process';
 import { ReadStream } from 'fs';
-import {EnvConfig} from '../../utils/loadEnvData'
+import {EnvConfig} from '../../utils/setEnvData'
 
 
 interface Options {

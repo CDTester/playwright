@@ -7,7 +7,6 @@ export class PostmanApi extends BaseApi {
     super(envData['apiAuthApiKey']);
   }
 
-
   // Get user
   async getMe(): Promise<APIResponse> {
     await this.init(); // Ensure the request context is initialized before making API calls

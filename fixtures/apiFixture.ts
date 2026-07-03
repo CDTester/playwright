@@ -3,7 +3,6 @@ import { BitlyApi } from '../pages/Api/Bitly/BitlyApi';
 import { PostmanApi } from '../pages/Api/Postman/PostmanApi';
 import { PostsApi } from '../pages/Api/Jsonplaceholder/PostsApi';
 import { UsersApi } from '../pages/Api/Jsonplaceholder/UsersApi';
-import envData from '../utils/loadEnvData';
 
 type PageFixtures = {
   bitlyApi: BitlyApi;
@@ -15,7 +14,7 @@ type PageFixtures = {
 
 export const test = base.extend<PageFixtures>({
   envData: [async ({}, use: (data:object) => Promise<void>) => {
-    const data = envData.getEnvData();
+    const data: object = JSON.parse(process.env.envData);
     await use(data); 
   }, { scope: 'worker' }],
   bitlyApi: async ({ envData }, use) => {

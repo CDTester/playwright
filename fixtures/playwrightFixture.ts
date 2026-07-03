@@ -1,7 +1,6 @@
 import { test as base } from '@playwright/test';
 import { HomePage } from '../pages/Playwright/HomePage';
 import { MenuPage } from '../pages/Playwright/MenuPage';
-import envData from '../utils/loadEnvData';
 
 type PageFixtures = {
   homePage: HomePage;
@@ -11,7 +10,7 @@ type PageFixtures = {
 
 export const test = base.extend<PageFixtures>({
   envData: [async ({}, use: (data:object) => Promise<void>) => {
-    const data = envData.getEnvData();
+    const data: object = JSON.parse(process.env.envData);
     await use(data); 
   }, { scope: 'worker' }],
   homePage: async ({ page, envData }, use) => {
