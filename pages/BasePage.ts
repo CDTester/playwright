@@ -1,9 +1,9 @@
 import { Page, Locator } from '@playwright/test';
 import * as allure from "allure-js-commons";
-import {EnvConfig} from '../utils/loadEnvData'
+import {EnvConfig} from '../utils/setEnvData'
 
 export abstract class BasePage {
-  protected page: Page;
+  public page: Page;
   protected env: EnvConfig;
 
   constructor(page: Page) {
@@ -38,8 +38,8 @@ export abstract class BasePage {
     throw lastError;
   }
 
-  async waitForPageLoad() {
-    await this.page.waitForLoadState('networkidle');
+  async waitForPageLoad(method: 'load' | 'domcontentloaded' | 'networkidle' = 'networkidle') {
+    await this.page.waitForLoadState(method);
   }
 
   async getText(locator: Locator): Promise<string> {

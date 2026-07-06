@@ -43,6 +43,7 @@ test('intercept websocket messages', async ({ page }) => {
   });
 
   await test.step('Disconnect from the WebSocket', async () => {
+    await expect.soft(page.getByRole('button', { name: 'Disconnect' })).toBeVisible();
     await page.getByRole('button', { name: 'Disconnect' }).click();
   });
 
