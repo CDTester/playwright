@@ -3,6 +3,9 @@
   "playwright": {
     "baseUrl": "https://playwright.dev/"
   },
+  "playwrightDemo": {
+    "baseUrl": "https://demo.playwright.dev"
+  },
   "apiUsers": {
     "baseUrl": "https://jsonplaceholder.typicode.com"
   },
@@ -27,6 +30,11 @@
   },
   "herokuapp": {
     "baseUrl": "https://the-internet.herokuapp.com"
+  },
+  "testsWs": {
+    "baseUrl": "https://tests.ws"
+  },
+  "echoWebSocket": {
+    "baseUrl": "https://echo.websocket.org/.ws"
   }
-
 }

@@ -8,6 +8,7 @@ export abstract class BasePage {
 
   constructor(page: Page) {
     this.page = page;
+    this.env = {} as EnvConfig; // Initialize env as an empty object
   }
 
 

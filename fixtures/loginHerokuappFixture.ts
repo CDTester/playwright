@@ -20,7 +20,8 @@ type WorkerFixtures = {
 
 export const test = base.extend<TestFixtures, WorkerFixtures>({
   envData: [async ({}, use: (data:object) => Promise<void>) => {
-    const data: object = JSON.parse(process.env.envData);
+    const envDataString: string = process.env.envData as string;
+    const data: object = JSON.parse(envDataString) ;
     await use(data); 
   }, { scope: 'worker' }],
   loginPage: async ({ page, envData }, use) => {
