@@ -1,0 +1,2 @@
+WebSocket opened: wss://echo.websocket.org/
+WebSocket message received: Hello chatbot
