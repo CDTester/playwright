@@ -1,1 +1,0 @@
-Dialog message: Please enter valid credentials
