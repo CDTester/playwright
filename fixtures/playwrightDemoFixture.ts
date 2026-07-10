@@ -1,6 +1,6 @@
 import { test as base, Locator } from '@playwright/test';
-import { TodoPage } from '../pages/playwrightDemo/TodoPage';
-import { ApiMockingPage } from '../pages/playwrightDemo/ApiMockingPage';
+import { TodoPage } from '../pages/PlaywrightDemo/TodoPage';
+import { ApiMockingPage } from '../pages/PlaywrightDemo/ApiMockingPage';
 
 type PageFixtures = {
   todoPage: TodoPage;

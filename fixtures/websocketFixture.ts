@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
-import { WebSocketTesterPage } from '../pages/websockets/websocketTester';
-import { RouteWebSocketPage } from '../pages/websockets/routeWebsocket';
+import { WebSocketTesterPage } from '../pages/Websockets/websocketTester';
+import { RouteWebSocketPage } from '../pages/Websockets/routeWebsocket';
 
 type PageFixtures = {
   webSocketTesterPage: WebSocketTesterPage;

@@ -5,6 +5,7 @@ export class WebSocketTesterPage extends BasePage {
   readonly url: string;
   readonly wsMessagesSent: string[];
   readonly wsMessagesReceived: string[];
+  readonly cookieConsentHeader: Locator;
   readonly doNotConsentButton: Locator;
   readonly websocketConnectButton: Locator;
   readonly websocketDisconnectButton: Locator;
@@ -23,6 +24,7 @@ export class WebSocketTesterPage extends BasePage {
     this.websocketDisconnectButton = this.page.getByRole('button', { name: 'Disconnect' });
     this.MessageInput = this.page.getByRole('textbox', { name: 'Type a message...' });
     this.MessageSendButton = this.page.getByRole('button', { name: 'Send' });
+    this.cookieConsentHeader = this.page.getByRole('heading', { name: 'tests.ws asks for your consent to use your personal data for the following purposes:' });
   }
 
   async goto () {
@@ -54,10 +56,14 @@ export class WebSocketTesterPage extends BasePage {
       });
     });
 
+
+    await this.page.addLocatorHandler(this.cookieConsentHeader, async () => {
+      await this.doNotConsentButton.click();
+    });
+
     await this.navigate(this.url);
     await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
 
-    await this.doNotConsentButton.click();
   }
 
   async connectToWebSocket() {

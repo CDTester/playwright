@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/pageFixture';
+import { test, expect } from '../../fixtures/websocketFixture';
 import * as allure from "allure-js-commons";
 
 test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
