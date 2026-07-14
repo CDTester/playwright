@@ -1,6 +1,11 @@
-import { test, expect } from '../../../fixtures/playwrightDemoFixture';
-import type { Locator } from '@playwright/test';
+import { test, expect, Locator } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-121', 'BUG-121', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-122', 'BUG-122', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-123', 'BUG-123', 'NORMAL');
+const annotation4 = testAnnotation('TODO-124', 'BUG-124', 'MINOR');
+const annotation5 = testAnnotation('TODO-125', 'BUG-125', 'TRIVIAL');
 
 const TODO_ITEMS = [
   'buy some cheese',
@@ -23,7 +28,8 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
     });
   });
 
-  test('All items checkbox should be initially unchecked', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('All items checkbox should be initially unchecked', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-121');
     await allure.issue('BUG-121');
@@ -58,7 +64,8 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
   });
 
 
-  test('Items can be marked as complete', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Items can be marked as complete', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-122');
     await allure.issue('BUG-122');
@@ -85,7 +92,8 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
   });
 
 
-  test('Completed item can be marked as active again', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Completed item can be marked as active again', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-123');
     await allure.issue('BUG-123');
@@ -115,7 +123,8 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
   });
 
 
-  test('All items can be marked as completed in one click', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('All items can be marked as completed in one click', 
+  {annotation: annotation4, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-124');
     await allure.issue('BUG-124');
@@ -148,7 +157,8 @@ test.describe('Complete Todo', {tag: ['@Todo', '@Complete']}, () => {
   });
 
 
-  test('All completed items can be marked as incomplete in one click', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('All completed items can be marked as incomplete in one click', 
+  {annotation: annotation5, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Complete ToDo Items from the list');
     await allure.tms('TODO-125');
     await allure.issue('BUG-125');

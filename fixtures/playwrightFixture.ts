@@ -37,4 +37,4 @@ export const test = base.extend<PageFixtures>({
     //, you can add more fixtures here
 });
 
-export { expect } from '@playwright/test';
+export { expect, TestDetailsAnnotation } from '@playwright/test';

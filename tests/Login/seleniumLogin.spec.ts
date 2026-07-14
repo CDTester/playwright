@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { SeleniumLoginPage } from '../../pages/Login/SeleniumLoginPage';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('LOGIN-001', 'BUG-101', 'BLOCKER');
+const annotation2 = testAnnotation('LOGIN-002', 'BUG-102', 'CRITICAL');
 
 test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noStorageState']}, () => {
   let login: SeleniumLoginPage;
@@ -19,7 +22,8 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
     });
   });
 
-  test('Login with valid credentials', async ({ page }) => {
+  test('Login with valid credentials', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ page }) => {
     await allure.story('Story: Login in to Selenium');
     await allure.tms('LOGIN-001');
     await allure.issue('BUG-101');
@@ -50,8 +54,8 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
 
   });
 
-
-  test('Login with invalid credentials', async ({ page }) => {
+  test('Login with invalid credentials', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ page }) => {
     await allure.story('Story: Login in to Selenium');
     await allure.tms('LOGIN-002');
     await allure.issue('BUG-102');
@@ -80,6 +84,4 @@ test.describe('Selenium Login Page Tests', {tag: ['@login', '@selenium', '@noSto
     });
 
   });
-
-
 });

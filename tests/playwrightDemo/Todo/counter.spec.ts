@@ -1,5 +1,10 @@
 import { test, expect } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-131', 'BUG-131', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-132', 'BUG-132', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-133', 'BUG-133', 'NORMAL');
+const annotation4 = testAnnotation('TODO-134', 'BUG-134', 'MINOR');
 
 const TODO_ITEMS = [
   'keep me',
@@ -23,7 +28,8 @@ test.describe('Todo Counter', {tag: ['@Todo', '@Counter']}, () => {
     });
   });
 
-  test('The counter should increase when an item is added', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('The counter should increase when an item is added', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Counter for active ToDo Items');
     await allure.tms('TODO-131');
     await allure.issue('BUG-131');
@@ -44,7 +50,8 @@ test.describe('Todo Counter', {tag: ['@Todo', '@Counter']}, () => {
   });
 
 
-  test('The counter should decrease WHEN an item is completed', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('The counter should decrease WHEN an item is completed', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Counter for active ToDo Items');
     await allure.tms('TODO-132');
     await allure.issue('BUG-132');
@@ -67,7 +74,8 @@ test.describe('Todo Counter', {tag: ['@Todo', '@Counter']}, () => {
   });
 
 
-  test('The counter should display 0 items left WHEN all items are complete', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('The counter should display 0 items left WHEN all items are complete', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Counter for active ToDo Items');
     await allure.tms('TODO-133');
     await allure.issue('BUG-133');
@@ -90,7 +98,8 @@ test.describe('Todo Counter', {tag: ['@Todo', '@Counter']}, () => {
   });
 
 
-  test('The counter should decrease WHEN an item is deleted', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('The counter should decrease WHEN an item is deleted', 
+  {annotation: annotation4, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Counter for active ToDo Items');
     await allure.tms('TODO-134');
     await allure.issue('BUG-134');

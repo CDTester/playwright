@@ -1,5 +1,10 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-001', 'BUG-001', 'NORMAL');
+const annotation2 = testAnnotation('USER-002', 'BUG-002', 'NORMAL');
+const annotation3 = testAnnotation('USER-003', 'BUG-003', 'NORMAL');
+const annotation4 = testAnnotation('USER-004', 'BUG-004', 'NORMAL');
 
 test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   test.beforeEach(async () => {
@@ -9,11 +14,12 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({ usersApi }) => {
-    await usersApi.dispose();
-  });
+  // test.afterEach(async ({ usersApi }) => {
+  //   await usersApi.dispose();
+  // });
 
-  test('Get all users', {tag: ['@smoke']}, async ({ usersApi }) => {
+  test('Get all users', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-001');
     await allure.issue('BUG-001');
@@ -43,7 +49,8 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by id', {tag: ['@smoke']}, async ({ usersApi }) => {
+  test('Get user by id', 
+  {annotation: annotation2, tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-002');
     await allure.issue('BUG-002');
@@ -56,7 +63,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     });
 
     await allure.step('WHEN a request is made to get a user by id', async () => {
-      response = await usersApi.getUserById('1');
+      response = (await usersApi.getUserById('1')) as APIResponse;
       respBody = await response.json();
     });
 
@@ -73,7 +80,8 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by username', {tag: ['@smoke']}, async ({ usersApi }) => {
+  test('Get user by username', 
+  {annotation: annotation3, tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-003');
     await allure.issue('BUG-003');
@@ -86,7 +94,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     });
 
     await allure.step('WHEN a request is made to get a user by username', async (step) => {
-      response = await usersApi.getUserByUsername('Samantha');
+      response = (await usersApi.getUserByUsername('Samantha')) as APIResponse;
       respBody = await response.json();
     });
 
@@ -103,7 +111,8 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
   });
 
 
-  test('Get user by city', {tag: ['@smoke']}, async ({ usersApi }) => {
+  test('Get user by city', 
+  {annotation: annotation4, tag: ['@smoke']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-004');
     await allure.issue('BUG-004');
@@ -116,7 +125,7 @@ test.describe('User API', {tag: ['@api', '@users', '@get']}, () => {
     });
 
     await allure.step('WHEN a request is made to get a user by city', async (step) => {
-      response = await usersApi.getUserByCity('South Elvis');
+      response = (await usersApi.getUserByCity('South Elvis')) as APIResponse;
       respBody = await response.json();
     });
 

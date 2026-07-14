@@ -1,5 +1,7 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-005', 'BUG-005', 'NORMAL');
 
 test.describe('Users API', {tag: ['@api', '@users']}, () => {
   test.beforeEach(async () => {
@@ -9,12 +11,12 @@ test.describe('Users API', {tag: ['@api', '@users']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({ usersApi }) => {
-    await usersApi.dispose();
-  });
+  // test.afterEach(async ({ usersApi }) => {
+  //   await usersApi.dispose();
+  // });
 
-
-  test('Validate User JSON schema', {tag: ['@smoke', '@schema']}, async ({ usersApi }) => {
+  test('Validate User JSON schema', 
+  {annotation: annotation1, tag: ['@smoke', '@schema']}, async ({ usersApi }) => {
     await allure.story('Story: Get users');
     await allure.tms('USER-005');
     await allure.issue('BUG-005');

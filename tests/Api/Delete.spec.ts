@@ -1,5 +1,7 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-011', 'BUG-011', 'NORMAL');
 
 test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
   test.beforeEach(async () => {
@@ -9,11 +11,12 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({ postsApi }) => {
-    await postsApi.dispose();
-  });
+  // test.afterEach(async ({ postsApi }) => {
+  //   await postsApi.dispose();
+  // });
 
-  test('DELETE an existing post', {tag: ['@smoke']}, async ({ postsApi }) => {
+  test('DELETE an existing post', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ postsApi }) => {
     await allure.story('Story: Delete an existing post');
     await allure.tms('USER-011');
     await allure.issue('BUG-011');
@@ -26,7 +29,7 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@delete']}, () => {
     });
 
     await allure.step('WHEN a request is made to delete an existing post', async () => {
-      response = await postsApi.deletePost('1');
+      response = (await postsApi.deletePost('1')) as APIResponse;
       respBody = await response.json();
     });
 

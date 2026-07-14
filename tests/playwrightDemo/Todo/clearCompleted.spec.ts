@@ -1,5 +1,9 @@
 import { test, expect } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-111', 'BUG-111', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-112', 'BUG-112', 'NORMAL');
+const annotation3 = testAnnotation('TODO-113', 'BUG-113', 'MINOR');
 
 const TODO_ITEMS = [
   'keep me',
@@ -28,7 +32,8 @@ test.describe('Clear Completed Todo', {tag: ['@Todo', '@Clear']}, async () => {
   });
 
 
-  test(`The 'Clear Completed' button is hidden when there are no completed items`, {tag: ['@smoke']}, async ({ todoPage }) => {
+  test(`The 'Clear Completed' button is hidden when there are no completed items`, 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Clear Completed ToDo Item from the list');
     await allure.tms('TODO-111');
     await allure.issue('BUG-111');
@@ -48,7 +53,8 @@ test.describe('Clear Completed Todo', {tag: ['@Todo', '@Clear']}, async () => {
   });
 
 
-  test(`The 'Clear Completed' button is visible when there are completed items`, {tag: ['@regression']}, async ({ todoPage }) => {
+  test(`The 'Clear Completed' button is visible when there are completed items`, 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Clear Completed ToDo Item from the list');
     await allure.tms('TODO-112');
     await allure.issue('BUG-112');
@@ -70,7 +76,8 @@ test.describe('Clear Completed Todo', {tag: ['@Todo', '@Clear']}, async () => {
   });
 
 
-  test(`The 'Clear Completed' button should remove completed items`, {tag: ['@regression']}, async ({ todoPage }) => {
+  test(`The 'Clear Completed' button should remove completed items`, 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Clear Completed ToDo Item from the list');
     await allure.tms('TODO-113');
     await allure.issue('BUG-113');

@@ -1,5 +1,9 @@
 import { test, expect } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-101', 'BUG-101', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-102', 'BUG-102', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-103', 'BUG-103', 'NORMAL');
 
 const TODO_ITEMS = [
   'buy some cheese',
@@ -21,7 +25,8 @@ test.describe('Add Todo', {tag: ['@Todo', '@Add']}, async () => {
     });
   });
 
-  test('Item can be added to ToDo list', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('Item can be added to ToDo list', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Add ToDo Item to the list');
     await allure.tms('TODO-101');
     await allure.issue('BUG-101');
@@ -42,7 +47,8 @@ test.describe('Add Todo', {tag: ['@Todo', '@Add']}, async () => {
     });
   });
 
-  test('The input field should be cleared when the item is added', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('The input field should be cleared when the item is added', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Add ToDo Item to the list');
     await allure.tms('TODO-102');
     await allure.issue('BUG-102');
@@ -61,7 +67,8 @@ test.describe('Add Todo', {tag: ['@Todo', '@Add']}, async () => {
     });
   });
 
-  test('Item should be appended to the bottom of the list', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Item should be appended to the bottom of the list', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Add ToDo Item to the list');
     await allure.tms('TODO-103');
     await allure.issue('BUG-103');

@@ -45,8 +45,8 @@ export default defineConfig({
     headless: process.env.CI ? true : false,
     geolocation: { latitude: 29.97918, longitude: 31.13420 }, // Set geolocation to Great Pyramid of Giza
     permissions: ['geolocation'],
-    trace: 'retain-on-failure', // on, off, retain-on-failure, on-first-retry
-    screenshot: 'only-on-failure', // on, off, retain-on-failure
+    trace: 'retain-on-first-failure', // on, off, retain-on-failure, on-first-retry
+    screenshot: 'on-first-failure', // on, off, retain-on-failure
     video: 'off', // on, off, retain-on-failure, on-first-retry
     viewport: { width: 1200, height: 700 },
     ignoreHTTPSErrors: true, // Ignore HTTPS errors to handle SSL certificate issues

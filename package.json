@@ -20,7 +20,8 @@
     "codegenMini": "playwright codegen --viewport-size=\"500,800\"",
     "codegen": "playwright codegen",
     "agentInit": "playwright init-agents --loop=vscode",
-    "tscode": "npx ts-node --project tsconfig.json"
+    "tscode": "npx ts-node --project tsconfig.json",
+    "tslint": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

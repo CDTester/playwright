@@ -1,5 +1,22 @@
 import { test, expect } from '../../fixtures/playwrightFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('PLAY-011', 'BUG-011', 'BLOCKER');
+const annotation2 = testAnnotation('PLAY-012', 'BUG-012', 'CRITICAL');
+const annotation3 = testAnnotation('PLAY-013', 'BUG-013', 'NORMAL');
+const annotation4 = testAnnotation('PLAY-014', 'BUG-014', 'MINOR');
+const annotation5 = testAnnotation('PLAY-015', 'BUG-015', 'MINOR');
+const annotation6 = testAnnotation('PLAY-017', 'BUG-017', 'NORMAL');
+const annotation7 = testAnnotation('PLAY-018', 'BUG-018', 'NORMAL');
+const annotation8 = testAnnotation('PLAY-019', 'BUG-019', 'NORMAL');
+const annotation9 = testAnnotation('PLAY-020', 'BUG-020', 'CRITICAL');
+const annotation10 = testAnnotation('PLAY-021', 'BUG-021', 'NORMAL');
+const annotation11 = testAnnotation('PLAY-022', 'BUG-022', 'NORMAL');
+const annotation12 = testAnnotation('PLAY-023', 'BUG-023', 'MINOR');
+const annotation13 = testAnnotation('PLAY-024', 'BUG-024', 'MINOR');
+const annotation14 = testAnnotation('PLAY-026', 'BUG-026', 'NORMAL');
+const annotation15 = testAnnotation('PLAY-027', 'BUG-027', 'NORMAL');
+const annotation16 = testAnnotation('PLAY-028', 'BUG-028', 'TRIVIAL');
 
 test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
@@ -16,8 +33,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Large screen) should have homepage link to 'Playwright'`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should have homepage link to 'Playwright'`, 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-011');
@@ -31,7 +48,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  test(`Menu (Large screen) should have link for 'Docs'`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should have link for 'Docs'`, 
+  {annotation: annotation2, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-012');
@@ -46,7 +64,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  test(`Menu (Large screen) should have link for 'API'`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should have link for 'API'`, 
+  {annotation: annotation3, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-013');
@@ -61,7 +80,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  test(`Menu (Large screen) should have link for 'Node.js'`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should have link for 'Node.js'`, 
+  {annotation: annotation4, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-014');
@@ -76,8 +96,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Large screen) should have drop down menu for other languages`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should have drop down menu for other languages`, 
+  {annotation: annotation5, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-015');
@@ -112,8 +132,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Large screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should change menu links when python language is selected`, 
+  {annotation: annotation6, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-017');
@@ -140,7 +160,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  test(`Menu (Large screen) should change menu links when Java language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should change menu links when Java language is selected`, 
+  {annotation: annotation7, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-018');
@@ -168,7 +189,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 
   });
 
-  test(`Menu (Large screen) should change menu links when .NET language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Large screen) should change menu links when .NET language is selected`, 
+  {annotation: annotation8, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Large Screen');
     await allure.story('Story: Menu - Large Screen');
     await allure.tms('PLAY-019');
@@ -196,8 +218,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
 ;
   });
 
-
-  test(`Menu (Small screen) should have homepage link to 'Playwright'`, {tag: ['@regression']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should have homepage link to 'Playwright'`, 
+  {annotation: annotation9, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-020');
@@ -212,8 +234,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Small screen) should have link for 'Docs'`, {tag: ['@regression']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should have link for 'Docs'`, 
+  {annotation: annotation10, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-021');
@@ -240,8 +262,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Small screen) should have link for 'API'`, {tag: ['@regression']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should have link for 'API'`, 
+  {annotation: annotation11, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-022');
@@ -268,7 +290,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-  test(`Menu (Small screen) should have link for 'Node.js'`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should have link for 'Node.js'`, 
+  {annotation: annotation12, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-023');
@@ -294,8 +317,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Small screen) should have drop down menu for other languages`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should have drop down menu for other languages`, 
+  {annotation: annotation13, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-024');
@@ -341,8 +364,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     });
   });
 
-
-  test(`Menu (Small screen) should change menu links when python language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should change menu links when python language is selected`, 
+  {annotation: annotation14, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-026');
@@ -382,7 +405,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     // });
   });
 
-  test(`Menu (Small screen) should change menu links when Java language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should change menu links when Java language is selected`, 
+  {annotation: annotation15, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-027');
@@ -417,7 +441,8 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     // });
   });
 
-  test(`Menu (Small screen) should change menu links when .NET language is selected`, {tag: ['@smoke']}, async ({ menuPage }) => {
+  test(`Menu (Small screen) should change menu links when .NET language is selected`, 
+  {annotation: annotation16, tag: ['@smoke']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-028');

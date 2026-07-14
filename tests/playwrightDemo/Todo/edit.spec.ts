@@ -1,6 +1,11 @@
-import { test, expect } from '../../../fixtures/playwrightDemoFixture';
-import type { Locator } from '@playwright/test';
+import { test, expect, Locator } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-151', 'BUG-151', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-152', 'BUG-152', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-153', 'BUG-153', 'NORMAL');
+const annotation4 = testAnnotation('TODO-154', 'BUG-154', 'MINOR');
+const annotation5 = testAnnotation('TODO-155', 'BUG-155', 'TRIVIAL');
 
 const TODO_ITEMS = [
   'buy some cheese',
@@ -23,7 +28,8 @@ test.describe('Edit Todo', {tag: ['@Todo', '@Edit']}, () => {
   });
 
 
-  test('Complete Checkbox should be hidden when editing', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('Complete Checkbox should be hidden when editing', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Edit ToDo Items from the list');
     await allure.tms('TODO-151');
     await allure.issue('BUG-151');
@@ -46,7 +52,8 @@ test.describe('Edit Todo', {tag: ['@Todo', '@Edit']}, () => {
   });
 
 
-  test('Edits are saved when the edit field is unfocused', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Edits are saved when the edit field is unfocused', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Edit ToDo Items from the list');
     await allure.tms('TODO-152');
     await allure.issue('BUG-152');
@@ -69,7 +76,8 @@ test.describe('Edit Todo', {tag: ['@Todo', '@Edit']}, () => {
   });
 
 
-  test('Edits are saved when Enter is pressed', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Edits are saved when Enter is pressed', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Edit ToDo Items from the list');
     await allure.tms('TODO-153');
     await allure.issue('BUG-153');
@@ -92,7 +100,8 @@ test.describe('Edit Todo', {tag: ['@Todo', '@Edit']}, () => {
   });
 
 
-  test('Whitespace before and after text is removed when saving', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Whitespace before and after text is removed when saving', 
+  {annotation: annotation4, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Edit ToDo Items from the list');
     await allure.tms('TODO-154');
     await allure.issue('BUG-154');
@@ -115,7 +124,8 @@ test.describe('Edit Todo', {tag: ['@Todo', '@Edit']}, () => {
   });
 
 
-  test('Cancel edit by using escape', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('Cancel edit by using escape', 
+  {annotation: annotation5, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Edit ToDo Items from the list');
     await allure.tms('TODO-155');
     await allure.issue('BUG-155');

@@ -15,10 +15,11 @@
     "strictPropertyInitialization": false,
     "noImplicitReturns": false,
     "strictNullChecks": false,
+    "skipLibCheck": true,
     "noImplicitAny": false
   },
-  "include": ["./pages/*.ts", "./tests/**/*.ts", "./playwright.config.ts", "./utils/**/*.ts" ],
-  "exclude": ["*.js"],
+  "include": ["./pages/*.ts", "./tests/**/*.ts", "./fixtures/**/*.ts", "./playwright.config.ts", "./utils/**/*.ts" ],
+  "exclude": ["*.js", "./node_modules/*"],
   "ts-node": {
     "transpileOnly": true,
     "esm": false,
@@ -35,7 +36,8 @@
       "strictNullChecks": false,
       "noImplicitAny": false
     },
-    "include": ["./test/**/*.ts", "./src/**/*.ts", "./playwright.config.ts", "./pages/*.ts", "./utils/**/*.ts"],
+    "include": ["./pages/*.ts", "./tests/**/*.ts", "./fixtures/**/*.ts", "./playwright.config.ts", "./utils/**/*.ts" ],
+    "exclude": ["*.js", "./node_modules/*"],
     "export": ["./node_modules"]
   }
 }

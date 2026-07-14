@@ -1,4 +1,4 @@
-import { test as base, Locator } from '@playwright/test';
+import { test as base } from '@playwright/test';
 import { TodoPage } from '../pages/PlaywrightDemo/TodoPage';
 import { ApiMockingPage } from '../pages/PlaywrightDemo/ApiMockingPage';
 
@@ -32,4 +32,4 @@ export const test = base.extend<PageFixtures, WorkerFixtures>({
   }
 });
 
-export { expect } from '@playwright/test';
+export { expect, TestDetailsAnnotation, Locator  } from '@playwright/test';

@@ -1,5 +1,7 @@
 import { test, expect } from '../../fixtures/websocketFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('SOCK-001', 'BUG-201', 'BLOCKER');
 
 test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
 
@@ -10,11 +12,7 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
   });
 
   test('intercept websocket messages',
-  {annotation: [
-    { type: 'TMS', description: 'https://tms.example.com/testcase/SOCK-001' },
-    { type: 'BUGS', description: 'https://issue-tracker.example.com/issue/BUG-201' },
-    { type: 'SEVERITY', description: 'BLOCKER' }]
-  }, async ({webSocketTesterPage}) => {
+  {annotation: annotation1 , tag: ['@smoke']}, async ({webSocketTesterPage}) => {
     await allure.story('Story: Send and receive messages on a websocket');
     await allure.tms('SOCK-001');
     await allure.issue('BUG-201');

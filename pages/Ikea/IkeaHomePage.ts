@@ -18,15 +18,15 @@ export class IkeaHomePage extends BasePage {
   }
 
   async goto () {
-    // what about page.routeWebsocket to intercept the websocket connection and mock the response?
+    await this.navigate(this.url);
+    await this.page.waitForLoadState('load'); // or 'domcontentloaded'
+  }
 
-
+  async rejectCookieConsent () {
     await this.page.addLocatorHandler(this.cookieConsentHeader, async () => {
+      await this.highlightElement(this.cookieRejectButton, 'red', true);
       await this.cookieRejectButton.click();
     });
-
-    await this.navigate(this.url);
-    await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
 
   }
 

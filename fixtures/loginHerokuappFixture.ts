@@ -79,4 +79,4 @@ export const testWithTrace = base.extend({
   },
 });
 
-export { expect } from '@playwright/test';
+export { expect, TestDetailsAnnotation } from '@playwright/test';

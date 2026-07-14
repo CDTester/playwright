@@ -1,6 +1,10 @@
 import { test, expect } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
-
+const annotation1 = testAnnotation('TODO-161', 'BUG-161', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-162', 'BUG-162', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-163', 'BUG-163', 'NORMAL');
+const annotation4 = testAnnotation('TODO-164', 'BUG-163', 'MINOR');
 const TODO_ITEMS = [
   'keep me',
   'complete me',
@@ -24,7 +28,8 @@ test.describe('Todo Filters', {tag: ['@Todo', '@Filter']}, () => {
   });
 
 
-  test('There should be 3 filters available when there are items on the list', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('There should be 3 filters available when there are items on the list', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Filter active and complete ToDo Items from the list');
     await allure.tms('TODO-161');
     await allure.issue('BUG-161');
@@ -60,7 +65,8 @@ test.describe('Todo Filters', {tag: ['@Todo', '@Filter']}, () => {
   });
 
 
-  test(`The 'All' filter should show active and completed items`, {tag: ['@regression']}, async ({ todoPage }) => {
+  test(`The 'All' filter should show active and completed items`, 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Filter active and complete ToDo Items from the list');
     await allure.tms('TODO-162');
     await allure.issue('BUG-162');
@@ -87,7 +93,8 @@ test.describe('Todo Filters', {tag: ['@Todo', '@Filter']}, () => {
   });
 
 
-  test(`The 'Active' filter should show only active items`, {tag: ['@regression']}, async ({ todoPage }) => {
+  test(`The 'Active' filter should show only active items`, 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Filter active and complete ToDo Items from the list');
     await allure.tms('TODO-163');
     await allure.issue('BUG-163');
@@ -112,7 +119,8 @@ test.describe('Todo Filters', {tag: ['@Todo', '@Filter']}, () => {
     });
   });
 
-  test(`The 'Completed' filter should only show completed items`, {tag: ['@regression']}, async ({ todoPage }) => {
+  test(`The 'Completed' filter should only show completed items`, 
+  {annotation: annotation4, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Filter active and complete ToDo Items from the list');
     await allure.tms('TODO-164');
     await allure.issue('BUG-164');

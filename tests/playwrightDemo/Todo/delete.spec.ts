@@ -1,6 +1,9 @@
-import { test, expect } from '../../../fixtures/playwrightDemoFixture';
-import type { Locator } from '@playwright/test';
+import { test, expect, Locator } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('TODO-141', 'BUG-141', 'BLOCKER');
+const annotation2 = testAnnotation('TODO-142', 'BUG-142', 'CRITICAL');
+const annotation3 = testAnnotation('TODO-143', 'BUG-143', 'NORMAL');
 
 const TODO_ITEMS = [
   'buy some cheese',
@@ -23,7 +26,8 @@ test.describe('Delete Todo', {tag: ['@Todo', '@Delete']}, () => {
     });
   });
 
-  test('The delete button should be visible when hovering over an item', {tag: ['@smoke']}, async ({ todoPage }) => {
+  test('The delete button should be visible when hovering over an item', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ todoPage }) => {
     await allure.story('Story: Delete ToDo Items from the list');
     await allure.tms('TODO-141');
     await allure.issue('BUG-141');
@@ -51,7 +55,8 @@ test.describe('Delete Todo', {tag: ['@Todo', '@Delete']}, () => {
   });
 
 
-  test('An item can be removed from using the delete button', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('An item can be removed from using the delete button', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Delete ToDo Items from the list');
     await allure.tms('TODO-142');
     await allure.issue('BUG-142');
@@ -72,7 +77,8 @@ test.describe('Delete Todo', {tag: ['@Todo', '@Delete']}, () => {
     });
   });
 
-  test('An item can be removed when an empty text string is entered during edit', {tag: ['@regression']}, async ({ todoPage }) => {
+  test('An item can be removed when an empty text string is entered during edit', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ todoPage }) => {
     await allure.story('Story: Delete ToDo Items from the list');
     await allure.tms('TODO-143');
     await allure.issue('BUG-143');

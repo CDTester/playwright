@@ -21,21 +21,25 @@ export const test = base.extend<PageFixtures>({
   bitlyApi: async ({ envData }, use) => {
     const api = new BitlyApi(envData);
     await use(api);
+    api.dispose();
   },
   postmanApi: async ({ envData }, use) => {
     const api = new PostmanApi(envData);
     await use(api);
+    api.dispose();
   },
   postsApi: async ({ envData }, use) => {
     const api = new PostsApi(envData);
     await use(api);
+    api.dispose();
   },
   usersApi: async ({ envData }, use) => {
     const api = new UsersApi(envData);
     await use(api);
+    api.dispose();
   }
 
     //, you can add more fixtures here
 });
 
-export { expect, APIResponse } from '@playwright/test';
+export { expect, APIResponse, TestDetailsAnnotation  } from '@playwright/test';

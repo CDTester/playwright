@@ -19,7 +19,7 @@ test.describe('Counter Display', { tag: ['@Todo', '@Counter'] }, () => {
     await allure.feature('Feature: Counter Display');
     await allure.story('Story: Counter plural form');
     await allure.owner('QA Team');
-    await allure.severity(allure.Severity.MEDIUM);
+    await allure.severity(allure.Severity.NORMAL);
 
     // 1. When I add item 'Buy milk'
     await allure.step('WHEN I add item "Buy milk"', async (step) => {

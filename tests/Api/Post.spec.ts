@@ -1,5 +1,7 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-008', 'BUG-008', 'NORMAL');
 
 test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
   test.beforeEach(async () => {
@@ -9,11 +11,12 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({ postsApi }) => {
-    await postsApi.dispose();
-  });
+  // test.afterEach(async ({ postsApi }) => {
+  //   await postsApi.dispose();
+  // });
 
-  test('POST a new post', {tag: ['@smoke']}, async ({ postsApi }) => {
+  test('POST a new post', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ postsApi }) => {
     await allure.story('Story: Create a new post');
     await allure.tms('USER-008');
     await allure.issue('BUG-008');
@@ -31,7 +34,7 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@post']}, () => {
         body: 'this is the body of the new post',
         userId: 1
       };
-      response = await postsApi.createPost(data);
+      response = (await postsApi.createPost(data)) as APIResponse;
       respBody = await response.json();
     });
 

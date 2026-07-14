@@ -32,4 +32,4 @@ export const test = base.extend<PageFixtures, WorkerFixtures>({
   }
 });
 
-export { expect } from '@playwright/test';
+export { expect, TestDetailsAnnotation } from '@playwright/test';

@@ -1,5 +1,7 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-010', 'BUG-010', 'NORMAL');
 
 test.describe('Posts API', {tag: ['@api', '@posts', '@patch']}, () => {
   test.beforeEach(async () => {
@@ -9,17 +11,17 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@patch']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({ postsApi }) => {
-    await postsApi.dispose();
-  });
+  // test.afterEach(async ({ postsApi }) => {
+  //   await postsApi.dispose();
+  // });
 
-  test('PATCH an existing post', {tag: ['@smoke']}, async ({ postsApi }) => {
+  test('PATCH an existing post', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ postsApi }) => {
     await allure.story('Story: Update an existing post');
     await allure.tms('USER-010');
     await allure.issue('BUG-010');
     await allure.severity(allure.Severity.NORMAL);
 
-    
     let response: APIResponse;
     let respBody: any;
 
@@ -29,7 +31,7 @@ test.describe('Posts API', {tag: ['@api', '@posts', '@patch']}, () => {
 
     await allure.step('WHEN a request is made to patch an existing post', async () => {
       const data = { title: 'PATCH an existing post' };
-      response = await postsApi.patchPost('1', data);
+      response = (await postsApi.patchPost('1', data)) as APIResponse;
       respBody = await response.json();
     });
 

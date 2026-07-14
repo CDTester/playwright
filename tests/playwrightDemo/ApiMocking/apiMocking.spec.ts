@@ -1,5 +1,7 @@
 import { test, expect } from '../../../fixtures/playwrightDemoFixture';
+import { testAnnotation } from '../../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('MOCK-001', 'BUG-301', 'BLOCKER');
 
 test.describe('API Mocking Page Tests', {tag: ['@apiMocking']}, () => {
   test.beforeEach(async ({}) => {
@@ -9,12 +11,7 @@ test.describe('API Mocking Page Tests', {tag: ['@apiMocking']}, () => {
   });
 
   test('Mock the API response for the fruits endpoint',
-  {annotation: [
-    { type: 'TMS', description: 'https://tms.example.com/testcase/MOCK-001' },
-    { type: 'BUGS', description: 'https://issue-tracker.example.com/issue/BUG-301' },
-    { type: 'SEVERITY', description: 'BLOCKER' }]
-  },
-  async ({ apiMockingPage }) => {
+  {annotation: annotation1, tag: ['@smoke'] },  async ({ apiMockingPage }) => {
     await allure.story('Story: Mock the API response for the fruits endpoint');
     await allure.tms('MOCK-001');
     await allure.issue('BUG-301');

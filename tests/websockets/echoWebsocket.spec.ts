@@ -1,5 +1,9 @@
 import { test, expect } from '../../fixtures/websocketFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('SOCK-002', 'BUG-202', 'BLOCKER')
+const annotation2 = testAnnotation('SOCK-003', 'BUG-203', 'BLOCKER')
+const annotation3 = testAnnotation('SOCK-004', 'BUG-204', 'BLOCKER')
 
 test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
 
@@ -10,11 +14,7 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
   });
 
   test('Send websocket messages via UI',
-  {annotation: [
-    { type: 'TMS', description: 'https://tms.example.com/testcase/SOCK-002' },
-    { type: 'BUGS', description: 'https://issue-tracker.example.com/issue/BUG-202' },
-    { type: 'SEVERITY', description: 'BLOCKER' }]
-  }, async ({routeWebSocketPage}) => {
+  {annotation: annotation1, tag: ['@smoke'] }, async ({routeWebSocketPage}) => {
     await allure.story('Story: Send and receive messages on a websocket');
     await allure.tms('SOCK-002');
     await allure.issue('BUG-202');
@@ -50,11 +50,7 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
   });
 
   test('Mock websocket response messages',
-  {annotation: [
-    { type: 'TMS', description: 'https://tms.example.com/testcase/SOCK-003' },
-    { type: 'BUGS', description: 'https://issue-tracker.example.com/issue/BUG-203' },
-    { type: 'SEVERITY', description: 'BLOCKER' }]
-  }, async ({routeWebSocketPage}) => {
+  {annotation: annotation2, tag: ['@regression'] }, async ({routeWebSocketPage}) => {
     await allure.story('Story: Send and receive messages on a websocket');
     await allure.tms('SOCK-003');
     await allure.issue('BUG-203');
@@ -92,11 +88,7 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
   });
 
   test('Intercept websocket response messages',
-  {annotation: [
-    { type: 'TMS', description: 'https://tms.example.com/testcase/SOCK-004' },
-    { type: 'BUGS', description: 'https://issue-tracker.example.com/issue/BUG-204' },
-    { type: 'SEVERITY', description: 'BLOCKER' }]
-  }, async ({routeWebSocketPage}) => {
+  {annotation: annotation3, tag: ['@regression'] }, async ({routeWebSocketPage}) => {
     await allure.story('Story: Send and receive messages on a websocket');
     await allure.tms('SOCK-004');
     await allure.issue('BUG-204');

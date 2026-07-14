@@ -1,5 +1,8 @@
 import { test, expect, APIResponse } from '../../fixtures/apiFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('USER-006', 'BUG-006', 'NORMAL');
+const annotation2 = testAnnotation('USER-007', 'BUG-007', 'NORMAL');
 
 test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
 
@@ -10,12 +13,13 @@ test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
     await allure.owner('Chris');
   });
 
-  test.afterEach(async ({bitlyApi}) => {
-    await bitlyApi.dispose();
-  });
+  // test.afterEach(async ({bitlyApi}) => {
+  //   await bitlyApi.dispose();
+  // });
 
 
-  test('User gets 403 response with invalid Bearer token', {tag: ['@smoke', '@bearer']}, async ({bitlyApi}) => {
+  test('User gets 403 response with invalid Bearer token', 
+  {annotation: annotation1, tag: ['@smoke', '@bearer']}, async ({bitlyApi}) => {
     await allure.story('Story: authentication using Bearer token');
     await allure.tms('USER-006');
     await allure.issue('BUG-006');
@@ -27,7 +31,7 @@ test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
     });
 
     await allure.step('WHEN a request is made to get user with an invalid Bearer token', async (step) => {
-      response = await bitlyApi.getUser();
+      response = (await bitlyApi.getUser()) as APIResponse;
     });
 
     await allure.step('THEN the user will receive a 403 forbidden response', async (step) => {
@@ -39,6 +43,7 @@ test.describe('Bitly API', {tag: ['@api', '@auth']}, () => {
 });
 
 test.describe('Postman API', {tag: ['@api', '@auth']}, () => {
+
   test.beforeEach(async () => {
     // The 'request' fixture automatically uses baseURL from config
     await allure.epic('Epic: API tests');
@@ -50,8 +55,8 @@ test.describe('Postman API', {tag: ['@api', '@auth']}, () => {
     await postmanApi.dispose();
   });
 
-
-  test('User gets 401 response with invalid X-API-Key token', {tag: ['@smoke', '@x-api-key']}, async ({postmanApi}) => {
+  test('User gets 401 response with invalid X-API-Key token', 
+  {annotation: annotation2, tag: ['@smoke', '@x-api-key']}, async ({postmanApi}) => {
     await allure.story('Story: authentication using X-API-Key token');
     await allure.tms('USER-007');
     await allure.issue('BUG-007');

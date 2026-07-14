@@ -1,5 +1,10 @@
 import { test, expect } from '../../fixtures/playwrightFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('PLAY-001', 'BUG-001', 'BLOCKER');
+const annotation2 = testAnnotation('PLAY-002', 'BUG-002', 'CRITICAL');
+const annotation3 = testAnnotation('PLAY-003', 'BUG-003', 'NORMAL');
+const annotation4 = testAnnotation('PLAY-004', 'BUG-004', 'NORMAL');
 
 test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async () => {
 
@@ -17,8 +22,8 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
   });
 
-
-  test('Homepage should have correct page Title', {tag: ['@smoke']}, async ({ homePage }) => {
+  test('Homepage should have correct page Title', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
     await allure.story('Story: Homepage content');
     await allure.tms('PLAY-001');
@@ -32,7 +37,8 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
   });
 
-  test('Homepage should have Navigation Menu', {tag: ['@regression']}, async ({ homePage }) => {
+  test('Homepage should have Navigation Menu', 
+  {annotation: annotation2, tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
     await allure.story('Story: Homepage content');
     await allure.tms('PLAY-002');
@@ -46,7 +52,8 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
   });
 
-  test('Homepage should have a Header section', {tag: ['@regression']}, async ({ homePage }) => {
+  test('Homepage should have a Header section', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
     await allure.story('Story: Homepage content');
     await allure.tms('PLAY-003');
@@ -78,8 +85,8 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
   });
 
-
-    test('Homepage should have a Footer section', {tag: ['@regression']}, async ({ homePage }) => {
+  test('Homepage should have a Footer section', 
+  {annotation: annotation4, tag: ['@regression']}, async ({ homePage }) => {
     await allure.subSuite('SubSuite: Homepage content');
     await allure.story('Story: Homepage content');
     await allure.tms('PLAY-004');
@@ -100,6 +107,4 @@ test.describe('Playwright Homepage', {tag: ['@Playwright', '@Homepage']}, async 
     });
   });
 
-
 });
-

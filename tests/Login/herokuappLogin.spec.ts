@@ -1,5 +1,11 @@
 import { test, expect } from '../../fixtures/loginHerokuappFixture';
+import { testAnnotation } from '../../utils/reporter';
 import * as allure from "allure-js-commons";
+const annotation1 = testAnnotation('LOGIN-011', 'BUG-111', 'BLOCKER');
+const annotation2 = testAnnotation('LOGIN-012', 'BUG-112', 'CRITICAL');
+const annotation3 = testAnnotation('LOGIN-013', 'BUG-113', 'NORMAL');
+const annotation4 = testAnnotation('LOGIN-014', 'BUG-114', 'MINOR');
+const annotation5 = testAnnotation('LOGIN-015', 'BUG-115', 'MINOR');
 
 test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@selenium', '@noStorageState']}, () => {
 
@@ -9,8 +15,8 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     await allure.owner('Chris');
   });
 
-
-  test('Cannot access secure area without login', async ({ loginPage, securePage }) => {
+  test('Cannot access secure area without login', 
+  {annotation: annotation1, tag: ['@smoke']}, async ({ loginPage, securePage }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-011');
     await allure.issue('BUG-111');
@@ -37,8 +43,8 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     });
   });
 
-
-  test('Can access secure area with valid login', async ({ loginPage, securePage, userData }) => {
+  test('Can access secure area with valid login', 
+  {annotation: annotation2, tag: ['@smoke']}, async ({ loginPage, securePage, userData }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-012');
     await allure.issue('BUG-112');
@@ -72,8 +78,8 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
     });
   });
 
-
-  test('The user is redirected to the login page after logging out', async ({ loginPage, securePage, userData }) => {
+  test('The user is redirected to the login page after logging out', 
+  {annotation: annotation3, tag: ['@regression']}, async ({ loginPage, securePage, userData }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-013');
     await allure.issue('BUG-113');
@@ -102,16 +108,18 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
       await expect(message).toBeVisible();
     });
   });
-
 });
 
 // The following tests use storage state, which is created in the loggedInState fixture.
 // The fixture checks if the storage state exist, if not it will run the login processs and save the storage state.
-// when run in parallel both script were running the login process 
-// So these tests run in serial mode under one worker 
 test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@selenium', '@noStorageState']}, () => {
+  
+  // when run in parallel both script were running the login process 
+  // So these tests run in serial mode under one worker 
   test.describe.configure({ mode: 'serial' });
-  test('The user can access the secure page when storage state is used', async ({ loggedInState }) => {
+  
+  test('The user can access the secure page when storage state is used',
+  {annotation: annotation4, tag: ['@smoke']},  async ({ loggedInState }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-014');
     await allure.issue('BUG-114');
@@ -142,7 +150,8 @@ test.describe('The-internet.herokuapp Login Page Tests', {tag: ['@login', '@sele
   });
 
 
-  test('Re-run storage state test to check it runs faster as storagestate now saved', async ({ loggedInState }) => {
+  test('Re-run storage state test to check it runs faster as storagestate now saved', 
+  {annotation: annotation5, tag: ['@smoke']}, async ({ loggedInState }) => {
     await allure.story('Story: Access the-internet.herokuapp Secure Area');
     await allure.tms('LOGIN-015');
     await allure.issue('BUG-115');
