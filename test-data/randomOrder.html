@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Random Product Loader</title>
+    <style>
+      body{ font-family: Arial, Helvetica, sans-serif; background:#f5f5f5; padding:40px;}
+      h1{ margin-bottom:10px;}
+      button{ padding:10px 20px; cursor:pointer; margin-bottom:25px;}
+      #products{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px;}
+      .product{
+          background:white;
+          border-radius:8px;
+          padding:15px;
+          box-shadow:0 2px 8px rgba(0,0,0,.15);
+          transition:.2s;
+      }
+      .product:hover{ transform:scale(1.03);}
+      .price{ color:green; font-weight:bold;}
+      .loading{ color:#777;}
+      .added {border: 3px solid #28a745; background: #e6fbeb;}
+      .added button { background: #28a745; color: white;}
+      button:disabled { cursor: not-allowed; opacity: 0.7;}
+    </style>
+  </head>
+
+  <body>
+    <h1>Random Product Loader</h1>
+    <p class="loading">Products appear in a different order and at random times. </p>
+    <p>Basket: <strong id="basket-count" test-id="basket">0</strong> item(s)</p>
+
+    <button id="reload">Reload Products</button>
+    <div id="products"></div>
+    <script>
+      const productNames = [
+      "Laptop",
+      "Keyboard",
+      "Mouse",
+      "Monitor",
+      "Phone",
+      "Tablet",
+      "Printer",
+      "Speaker",
+      "Headphones",
+      "Desk",
+      "Chair",
+      "Microphone",
+      "Webcam",
+      ];
+
+      function shuffle(array){
+        for(let i=array.length-1;i>0;i--){
+          const j=Math.floor(Math.random()*(i+1));
+          [array[i],array[j]]=[array[j],array[i]];
+        }
+        return array;
+      }
+
+      function loadProducts(){
+        const container=document.getElementById("products");
+        container.innerHTML="";
+        basketCount = 0;
+        document.getElementById("basket-count").textContent = basketCount;
+        const products=shuffle([...productNames]);
+        products.forEach((name,index)=>{
+          const delay=Math.floor(Math.random()*3900)+100;
+          setTimeout(()=>{
+            const price=(Math.random()*900+10).toFixed(2);
+            const div=document.createElement("div");
+            div.className="product";
+            div.dataset.testid=name.toLowerCase().replace(/\s/g,"-");
+            div.innerHTML = `
+              <h3>${name}</h3>
+              <p class="price">£${price}</p>
+              <p>time to load: ${delay}</p>
+              <button>Add to Basket</button>
+            `;
+            const button = div.querySelector("button");
+            button.addEventListener("click", () => {
+              if (button.textContent !== 'Added ✓') {
+                basketCount++;
+                button.textContent = "Added ✓";
+                div.classList.add("added");
+              }
+              else {
+                basketCount--;
+                button.textContent = "Add to Basket";
+                div.classList.remove("added");
+              }
+              document.getElementById("basket-count").textContent = basketCount;
+            });
+            container.appendChild(div);
+          },delay);
+        });
+      }
+      
+      document.getElementById("reload").addEventListener("click",loadProducts);
+      let basketCount = 0;
+      loadProducts();
+    </script>
+  </body>
+</html>
