@@ -1,0 +1,4 @@
+WebSocket opened: wss://echo.websocket.org/
+RECEIVED: Request served by 4d896d95b55478
+SENT: Hello WebSocket!
+RECEIVED: Hello WebSocket!

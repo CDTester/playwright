@@ -1,0 +1,4 @@
+WebSocket opened: wss://echo.websocket.org/
+WebSocket message received: Request served by 4d896d95b55478
+WebSocket message received: Hello chatbot
+WebSocket message received: Another message

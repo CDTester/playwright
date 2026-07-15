@@ -1,0 +1,1 @@
+{"type":"step_metadata","data":{"parameters":[{"name":"Expected Message","value":"The logged in message is not visible because the login screen calls /authenticate which post the message to the secure area"}]}}

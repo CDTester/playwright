@@ -1,0 +1,7 @@
+GET https://jsonplaceholder.typicode.com/users?%7B%22address.city%22%3A%22South+Elvis%22%7D=
+Headers: {
+  "connection": "keep-alive",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Cache-Control": "no-cache",
+  "Accept": "*/*"
+}

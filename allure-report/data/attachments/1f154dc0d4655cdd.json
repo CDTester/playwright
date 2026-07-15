@@ -1,0 +1,17 @@
+{
+  "date": "Wed, 15 Jul 2026 16:58:35 GMT",
+  "content-type": "application/json",
+  "content-length": "120",
+  "connection": "keep-alive",
+  "server": "cloudflare",
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET,POST,PUT,DELETE",
+  "access-control-max-age": "5",
+  "access-control-expose-headers": "*",
+  "access-control-allow-headers": "Accept,X-Api-Key,Content-Type",
+  "set-cookie": "__cf_bm=c2VIqc_mzjwH27.PKvaR57QwGu5XwlFVmExrhxSjanw-1784134715.5226665-1.0.1.1-wRQLK7rMj5NevpwkNUcXoI7xHfv3W0.xW9WhBYAPmGBVk7uHsFcBHzqUvHLTuju8umNGJU2Y3RvNHzo3yo5V4y5U2Xr7HDSDugGnfLrHXW40yrziCLJtSmscXYKKYJYp; HttpOnly; SameSite=None; Secure; Path=/; Domain=getpostman.com; Expires=Wed, 15 Jul 2026 17:28:35 GMT",
+  "cf-cache-status": "DYNAMIC",
+  "x-content-type-options": "nosniff",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+  "cf-ray": "a1ba501408b87ac4-SJC"
+}
