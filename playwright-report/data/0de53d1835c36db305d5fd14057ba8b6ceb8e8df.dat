@@ -1,0 +1,1 @@
+{"type":"step_metadata","data":{"parameters":[{"name":"response body","value":"{\n  \"id\": 1,\n  \"title\": \"PUT an updated post\",\n  \"body\": \"this is the updated body of the post\",\n  \"userId\": 1\n}"}]}}
