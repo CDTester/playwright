@@ -110,6 +110,15 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
     });
 
     await test.step('AND I send a message on the websocket not to be intercepted', async () => {
+      await expect(routeWebSocketPage.onScreenMessages).toHaveText([
+        'attempting to connect',
+        'connected',
+        /Request served by/,
+        'paused messages',
+        messageToListenFor,
+        `Intercepted: ${messageToListenFor}`,
+      ]);
+
       await routeWebSocketPage.sendMessage('Another message');
     });
 

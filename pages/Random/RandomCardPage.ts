@@ -21,9 +21,8 @@ export class RandomCardPage extends BasePage {
   readonly webcamCard: Locator;
   readonly basket: Locator;
 
-  constructor (page: Page, envData: any) {
+  constructor (page: Page) {
     super(page);
-    this.env = envData['ikea'];
     this.page = page;
     this.url= `file://${path.resolve('test-data/randomOrder.html')}`; //this.env.baseUrl;
     this.header = this.page.getByRole('heading', { name: 'Random Product Loader' });
@@ -78,7 +77,6 @@ export class RandomCardPage extends BasePage {
 
   async getPrice(card: Locator): Promise<string> {
     const price = await card.getByText('£').innerText();
-    console.log('Price:', price)
     return price;
   }
 

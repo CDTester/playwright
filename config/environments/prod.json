@@ -36,6 +36,9 @@
   },
   "echoWebSocket": {
     "baseUrl": "https://echo.websocket.org/.ws"
+  },
+  "ikea": {
+    "baseUrl": "https://www.ikea.com/"
   }
 
 }

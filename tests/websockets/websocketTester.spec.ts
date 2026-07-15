@@ -33,11 +33,11 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
     });
 
     await test.step('Websocket should have sent the message', async () => {
-      expect(webSocketTesterPage.getSentMessages()).toContain(messageToSend);
+      await expect(webSocketTesterPage.getSentMessages(), `SENT message should contain: ${messageToSend}`).toContain(messageToSend);
     });
 
     await test.step('Websocket should have received the message', async () => {
-      expect(webSocketTesterPage.getReceivedMessages()).toContain(messageToSend);
+      await expect(webSocketTesterPage.getReceivedMessages(), `RECEIVED messages should contain: ${messageToSend}`).toContain(messageToSend);
     });
 
     await test.step('Disconnect from the WebSocket', async () => {

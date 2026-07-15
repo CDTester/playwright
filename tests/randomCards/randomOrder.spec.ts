@@ -5,8 +5,6 @@ import * as allure from "allure-js-commons";
 const annotation1 = testAnnotation('RAND-001', 'BUG-501', 'CRITICAL');
 const annotation2 = testAnnotation('RAND-002', 'BUG-502', 'NORMAL');
 const annotation3 = testAnnotation('RAND-003', 'BUG-503', 'MINOR');
-const envString: string | undefined = process.env.envData as string;
-const envData: object = envString === undefined ? {} : JSON.parse(envString);
 
 test.describe('Random order Cards Tests', {tag: ['@random']}, () => {
 
@@ -18,7 +16,7 @@ test.describe('Random order Cards Tests', {tag: ['@random']}, () => {
 
   test('Wait for all product cards to be displayed', 
   {annotation: annotation1 , tag: ['@smoke'] }, async ({page}) => {
-    const randomCardPage = new RandomCardPage(page, envData);
+    const randomCardPage = new RandomCardPage(page);
 
     await allure.story('Story: Page loads all cards in random order');
     await allure.tms('RAND-001');
@@ -40,7 +38,7 @@ test.describe('Random order Cards Tests', {tag: ['@random']}, () => {
 
   test('Get the random pice for a monitor',
   {annotation: annotation2 , tag: ['@regression'] }, async ({page}) => {
-    const randomCardPage = new RandomCardPage(page, envData);
+    const randomCardPage = new RandomCardPage(page);
 
     await allure.story('Story: Product price is to be displayed');
     await allure.tms('RAND-002');
@@ -66,7 +64,7 @@ test.describe('Random order Cards Tests', {tag: ['@random']}, () => {
 
   test('Add Printer to the basket',
   {annotation: annotation3 , tag: ['@regression'] }, async ({page}) => {
-    const randomCardPage = new RandomCardPage(page, envData);
+    const randomCardPage = new RandomCardPage(page);
 
     await allure.story('Story: Add product to basket');
     await allure.tms('RAND-003');

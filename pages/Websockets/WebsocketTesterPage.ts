@@ -80,7 +80,7 @@ export class WebSocketTesterPage extends BasePage {
     await this.MessageInput.click();
     await this.MessageInput.fill(message);
     await this.MessageSendButton.click();
-    await this.MessageSendButton.isDisabled();
+    await expect(this.MessageSendButton).toBeDisabled();
   }
 
   getSentMessages(): string[] {
