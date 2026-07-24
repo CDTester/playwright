@@ -1,20 +1,21 @@
 import { test as base, Page } from '@playwright/test';
-import { HerokuappLoginPage } from '../pages/Login/HerokuappLoginPage';
-import { HerokuappSecurePage } from '../pages/Login/HerokuappSecurePage';
+import { LoginPage } from '../pages/Herokuapp/LoginPage';
+import { LoginSecurePage } from '../pages/Herokuapp/LoginSecurePage';
+import { ChallengingDomPage } from '../pages/Herokuapp/ChallengingDomPage';
 import { HerokuappData } from '../test-data/pages/LoginData/HerokuappData';
 import { HerokuappAuth } from '../test-data/pages/LoginData/HerokuappAuth';
 import { attachment } from 'allure-js-commons';
 import * as fs from 'fs';
 
 type TestFixtures = {
-  loginPage: HerokuappLoginPage;
-  securePage: HerokuappSecurePage;
+  loginPage: LoginPage;
+  securePage: LoginSecurePage;
   userData: typeof HerokuappData;
-  envData: object;
+  tablesPage: ChallengingDomPage;
 };
 
 type WorkerFixtures = {
-  loggedInState: HerokuappSecurePage;
+  loggedInState: LoginSecurePage;
   envData: object;
 };
 
@@ -25,12 +26,16 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
     await use(data); 
   }, { scope: 'worker' }],
   loginPage: async ({ page, envData }, use) => {
-    const loginPage = new HerokuappLoginPage(page, envData);
+    const loginPage = new LoginPage(page, envData);
     await use(loginPage);
   },
   securePage: async ({ page, envData }, use) => {
-    const securePage = new HerokuappSecurePage(page, envData);
+    const securePage = new LoginSecurePage(page, envData);
     await use(securePage);
+  },
+  tablesPage: async ({ page, envData }, use) => {
+    const tablesPage = new ChallengingDomPage(page, envData);
+    await use(tablesPage);
   },
   userData: async ({}, use) => {
     await use(HerokuappData);
@@ -52,7 +57,7 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
     // Create new context with stored authentication
     const context = await browser.newContext({ storageState: sessionPath });
     const page = await context.newPage();
-    const securePage = new HerokuappSecurePage(page, envData);
+    const securePage = new LoginSecurePage(page, envData);
     await use(securePage);
     
     // Cleanup

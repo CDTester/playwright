@@ -58,7 +58,7 @@ test.describe('Random order Cards Tests', {tag: ['@random']}, () => {
       expect(price, `${price} should not be £0.00`).not.toBe('£0.00');
 
       //or 
-      await expect(randomCardPage.productPrice(randomCardPage.monitorCard)).not.toContainText('£0.00')
+      await expect(randomCardPage.productPrice(randomCardPage.monitorCard), `${price} should not be £0.00`).not.toContainText('£0.00')
     });
   });
 

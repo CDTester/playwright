@@ -1,5 +1,5 @@
-import { HerokuappLoginPage } from '../../../pages/Login/HerokuappLoginPage';
-import { HerokuappSecurePage } from '../../../pages/Login/HerokuappSecurePage';
+import { HerokuappLoginPage } from '../../../pages/Herokuapp/LoginPage';
+import { HerokuappSecurePage } from '../../../pages/Herokuapp/LoginSecurePage';
 import { HerokuappData } from './HerokuappData';
 import { chromium, firefox, webkit } from '@playwright/test';
 import fs from 'fs';

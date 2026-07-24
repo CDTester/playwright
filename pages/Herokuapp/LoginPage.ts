@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
-export class HerokuappLoginPage extends BasePage {
+export class LoginPage extends BasePage {
   readonly url: string;
   readonly headerText: Locator;
   readonly usernameInput: Locator;
@@ -11,7 +11,7 @@ export class HerokuappLoginPage extends BasePage {
   readonly errorMessage:string = 'You must login to view the secure area!';
 
 
-  constructor(page: Page, envData: object) {
+  constructor(page: Page, envData: Record<string, any>) {
     super(page);
     this.env = envData['herokuapp'];
     this.headerText = page.getByRole('heading', { name: 'Login Page' });

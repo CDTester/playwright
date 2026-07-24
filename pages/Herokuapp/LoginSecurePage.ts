@@ -1,14 +1,14 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
-export class HerokuappSecurePage extends BasePage {
+export class LoginSecurePage extends BasePage {
   readonly url: string;
   readonly headerText: Locator;
   readonly logoutButton: Locator;
   readonly loggedInMessage:string = 'You logged into a secure area!';
   readonly welcomeMessage: Locator;
 
-  constructor(page: Page, envData: object) {
+  constructor(page: Page, envData: Record<string, any>) {
     super(page);
     this.env = envData['herokuapp'];
     this.headerText = page.getByRole('heading', { name: 'Secure Area', exact: true });
