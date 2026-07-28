@@ -651,3 +651,86 @@ This creates poms with assertions in the POM. The POM should not perform asserti
 > Check the page object models in the POM directory and tell me if they are using best practices.
 
 
+# Playwright → Feature File Generator
+ 
+Scans your Playwright `tests/` folder and generates one readable `.feature`
+summary file per spec file — describe title, test names, tags, annotation
+IDs, and step text — without touching your actual tests or requiring
+Cucumber.
+ 
+It works by parsing each `*.spec.ts` file with the real TypeScript compiler
+(AST), so it correctly handles multi-line calls, template literals, and
+nested `test.step` / `allure.step` calls — no fragile regex over source text.
+ 
+## What it extracts
+ 
+| Playwright code | Ends up as |
+|---|---|
+| `test.describe('Title', { tag: [...] }, fn)` | `Feature: Title` + tags |
+| `test.beforeEach('Label', fn)` + its steps | `Background:` |
+| `test('Name', { tag, annotation }, fn)` | `Scenario: Name [IDs]` + tags |
+| `test.step('text', fn)` / `allure.step('text', fn)` | step lines, in order, nested steps indented |
+| `const annX = testAnnotation('TMS-1', 'BUG-1', 'SEV')` referenced via `annotation: annX` | a comment block just above the `Scenario:` line |
+ 
+The `testAnnotation(tms, bug, severity)` call is read positionally: 1st arg is
+the TMS id, 2nd is a bug id **or an array of bug ids**, 3rd is the severity.
+It's rendered as:
+ 
+```
+  # TMS: TABLE-001
+  # Bug: BUG-701
+  # Severity: BLOCKER
+  @smoke
+  Scenario: Confirm table headers and verify data in table cells
+```
+ 
+or, if the 2nd arg is an array of bug ids:
+ 
+```
+  # TMS: TABLE-001
+  # Bug: BUG-701, BUG-702
+  # Severity: BLOCKER
+  @smoke
+  Scenario: Confirm table headers and verify data in table cells
+```
+ 
+If a step's text already starts with `GIVEN`/`WHEN`/`THEN`/`AND` (as in your
+`herokuappTables.spec.ts` example), that keyword is kept. If it doesn't (as
+in your `menu.spec.ts` example, where steps just read like plain sentences),
+the first step in a scenario defaults to `Given` and the rest to `And` —
+purely cosmetic, the original wording is always preserved untouched.
+ 
+ 
+## Usage
+ 
+```bash
+npm run featurefiles [testsDir] [outDir]
+
+# defaults:
+npm run featurefiles ./tests ./features
+```
+ 
+Example:
+ 
+```bash
+npm run featurefiles ./tests ./docs/features
+```
+ 
+Output mirrors your `tests/` folder structure, e.g.:
+ 
+```
+tests/table/herokuappTables.spec.ts   -> features/table/herokuappTables.feature
+tests/menu/menu.spec.ts               -> features/menu/menu.feature
+```
+ 
+If a spec file has more than one `test.describe` block, each gets its own
+file suffixed `-1`, `-2`, etc.
+ 
+## Regenerating
+ 
+Nothing is cached — just re-run the command any time your tests change.
+Each generated file has a header comment noting it's auto-generated, so
+you (or a teammate) don't hand-edit it and lose the changes on next run.
+You could also wire this into a `pretest`/CI script to keep the feature
+files always up to date.
+ 

@@ -13,10 +13,18 @@ import {TestDetailsAnnotation } from '@playwright/test';
  *    { 'type': 'SEVERITY', 'description': severity }</p>
  * ]
  */
-export function testAnnotation(tms: string, bugs: string, severity: string): TestDetailsAnnotation[] {
+export function testAnnotation(tms: string, bugs: string | string[], severity: string): TestDetailsAnnotation[] {
+  let parsedBugs: string = '';
+  if (typeof bugs === 'object') {
+    let mappedbugs: string[] = bugs.map((bug) => `${process.env.JIRA_URL}${bug}`);
+    parsedBugs = mappedbugs.join(", ");
+  }
+  else {
+    parsedBugs = `${process.env.JIRA_URL}${bugs}`;
+  }
     return [
       { type: 'TMS', description: `${process.env.TMS_URL}${tms}` },
-      { type: 'BUGS', description: `${process.env.JIRA_URL}${bugs}` },
+      { type: 'BUGS', description: parsedBugs },
       { type: 'SEVERITY', description: severity }
     ] as TestDetailsAnnotation[];
   }

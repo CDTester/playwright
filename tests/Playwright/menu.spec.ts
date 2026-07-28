@@ -41,7 +41,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-011');
     await allure.severity(allure.Severity.BLOCKER);
 
-    await allure.step('Should have link to "Playwright" for Node.js', async () => {
+    await allure.step('THEN there should be a link to "Playwright" for Node.js', async () => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_LargeScreen');
       await expect(menuPage.menuPlaywright, `link text should be "Playwright"`).toHaveText('Playwright');
       await expect(menuPage.menuPlaywright, `Expect link href to be '${menuPage.getLinkHref('nodejs')}'`).toHaveAttribute('href', menuPage.getLinkHref('nodejs'));
@@ -56,7 +56,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-012');
     await allure.severity(allure.Severity.CRITICAL);
 
-    await allure.step('Should have link to "Docs"', async step => {
+    await allure.step('THEN there should be a link to "Docs"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_LargeScreen');
       await expect(menuPage.menuDocs).toBeVisible();
       await expect(menuPage.menuDocs, `link text should be "Docs"`).toHaveText('Docs');
@@ -72,7 +72,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-013');
     await allure.severity(allure.Severity.NORMAL);
 
-    await allure.step('Should have link to "API"', async step => {
+    await allure.step('THEN there should be a link to "API"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_LargeScreen');
       await expect(menuPage.menuAPI).toBeVisible();
       await expect(menuPage.menuAPI, `link text should be "API"`).toHaveText('API');
@@ -88,7 +88,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-014');
     await allure.severity(allure.Severity.MINOR);
 
-    await allure.step('Should have link to "Node.js"', async step => {
+    await allure.step('THEN there should be a link to "Node.js"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_LargeScreen');
       await expect(menuPage.menuLanguageSelectedNodeJS).toBeVisible();
       await expect(menuPage.menuLanguageSelectedNodeJS, `link text should be "Node.js"`).toHaveText(/^Node.js/);
@@ -104,17 +104,19 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-015');
     await allure.severity(allure.Severity.MINOR);
 
-    await allure.step('Should not show dropdown menu for other languages', async step => {
+    await allure.step('AND the dropdown menu for other languages is not shown', async step => {
       await expect(menuPage.menuNodeJS).not.toBeVisible();
       await expect(menuPage.menuPython).not.toBeVisible();
       await expect(menuPage.menuJava).not.toBeVisible();
       await expect(menuPage.menuDotNet).not.toBeVisible();
     });
 
-    await allure.step('Should reveal dropdown menu for other languages', async step => {
+    await allure.step('WHEN you hover over the languages menu', async step => {
       await menuPage.menuLanguageSelectedNodeJS.hover();
       await menuPage.takeScreenshot(false, 'Menu_LargeScreen_withDropdown');
+    });
 
+    await allure.step('THEN it Should reveal dropdown menu for other languages', async step => {
       await expect(menuPage.menuNodeJS).toBeVisible();
       await expect(menuPage.menuNodeJS, `link text should be "Node.js"`).toHaveText(/^Node.js/);
       await expect(menuPage.menuNodeJS, `Expect link href to be '${menuPage.getLinkHref('nodejs')}'`).toHaveAttribute('href', menuPage.getLinkHref('nodejs'));
@@ -141,21 +143,21 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to Python', async step => {
+    await allure.step('WHEN the language is changed to Python', async step => {
       await menuPage.changeLanguageTo('python');
       await menuPage.takeScreenshot(false, 'Menu_LargeScreen_Python');
     });
 
-    await allure.step('Should have homepage link to "Playwright for Python"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for Python"', async () => {
       await expect(menuPage.menuPlaywright, `link text should be "Playwright for Python"`).toHaveText('Playwright for Python');
       await expect(menuPage.menuPlaywright, `Expect link href to be '${menuPage.getLinkHref('python')}'`).toHaveAttribute('href', menuPage.getLinkHref('python'));
     });
 
-    await allure.step('Should have \'Docs\' link to Python docs', async () => {
+    await allure.step('AND have \'Docs\' link to Python docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to Python API docs', async () => {
+    await allure.step('AND have \'API\' link to Python API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
   });
@@ -169,21 +171,21 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to Java', async step => {
+    await allure.step('WHEN the language is changed to Java', async step => {
       await menuPage.changeLanguageTo('java');
       await menuPage.takeScreenshot(false, 'Menu_LargeScreen_Java');
     });
 
-    await allure.step('Should have homepage link to "Playwright for Java"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for Java"', async () => {
       await expect(menuPage.menuPlaywright, `link text should be "Playwright for Java"`).toHaveText('Playwright for Java');
       await expect(menuPage.menuPlaywright, `Expect link href to be '${menuPage.getLinkHref('java')}'`).toHaveAttribute('href', menuPage.getLinkHref('java'));
     });
 
-    await allure.step('Should have \'Docs\' link to Java docs', async () => {
+    await allure.step('AND have \'Docs\' link to Java docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to Java API docs', async () => {
+    await allure.step('AND have \'API\' link to Java API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 
@@ -198,21 +200,21 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to .NET', async step => {
+    await allure.step('WHEN the language is changed to .NET', async step => {
       await menuPage.changeLanguageTo('dotnet');
       await menuPage.takeScreenshot(false, 'Menu_LargeScreen_DotNet');
     });
 
-    await allure.step('Should have homepage link to "Playwright for .NET"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for .NET"', async () => {
       await expect(menuPage.menuPlaywright, `link text should be "Playwright for .NET"`).toHaveText('Playwright for .NET');
       await expect(menuPage.menuPlaywright, `Expect link href to be '${menuPage.getLinkHref('dotnet')}'`).toHaveAttribute('href', menuPage.getLinkHref('dotnet'));
     });
 
-    await allure.step('Should have \'Docs\' link to .NET docs', async () => {
+    await allure.step('AND have \'Docs\' link to .NET docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to .NET API docs', async () => {
+    await allure.step('AND have \'API\' link to .NET API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 ;
@@ -226,7 +228,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-020');
     await allure.severity(allure.Severity.CRITICAL);
 
-    await allure.step('Should have link to "Playwright"', async () => {
+    await allure.step('THEN it should have link to "Playwright"', async () => {
       await menuPage.smallScreenSize();
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenu, 'Menu_SmallScreen');
       await expect(menuPage.menuPlaywright, `link text should be "Playwright"`).toHaveText('Playwright');
@@ -242,18 +244,18 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-021');
     await allure.severity(allure.Severity.NORMAL);
 
-    await allure.step('Should not show link to "Docs" when menu is closed', async step => {
+    await allure.step('AND the link to "Docs" is not visible when menu is closed', async step => {
       await menuPage.smallScreenSize();
       await expect(menuPage.topNavMenuMini).not.toBeVisible();
       await expect(menuPage.menuDocs).not.toBeVisible();
     });
 
-    await allure.step('Should click menu icon to open the menu', async step => {
+    await allure.step('WHEN the menu icon is clicked to open the menu', async step => {
       await expect(menuPage.topNavMenuMiniOpen).toBeVisible();
       await menuPage.OpenMiniMenu();
     });
 
-    await allure.step('Should have link to "Docs"', async step => {
+    await allure.step('THEN it should have link to "Docs"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenuMini, 'Menu_SmallScreenOpened');
       await expect(menuPage.topNavMenuMini).toBeVisible();
       await expect(menuPage.menuDocs, `link text should be "Docs"`).toHaveText('Docs');
@@ -270,18 +272,18 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.issue('BUG-022');
     await allure.severity(allure.Severity.NORMAL);
 
-    await allure.step('Should not show link to "API" when menu is closed', async step => {
+    await allure.step('AND the link to "API" is not visible when menu is closed', async step => {
       await menuPage.smallScreenSize();
       await expect(menuPage.topNavMenuMini).not.toBeVisible();
       await expect(menuPage.menuAPI).not.toBeVisible();
     });
 
-    await allure.step('Should click menu icon to open the menu', async step => {
+    await allure.step('WHEN the menu icon is clicked to open the menu', async step => {
       await expect(menuPage.topNavMenuMiniOpen).toBeVisible();
       await menuPage.OpenMiniMenu();
     });
 
-    await allure.step('Should have link to "API"', async step => {
+    await allure.step('THEN it should have link to "API"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenuMini, 'Menu_SmallScreenOpened');
       await expect(menuPage.topNavMenuMini).toBeVisible();
       await expect(menuPage.menuAPI, `link text should be "API"`).toHaveText('API');
@@ -291,25 +293,25 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   });
 
   test(`Menu (Small screen) should have link for 'Node.js'`, 
-  {annotation: annotation12, tag: ['@smoke']}, async ({ menuPage }) => {
+  {annotation: annotation12, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-023');
     await allure.issue('BUG-023');
     await allure.severity(allure.Severity.MINOR);
 
-    await allure.step('Should not show link to "Node.js" when menu is closed', async step => {
+    await allure.step('AND the link to "Node.js" is not shown when menu is closed', async step => {
       await menuPage.smallScreenSize();
       await expect(menuPage.topNavMenuMini).not.toBeVisible();
       await expect(menuPage.menuLanguageSelectedNodeJS).not.toBeVisible();
     });
 
-    await allure.step('Should click menu icon to open the menu', async step => {
+    await allure.step('WHEN the menu icon is clicked to open the menu', async step => {
       await expect(menuPage.topNavMenuMiniOpen).toBeVisible();
       await menuPage.OpenMiniMenu();
     });
 
-    await allure.step('Should have link to "Node.js"', async step => {
+    await allure.step('THEN it should have link to "Node.js"', async step => {
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenuMini, 'Menu_SmallScreenOpened');
       await expect(menuPage.menuLanguageSelectedNodeJS).toBeVisible();
       await expect(menuPage.menuLanguageSelectedNodeJS, `link text should be "Node.js"`).toHaveText(/^Node.js/);
@@ -318,35 +320,37 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   });
 
   test(`Menu (Small screen) should have drop down menu for other languages`, 
-  {annotation: annotation13, tag: ['@smoke']}, async ({ menuPage }) => {
+  {annotation: annotation13, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-024');
     await allure.issue('BUG-024');
     await allure.severity(allure.Severity.MINOR);
 
-    await allure.step('Should not show link to "Node.js" when menu is closed', async step => {
+    await allure.step('AND the link to "Node.js" is not shown when menu is closed', async step => {
       await menuPage.smallScreenSize();
       await expect(menuPage.topNavMenuMini).not.toBeVisible();
       await expect(menuPage.menuLanguageSelectedNodeJS).not.toBeVisible();
     });
 
-    await allure.step('Should click menu icon to open the menu', async step => {
+    await allure.step('AND the menu icon is clicked to open the menu', async step => {
       await expect(menuPage.topNavMenuMiniOpen).toBeVisible();
       await menuPage.OpenMiniMenu();
     });
 
-    await allure.step('Should not show dropdown menu for other languages', async step => {
+    await allure.step('AND it should not show dropdown menu for other languages', async step => {
       await expect(menuPage.menuNodeJS).not.toBeVisible();
       await expect(menuPage.menuPython).not.toBeVisible();
       await expect(menuPage.menuJava).not.toBeVisible();
       await expect(menuPage.menuDotNet).not.toBeVisible();
     });
 
-    await allure.step('Should reveal dropdown menu for other languages', async step => {
+    await allure.step('WHEN the menu for other languages is clicked', async step => {
       await menuPage.menuLanguageSelectedNodeJS.click();
       await menuPage.takeLocatorScreenshot(menuPage.topNavMenuMini, 'Menu_SmallScreenOpened');
+    });
 
+    await allure.step('THEN it should reveal dropdown menu for other languages', async step => {
       await expect(menuPage.menuNodeJS).toBeVisible();
       await expect(menuPage.menuNodeJS, `link text should be "Node.js"`).toHaveText(/^Node.js/);
       await expect(menuPage.menuNodeJS, `Expect link href to be '${menuPage.getLinkHref('nodejs')}'`).toHaveAttribute('href', menuPage.getLinkHref('nodejs'));
@@ -365,7 +369,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   });
 
   test(`Menu (Small screen) should change menu links when python language is selected`, 
-  {annotation: annotation14, tag: ['@smoke']}, async ({ menuPage }) => {
+  {annotation: annotation14, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-026');
@@ -373,12 +377,12 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to Python', async step => {
+    await allure.step('WHEN the language is changed to Python', async step => {
       await menuPage.smallScreenSize();
       await menuPage.changeLanguageTo('python');
     });
 
-    await allure.step('Should have homepage link to "Playwright for Python"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for Python"', async () => {
 
       // expect(async () => {code block}).toPass - retries step at a polled interval untill pass or timeout
       await expect(async () => {
@@ -392,11 +396,11 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
       await expect(menuPage.menuPlaywright.nth(1), `Expect link href to be '${menuPage.getLinkHref('python')}'`).toHaveAttribute('href', menuPage.getLinkHref('python'));
     });
 
-    await allure.step('Should have \'Docs\' link to Python docs', async () => {
+    await allure.step('AND it should have \'Docs\' link to Python docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to Python API docs', async () => {
+    await allure.step('AND it should have \'API\' link to Python API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 
@@ -406,7 +410,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   });
 
   test(`Menu (Small screen) should change menu links when Java language is selected`, 
-  {annotation: annotation15, tag: ['@smoke']}, async ({ menuPage }) => {
+  {annotation: annotation15, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-027');
@@ -414,12 +418,12 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to Java', async step => {
+    await allure.step('WHEN the language is changed to Java', async step => {
       await menuPage.smallScreenSize();
       await menuPage.changeLanguageTo('java');
     });
 
-    await allure.step('Should have homepage link to "Playwright for Java"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for Java"', async () => {
       await menuPage.OpenMiniMenu();
       await expect(menuPage.topNavMenuMini).toBeVisible();
       await menuPage.takeScreenshot(false, 'Menu_SmallScreen_Java');
@@ -428,11 +432,11 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
       await expect(menuPage.menuPlaywright.nth(1), `Expect link href to be '${menuPage.getLinkHref('java')}'`).toHaveAttribute('href', menuPage.getLinkHref('java'));
     });
 
-    await allure.step('Should have \'Docs\' link to Java docs', async () => {
+    await allure.step('AND it should have \'Docs\' link to Java docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to Java API docs', async () => {
+    await allure.step('AND it should have \'API\' link to Java API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 
@@ -442,7 +446,7 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
   });
 
   test(`Menu (Small screen) should change menu links when .NET language is selected`, 
-  {annotation: annotation16, tag: ['@smoke']}, async ({ menuPage }) => {
+  {annotation: annotation16, tag: ['@regression']}, async ({ menuPage }) => {
     await allure.subSuite('SubSuite: Menu - Small Screen');
     await allure.story('Story: Menu - Small Screen');
     await allure.tms('PLAY-028');
@@ -450,12 +454,12 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
     await allure.severity(allure.Severity.NORMAL);
 
 
-    await allure.step('Change language to .NET', async step => {
+    await allure.step('WHEN the language is chnaged to .NET', async step => {
       await menuPage.smallScreenSize();
       await menuPage.changeLanguageTo('dotnet');
     });
 
-    await allure.step('Should have homepage link to "Playwright for .NET"', async () => {
+    await allure.step('THEN it should have homepage link to "Playwright for .NET"', async () => {
       await menuPage.OpenMiniMenu();
       await expect(menuPage.topNavMenuMini).toBeVisible();
       await menuPage.takeScreenshot(false, 'Menu_SmallScreen_DotNet');
@@ -464,11 +468,11 @@ test.describe('Playwright Menu', {tag: ['@Playwright', '@Menu']}, async () => {
       await expect(menuPage.menuPlaywright.nth(1), `Expect link href to be '${menuPage.getLinkHref('dotnet')}'`).toHaveAttribute('href', menuPage.getLinkHref('dotnet'));
     });
 
-    await allure.step('Should have \'Docs\' link to .NET docs', async () => {
+    await allure.step('AND it should have \'Docs\' link to .NET docs', async () => {
       await expect(menuPage.menuDocs, `Expect link href to be '${menuPage.getLinkHref('docs')}'`).toHaveAttribute('href', menuPage.getLinkHref('docs'));
     });
 
-    await allure.step('Should have \'API\' link to .NET API docs', async () => {
+    await allure.step('AND it should have \'API\' link to .NET API docs', async () => {
       await expect(menuPage.menuAPI, `Expect link href to be '${menuPage.getLinkHref('api')}'`).toHaveAttribute('href', menuPage.getLinkHref('api'));
     });
 

@@ -21,7 +21,8 @@
     "codegen": "playwright codegen",
     "agentInit": "playwright init-agents --loop=vscode",
     "tscode": "npx ts-node --project tsconfig.json",
-    "tslint": "tsc --noEmit"
+    "tslint": "tsc --noEmit",
+    "featurefiles": "node ./utils/generate_feature_files.js"
   },
   "repository": {
     "type": "git",
