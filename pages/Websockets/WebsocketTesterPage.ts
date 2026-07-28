@@ -1,4 +1,4 @@
-import { Page, Locator, expect, WebSocket } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
 export class WebSocketTesterPage extends BasePage {
@@ -11,6 +11,7 @@ export class WebSocketTesterPage extends BasePage {
   readonly websocketDisconnectButton: Locator;
   readonly MessageInput: Locator;
   readonly MessageSendButton: Locator;
+  messages: Locator;
 
   constructor (page: Page, envData: any) {
     super(page);
@@ -62,7 +63,7 @@ export class WebSocketTesterPage extends BasePage {
     });
 
     await this.navigate(this.url);
-    await this.page.waitForLoadState('domcontentloaded'); // or 'domcontentloaded'
+    await this.page.waitForLoadState('load'); // or 'domcontentloaded'
 
   }
 
@@ -92,4 +93,8 @@ export class WebSocketTesterPage extends BasePage {
   } 
 
 
+  async waitForMessages(sent: number, received: number): Promise<void> {
+    this.messages = this.page.getByText(`Messages: ${sent} sent, ${received} received`);
+    await expect(this.messages).toBeVisible;
+  }
 }

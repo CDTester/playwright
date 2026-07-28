@@ -24,6 +24,7 @@ export class IkeaHomePage extends BasePage {
 
   async rejectCookieConsent () {
     await this.page.addLocatorHandler(this.cookieConsentHeader, async () => {
+      await expect(this.cookieConsentHeader).toBeVisible();
       await this.highlightElement(this.cookieRejectButton, 'red', true);
       await this.cookieRejectButton.click();
     });

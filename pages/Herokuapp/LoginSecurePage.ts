@@ -38,4 +38,5 @@ export class LoginSecurePage extends BasePage {
   async getMessage(byText: string): Promise<Locator> {
     return this.page.getByText(byText);
   }
+
 }

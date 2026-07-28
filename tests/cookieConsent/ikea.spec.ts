@@ -22,7 +22,6 @@ test.describe('Cookie Consent Tests', {tag: ['@cookie']}, () => {
     });
 
     await test.step('WHEN the cookie consent is displayed', async () => {
-      await expect(ikeaHomePage.cookieConsentHeader).toBeVisible();
       await ikeaHomePage.rejectCookieConsent();
     });
 

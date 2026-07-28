@@ -1,5 +1,5 @@
-import { HerokuappLoginPage } from '../../../pages/Herokuapp/LoginPage';
-import { HerokuappSecurePage } from '../../../pages/Herokuapp/LoginSecurePage';
+import { LoginPage } from '../../../pages/Herokuapp/LoginPage';
+import { LoginSecurePage } from '../../../pages/Herokuapp/LoginSecurePage';
 import { HerokuappData } from './HerokuappData';
 import { chromium, firefox, webkit } from '@playwright/test';
 import fs from 'fs';
@@ -26,8 +26,8 @@ export class HerokuappAuth {
       }
       const context = await browser.newContext();
       const page = await context.newPage();
-      const loginPage = new HerokuappLoginPage(page, envData);
-      const securePage = new HerokuappSecurePage(page, envData);
+      const loginPage = new LoginPage(page, envData);
+      const securePage = new LoginSecurePage(page, envData);
 
       await loginPage.goto();
       await loginPage.login(userData.validUser.username, userData.validUser.password);

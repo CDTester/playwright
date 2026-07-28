@@ -37,6 +37,7 @@ test.describe('Websockets Page Tests', {tag: ['@websocket']}, () => {
     });
 
     await test.step('Websocket should have received the message', async () => {
+      await webSocketTesterPage.waitForMessages(1,2);
       await expect(webSocketTesterPage.getReceivedMessages(), `RECEIVED messages should contain: ${messageToSend}`).toContain(messageToSend);
     });
 
