@@ -95,6 +95,7 @@ export class WebSocketTesterPage extends BasePage {
 
   async waitForMessages(sent: number, received: number): Promise<void> {
     this.messages = this.page.getByText(`Messages: ${sent} sent, ${received} received`);
-    await expect(this.messages).toBeVisible;
+    await this.highlightElement(this.messages);
+    await expect(this.messages).toHaveText(`Messages: ${sent} sent, ${received} received`);
   }
 }
