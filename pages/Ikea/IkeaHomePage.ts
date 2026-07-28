@@ -1,4 +1,4 @@
-import { Page, Locator, expect, WebSocket } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
 export class IkeaHomePage extends BasePage {
@@ -24,7 +24,6 @@ export class IkeaHomePage extends BasePage {
 
   async rejectCookieConsent () {
     await this.page.addLocatorHandler(this.cookieConsentHeader, async () => {
-      await expect(this.cookieConsentHeader).toBeVisible();
       await this.highlightElement(this.cookieRejectButton, 'red', true);
       await this.cookieRejectButton.click();
     });

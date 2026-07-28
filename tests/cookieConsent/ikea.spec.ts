@@ -11,8 +11,8 @@ test.describe('Cookie Consent Tests', {tag: ['@cookie']}, () => {
     await allure.owner('Chris');
   });
 
-  test('intercept websocket messages', {annotation: annotation1 , tag: ['@smoke'] }, async ({ikeaHomePage}) => {
-    await allure.story('Story: Send and receive messages on a websocket');
+  test('Reject Cookie Consent when displayed', {annotation: annotation1 , tag: ['@smoke'] }, async ({ikeaHomePage}) => {
+    await allure.story('Story: Display cookie Consent modal');
     await allure.tms('COOK-001');
     await allure.issue('BUG-401');
     await allure.severity(allure.Severity.CRITICAL);
@@ -22,11 +22,12 @@ test.describe('Cookie Consent Tests', {tag: ['@cookie']}, () => {
     });
 
     await test.step('WHEN the cookie consent is displayed', async () => {
+      await ikeaHomePage.cookieConsentHeader.waitFor({ state: 'visible' });
       await ikeaHomePage.rejectCookieConsent();
     });
 
     await test.step('THEN the locator handler in the goto function rejects the cookie consent', async () => {
-      await expect(ikeaHomePage.cookieConsentHeader).not.toBeVisible();
+      await expect(ikeaHomePage.cookieConsentHeader).toBeHidden({ timeout: 10000 }); // more generous timeout for CMP re-render
     });
 
   });
