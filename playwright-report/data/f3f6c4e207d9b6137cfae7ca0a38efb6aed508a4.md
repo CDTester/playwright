@@ -1,0 +1,149 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: tables/herokuappTables.spec.ts >> The-internet.herokuapp Challenging DOM Page Tests >> Can edit a row
+- Location: tests/tables/herokuappTables.spec.ts:72:7
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('table')
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 5000ms
+  - waiting for getByRole('table')
+
+```
+
+# Test source
+
+```ts
+  1   | import { test, expect } from '../../fixtures/loginHerokuappFixture';
+  2   | import { testAnnotation } from '../../utils/reporter';
+  3   | import * as allure from "allure-js-commons";
+  4   | const annotation1 = testAnnotation('TABLE-001', 'BUG-701', 'BLOCKER');
+  5   | const annotation2 = testAnnotation('TABLE-002', 'BUG-702', 'CRITICAL');
+  6   | const annotation3 = testAnnotation('TABLE-003', 'BUG-703', 'NORMAL');
+  7   | 
+  8   | test.describe('The-internet.herokuapp Challenging DOM Page Tests', {tag: ['@tables']}, () => {
+  9   | 
+  10  |   test.beforeEach(async ({}) => {
+  11  |     await allure.epic('Epic: Tables');
+  12  |     await allure.feature('Feature: Table Tests');
+  13  |     await allure.owner('Chris');
+  14  |   });
+  15  | 
+  16  |   test('Confirm table headers and verify data in table cells', 
+  17  |   {annotation: annotation1, tag: ['@smoke']}, async ({ tablesPage }) => {
+  18  |     await allure.story('Story: Access the-internet.herokuapp Tables');
+  19  |     await allure.tms('TABLE-001');
+  20  |     await allure.issue('BUG-701');
+  21  |     await allure.severity(allure.Severity.BLOCKER);
+  22  | 
+  23  |     await test.step(`GIVEN the challenging DOM page has loaded`, async () => {
+  24  |       await tablesPage.goto();
+  25  |     });
+  26  | 
+  27  |     await test.step(`WHEN the table is visible`, async () => {
+  28  |       await expect(tablesPage.table.tableLocator).toBeVisible();
+  29  |     });
+  30  | 
+  31  |     await test.step(`THEN the table must have column headers`, async () => {
+  32  |       const headers: string[] = ['Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Diceret', 'Action'];
+  33  |       expect(await tablesPage.table.getHeaders(),
+  34  |         `Verify table has these column headers: ${headers.toString()}`)
+  35  |         .toStrictEqual(headers);
+  36  |     });
+  37  | 
+  38  |     await test.step(`AND there are 10 rows`, async () => {
+  39  |       expect(await tablesPage.table.getRowCount(), `Expect there to be 10 rows`).toBe(10);
+  40  |     });
+  41  | 
+  42  |     await test.step(`AND verify the data in row 5`, async () => {
+  43  |       const expectRow: string = 'Iuvaret4 Apeirian4 Adipisci4 Definiebas4 Consequuntur4 Phaedrum4 edit delete';
+  44  | 
+  45  |       await expect(tablesPage.table.getRow(4), `Expect row 5 to have values: ${expectRow}`).toHaveText(expectRow);
+  46  |     });
+  47  | 
+  48  |     await test.step(`AND you can find a row based on one or many column values`, async () => {
+  49  |       const expectValues: string[] = ['Iuvaret7', 'Definiebas7'];
+  50  |       const rows = tablesPage.table.getRowLocatorByCellValues(...expectValues);
+  51  |       await expect(await rows, `Expect row 7 to have values: ${expectValues[0]}`).toContainText(expectValues[0]);
+  52  |       await expect(await rows, `Expect row 7 to have values: ${expectValues[1]}`).toContainText(expectValues[1]);
+  53  |     });
+  54  | 
+  55  |     await test.step(`AND you can get the row index by a value from a specific column`, async () => {
+  56  |       expect(await tablesPage.table.getRowIndexByCellValue('Amet', 'Consequuntur2'), `Expect row 2 to have value Consequuntur2 in columm Amet`)
+  57  |         .toBe(2);
+  58  |     });
+  59  | 
+  60  |     await test.step(`AND you can get the values of a cell by column and row index`, async () => {
+  61  |       expect(await tablesPage.table.getCellText(9, 'Sit'), `Expect row 9 to have value Definiebas9 in columm Sit`)
+  62  |         .toBe('Definiebas9');
+  63  |     });
+  64  | 
+  65  |     await test.step(`AND you can get all the values in a column`, async () => {
+  66  |       const expectedValues: string[] = ['Adipisci0', 'Adipisci1', 'Adipisci2', 'Adipisci3', 'Adipisci4', 'Adipisci5', 'Adipisci6', 'Adipisci7', 'Adipisci8', 'Adipisci9'];
+  67  |       expect(await tablesPage.table.getColumnValues('Dolor'), `Expect column Dolor to have values ${expectedValues}`)
+  68  |         .toStrictEqual(expectedValues);
+  69  |     });
+  70  |   });
+  71  | 
+  72  |   test('Can edit a row', 
+  73  |   {annotation: annotation2, tag: ['@regression']}, async ({ tablesPage }) => {
+  74  |     await allure.story('Story: Can edit a row in the table');
+  75  |     await allure.tms('TABLE-002');
+  76  |     await allure.issue('BUG-702');
+  77  |     await allure.severity(allure.Severity.CRITICAL);
+  78  | 
+  79  |     await test.step(`GIVEN the challenging DOM page has loaded`, async () => {
+  80  |       await tablesPage.goto();
+  81  |     });
+  82  | 
+  83  |     await test.step(`WHEN table is visible`, async (step) => {
+> 84  |       await expect(tablesPage.table.tableLocator).toBeVisible();
+      |                                                   ^ Error: expect(locator).toBeVisible() failed
+  85  |     });
+  86  | 
+  87  |     await test.step(`THEN the edit row link can be clicked`, async () => {
+  88  |       await tablesPage.editRow('Amet', 'Consequuntur3');
+  89  |       expect(await tablesPage.page, `Expect URL to be ${tablesPage.url}#edit`).toHaveURL(`${tablesPage.url}#edit`);
+  90  |     });
+  91  | 
+  92  |   });
+  93  | 
+  94  |   test('Can delete a row', 
+  95  |   {annotation: annotation3, tag: ['@regression']}, async ({ tablesPage }) => {
+  96  |     await allure.story('Story: Can delete a row in the table');
+  97  |     await allure.tms('TABLE-003');
+  98  |     await allure.issue('BUG-703');
+  99  |     await allure.severity(allure.Severity.CRITICAL);
+  100 | 
+  101 |     await test.step(`GIVEN the challenging DOM page has loaded`, async () => {
+  102 |       await tablesPage.goto();
+  103 |     });
+  104 | 
+  105 |     await test.step(`WHEN table is visible`, async (step) => {
+  106 |       await expect(tablesPage.table.tableLocator).toBeVisible();
+  107 |     });
+  108 | 
+  109 |     await test.step(`THEN the delete row link can be clicked`, async () => {
+  110 |       await tablesPage.deleteRow('Amet', 'Consequuntur3');
+  111 |       expect(await tablesPage.page, `Expect URL to be ${tablesPage.url}#delete`).toHaveURL(`${tablesPage.url}#delete`);
+  112 |     });
+  113 | 
+  114 |   });
+  115 | 
+  116 | });
+  117 | 
+```

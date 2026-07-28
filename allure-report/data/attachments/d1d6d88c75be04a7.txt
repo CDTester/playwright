@@ -1,0 +1,4 @@
+Navigation attempt 1 failed: page.goto: Test timeout of 30000ms exceeded.
+Call log:
+  - navigating to "https://the-internet.herokuapp.com/secure", waiting until "commit"
+
