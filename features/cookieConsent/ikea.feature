@@ -8,7 +8,7 @@ Feature: Cookie Consent Tests
   # Bug: BUG-401
   # Severity: CRITICAL
   @smoke
-  Scenario: intercept websocket messages
+  Scenario: Reject Cookie Consent when displayed
     Given I navigate to the Ikea homepage
     When the cookie consent is displayed
     Then the locator handler in the goto function rejects the cookie consent

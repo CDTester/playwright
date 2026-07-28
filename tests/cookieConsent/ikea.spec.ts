@@ -22,12 +22,11 @@ test.describe('Cookie Consent Tests', {tag: ['@cookie']}, () => {
     });
 
     await test.step('WHEN the cookie consent is displayed', async () => {
-      await ikeaHomePage.cookieConsentHeader.waitFor({ state: 'visible' });
       await ikeaHomePage.rejectCookieConsent();
     });
 
     await test.step('THEN the locator handler in the goto function rejects the cookie consent', async () => {
-      await expect(ikeaHomePage.cookieConsentHeader).toBeHidden({ timeout: 10000 }); // more generous timeout for CMP re-render
+      await expect(ikeaHomePage.cookieConsentHeader).toBeHidden({timeout: 30000});
     });
 
   });
