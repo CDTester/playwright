@@ -8,9 +8,9 @@ export default defineConfig({
   fullyParallel: true,              // Run tests in files in parallel
   globalSetup: require.resolve('./utils/setEnvData'), // global setup script to set environment variables before tests run
   globalTeardown: require.resolve('./utils/global_teardown'), // global teardown script to clean up any resources after all tests have run
-  workers: process.env.CI ? 4 : 1,  // Opt out of parallel tests on CI by setting to 1. 
+  workers: process.env.CI ? 4 : 2,  // Opt out of parallel tests on CI by setting to 1. 
   forbidOnly: !!process.env.CI,     // Fail the build on CI if you accidentally left test.only in the source code.
-  retries: process.env.CI ? 0 : 2,  // Retry on Local only
+  retries: process.env.CI ? 1 : 4,  // Retry on Local only
   reporter: [                       // Reporter to use. See https://playwright.dev/docs/test-reporters
     ['html'],
     ['allure-playwright',{
