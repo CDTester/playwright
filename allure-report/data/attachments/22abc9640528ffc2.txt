@@ -1,4 +1,0 @@
-Navigation attempt 1 failed: page.goto: Timeout 30000ms exceeded.
-Call log:
-  - navigating to "https://the-internet.herokuapp.com/challenging_dom", waiting until "commit"
-
