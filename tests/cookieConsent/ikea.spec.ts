@@ -11,11 +11,13 @@ test.describe('Cookie Consent Tests', {tag: ['@cookie']}, () => {
     await allure.owner('Chris');
   });
 
-  test('Reject Cookie Consent when displayed', {annotation: annotation1 , tag: ['@smoke'] }, async ({ikeaHomePage}) => {
+  test('Reject Cookie Consent when displayed', {annotation: annotation1,
+    tag: ['@smoke'] }, async ({ikeaHomePage, browserName}) => {
     await allure.story('Story: Display cookie Consent modal');
     await allure.tms('COOK-001');
     await allure.issue('BUG-401');
     await allure.severity(allure.Severity.CRITICAL);
+    test.fixme(browserName === 'webkit', 'WebKit hangs on locator handler - BUG-401');
 
     await test.step('GIVEN I navigate to the Ikea homepage', async () => {
       await ikeaHomePage.goto();
